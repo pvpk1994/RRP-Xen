@@ -1,0 +1,10 @@
+prefix=/root/xen/stubdom/libxc-x86_64/../..
+includedir=/root/xen/stubdom/libxc-x86_64/../../tools/libxc/include
+libdir=/root/xen/stubdom/libxc-x86_64
+
+Name: Xencontrol
+Description: The Xencontrol library for Xen hypervisor
+Version: 4.12.0
+Cflags: -I${includedir} -I/root/xen/stubdom/libxc-x86_64/../../tools/include
+Libs: -Wl,-rpath-link=${libdir} -lxenctrl
+Requires.private: xenevtchn,xengnttab,xencall,xenforeignmemory,xendevicemodel,xentoollog

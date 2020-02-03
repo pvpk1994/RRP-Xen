@@ -196,6 +196,7 @@ libxl_bios_type = Enumeration("bios_type", [
 libxl_scheduler = Enumeration("scheduler", [
     (0, "unknown"),
     (4, "sedf"),
+    (3, "aaf"),
     (5, "credit"),
     (6, "credit2"),
     (7, "arinc653"),

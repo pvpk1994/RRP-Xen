@@ -273,7 +273,7 @@ int main_cpupoollist(int argc, char **argv)
     if (opt_cpus)
         printf("CPU list\n");
     else
-        printf("CPUs   Sched     Active   Domain count\n");
+        printf("CPUs   Sched     Active   Domain count   PoolID\n");
 
     for (p = 0; p < n_pools; p++) {
         if (!pool || (poolinfo[p].poolid == poolid)) {
@@ -287,9 +287,9 @@ int main_cpupoollist(int argc, char **argv)
                     n++;
                 }
             if (!opt_cpus) {
-                printf("%3d %9s       y       %4d", n,
+                printf("%3d %9s       y       %4d  %10d", n,
                        libxl_scheduler_to_string(poolinfo[p].sched),
-                       poolinfo[p].n_dom);
+                       poolinfo[p].n_dom, poolinfo[p].poolid);
             }
             printf("\n");
         }

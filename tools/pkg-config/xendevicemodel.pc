@@ -1,0 +1,10 @@
+prefix=/root/xen/tools/libs/devicemodel/../../..
+includedir=/root/xen/tools/libs/devicemodel/../../../tools/libs/devicemodel/include
+libdir=/root/xen/tools/libs/devicemodel
+
+Name: Xendevicemodel
+Description: The Xendevicemodel library for Xen hypervisor
+Version: 1.3
+Cflags: -I${includedir} -I/root/xen/tools/libs/devicemodel/../../../tools/include
+Libs: -Wl,-rpath-link=${libdir} -lxendevicemodel
+Requires.private: xentoolcore,xentoollog,xencall

@@ -1,0 +1,2350 @@
+"xenlight.ml" 66 1829 1833 "xenlight.ml" 66 1829 1848
+type(
+  error -> string
+)
+ident(
+  def string_of_error "xenlight.ml" 101 3264 3264 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 67 1860 1863 "xenlight.ml" 67 1860 1880
+type(
+  error
+)
+"xenlight.ml" 67 1860 1884 "xenlight.ml" 67 1860 1897
+type(
+  string
+)
+"xenlight.ml" 68 1898 1901 "xenlight.ml" 68 1898 1914
+type(
+  error
+)
+"xenlight.ml" 68 1898 1918 "xenlight.ml" 68 1898 1927
+type(
+  string
+)
+"xenlight.ml" 69 1928 1931 "xenlight.ml" 69 1928 1941
+type(
+  error
+)
+"xenlight.ml" 69 1928 1945 "xenlight.ml" 69 1928 1951
+type(
+  string
+)
+"xenlight.ml" 70 1952 1955 "xenlight.ml" 70 1952 1963
+type(
+  error
+)
+"xenlight.ml" 70 1952 1967 "xenlight.ml" 70 1952 1971
+type(
+  string
+)
+"xenlight.ml" 71 1972 1975 "xenlight.ml" 71 1972 1986
+type(
+  error
+)
+"xenlight.ml" 71 1972 1990 "xenlight.ml" 71 1972 1997
+type(
+  string
+)
+"xenlight.ml" 72 1998 2001 "xenlight.ml" 72 1998 2012
+type(
+  error
+)
+"xenlight.ml" 72 1998 2016 "xenlight.ml" 72 1998 2023
+type(
+  string
+)
+"xenlight.ml" 73 2024 2027 "xenlight.ml" 73 2024 2040
+type(
+  error
+)
+"xenlight.ml" 73 2024 2044 "xenlight.ml" 73 2024 2053
+type(
+  string
+)
+"xenlight.ml" 74 2054 2057 "xenlight.ml" 74 2054 2077
+type(
+  error
+)
+"xenlight.ml" 74 2054 2081 "xenlight.ml" 74 2054 2097
+type(
+  string
+)
+"xenlight.ml" 75 2098 2101 "xenlight.ml" 75 2098 2115
+type(
+  error
+)
+"xenlight.ml" 75 2098 2119 "xenlight.ml" 75 2098 2129
+type(
+  string
+)
+"xenlight.ml" 76 2130 2133 "xenlight.ml" 76 2130 2149
+type(
+  error
+)
+"xenlight.ml" 76 2130 2153 "xenlight.ml" 76 2130 2165
+type(
+  string
+)
+"xenlight.ml" 77 2166 2169 "xenlight.ml" 77 2166 2184
+type(
+  error
+)
+"xenlight.ml" 77 2166 2188 "xenlight.ml" 77 2166 2199
+type(
+  string
+)
+"xenlight.ml" 78 2200 2203 "xenlight.ml" 78 2200 2225
+type(
+  error
+)
+"xenlight.ml" 78 2200 2229 "xenlight.ml" 78 2200 2247
+type(
+  string
+)
+"xenlight.ml" 79 2248 2251 "xenlight.ml" 79 2248 2267
+type(
+  error
+)
+"xenlight.ml" 79 2248 2271 "xenlight.ml" 79 2248 2283
+type(
+  string
+)
+"xenlight.ml" 80 2284 2287 "xenlight.ml" 80 2284 2306
+type(
+  error
+)
+"xenlight.ml" 80 2284 2310 "xenlight.ml" 80 2284 2325
+type(
+  string
+)
+"xenlight.ml" 81 2326 2329 "xenlight.ml" 81 2326 2344
+type(
+  error
+)
+"xenlight.ml" 81 2326 2348 "xenlight.ml" 81 2326 2359
+type(
+  string
+)
+"xenlight.ml" 82 2360 2363 "xenlight.ml" 82 2360 2386
+type(
+  error
+)
+"xenlight.ml" 82 2360 2390 "xenlight.ml" 82 2360 2409
+type(
+  string
+)
+"xenlight.ml" 83 2410 2413 "xenlight.ml" 83 2410 2432
+type(
+  error
+)
+"xenlight.ml" 83 2410 2436 "xenlight.ml" 83 2410 2451
+type(
+  string
+)
+"xenlight.ml" 84 2452 2455 "xenlight.ml" 84 2452 2493
+type(
+  error
+)
+"xenlight.ml" 84 2452 2497 "xenlight.ml" 84 2452 2531
+type(
+  string
+)
+"xenlight.ml" 85 2532 2535 "xenlight.ml" 85 2532 2572
+type(
+  error
+)
+"xenlight.ml" 85 2532 2576 "xenlight.ml" 85 2532 2609
+type(
+  string
+)
+"xenlight.ml" 86 2610 2613 "xenlight.ml" 86 2610 2639
+type(
+  error
+)
+"xenlight.ml" 86 2610 2643 "xenlight.ml" 86 2610 2665
+type(
+  string
+)
+"xenlight.ml" 87 2666 2669 "xenlight.ml" 87 2666 2690
+type(
+  error
+)
+"xenlight.ml" 87 2666 2694 "xenlight.ml" 87 2666 2711
+type(
+  string
+)
+"xenlight.ml" 88 2712 2715 "xenlight.ml" 88 2712 2728
+type(
+  error
+)
+"xenlight.ml" 88 2712 2732 "xenlight.ml" 88 2712 2741
+type(
+  string
+)
+"xenlight.ml" 89 2742 2745 "xenlight.ml" 89 2742 2759
+type(
+  error
+)
+"xenlight.ml" 89 2742 2763 "xenlight.ml" 89 2742 2773
+type(
+  string
+)
+"xenlight.ml" 90 2774 2777 "xenlight.ml" 90 2774 2799
+type(
+  error
+)
+"xenlight.ml" 90 2774 2803 "xenlight.ml" 90 2774 2821
+type(
+  string
+)
+"xenlight.ml" 91 2822 2825 "xenlight.ml" 91 2822 2846
+type(
+  error
+)
+"xenlight.ml" 91 2822 2850 "xenlight.ml" 91 2822 2867
+type(
+  string
+)
+"xenlight.ml" 92 2868 2871 "xenlight.ml" 92 2868 2895
+type(
+  error
+)
+"xenlight.ml" 92 2868 2899 "xenlight.ml" 92 2868 2919
+type(
+  string
+)
+"xenlight.ml" 93 2920 2923 "xenlight.ml" 93 2920 2946
+type(
+  error
+)
+"xenlight.ml" 93 2920 2950 "xenlight.ml" 93 2920 2969
+type(
+  string
+)
+"xenlight.ml" 94 2970 2973 "xenlight.ml" 94 2970 2996
+type(
+  error
+)
+"xenlight.ml" 94 2970 3000 "xenlight.ml" 94 2970 3019
+type(
+  string
+)
+"xenlight.ml" 95 3020 3023 "xenlight.ml" 95 3020 3050
+type(
+  error
+)
+"xenlight.ml" 95 3020 3054 "xenlight.ml" 95 3020 3077
+type(
+  string
+)
+"xenlight.ml" 96 3078 3081 "xenlight.ml" 96 3078 3108
+type(
+  error
+)
+"xenlight.ml" 96 3078 3112 "xenlight.ml" 96 3078 3135
+type(
+  string
+)
+"xenlight.ml" 97 3136 3139 "xenlight.ml" 97 3136 3165
+type(
+  error
+)
+"xenlight.ml" 97 3136 3169 "xenlight.ml" 97 3136 3191
+type(
+  string
+)
+"xenlight.ml" 98 3192 3195 "xenlight.ml" 98 3192 3209
+type(
+  error
+)
+"xenlight.ml" 98 3192 3213 "xenlight.ml" 98 3192 3223
+type(
+  string
+)
+"xenlight.ml" 66 1829 1851 "xenlight.ml" 98 3192 3223
+type(
+  error -> string
+)
+"xenlight.ml" 107 3368 3372 "xenlight.ml" 107 3368 3393
+type(
+  domain_type -> string
+)
+ident(
+  def string_of_domain_type "xenlight.ml" 114 3572 3572 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 108 3405 3408 "xenlight.ml" 108 3405 3427
+type(
+  domain_type
+)
+"xenlight.ml" 108 3405 3431 "xenlight.ml" 108 3405 3440
+type(
+  string
+)
+"xenlight.ml" 109 3441 3444 "xenlight.ml" 109 3441 3459
+type(
+  domain_type
+)
+"xenlight.ml" 109 3441 3463 "xenlight.ml" 109 3441 3468
+type(
+  string
+)
+"xenlight.ml" 110 3469 3472 "xenlight.ml" 110 3469 3486
+type(
+  domain_type
+)
+"xenlight.ml" 110 3469 3490 "xenlight.ml" 110 3469 3494
+type(
+  string
+)
+"xenlight.ml" 111 3495 3498 "xenlight.ml" 111 3495 3513
+type(
+  domain_type
+)
+"xenlight.ml" 111 3495 3517 "xenlight.ml" 111 3495 3522
+type(
+  string
+)
+"xenlight.ml" 107 3368 3396 "xenlight.ml" 111 3495 3522
+type(
+  domain_type -> string
+)
+"xenlight.ml" 118 3664 3668 "xenlight.ml" 118 3664 3698
+type(
+  rdm_reserve_strategy -> string
+)
+ident(
+  def string_of_rdm_reserve_strategy "xenlight.ml" 123 3839 3839 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 119 3710 3713 "xenlight.ml" 119 3710 3740
+type(
+  rdm_reserve_strategy
+)
+"xenlight.ml" 119 3710 3744 "xenlight.ml" 119 3710 3752
+type(
+  string
+)
+"xenlight.ml" 120 3753 3756 "xenlight.ml" 120 3753 3781
+type(
+  rdm_reserve_strategy
+)
+"xenlight.ml" 120 3753 3785 "xenlight.ml" 120 3753 3791
+type(
+  string
+)
+"xenlight.ml" 118 3664 3701 "xenlight.ml" 120 3753 3791
+type(
+  rdm_reserve_strategy -> string
+)
+"xenlight.ml" 128 3959 3963 "xenlight.ml" 128 3959 3991
+type(
+  rdm_reserve_policy -> string
+)
+ident(
+  def string_of_rdm_reserve_policy "xenlight.ml" 134 4177 4177 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 129 4003 4006 "xenlight.ml" 129 4003 4032
+type(
+  rdm_reserve_policy
+)
+"xenlight.ml" 129 4003 4036 "xenlight.ml" 129 4003 4045
+type(
+  string
+)
+"xenlight.ml" 130 4046 4049 "xenlight.ml" 130 4046 4074
+type(
+  rdm_reserve_policy
+)
+"xenlight.ml" 130 4046 4078 "xenlight.ml" 130 4046 4086
+type(
+  string
+)
+"xenlight.ml" 131 4087 4090 "xenlight.ml" 131 4087 4116
+type(
+  rdm_reserve_policy
+)
+"xenlight.ml" 131 4087 4120 "xenlight.ml" 131 4087 4129
+type(
+  string
+)
+"xenlight.ml" 128 3959 3994 "xenlight.ml" 131 4087 4129
+type(
+  rdm_reserve_policy -> string
+)
+"xenlight.ml" 139 4293 4297 "xenlight.ml" 139 4293 4325
+type(
+  channel_connection -> string
+)
+ident(
+  def string_of_channel_connection "xenlight.ml" 145 4505 4505 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 140 4337 4340 "xenlight.ml" 140 4337 4366
+type(
+  channel_connection
+)
+"xenlight.ml" 140 4337 4370 "xenlight.ml" 140 4337 4379
+type(
+  string
+)
+"xenlight.ml" 141 4380 4383 "xenlight.ml" 141 4380 4405
+type(
+  channel_connection
+)
+"xenlight.ml" 141 4380 4409 "xenlight.ml" 141 4380 4414
+type(
+  string
+)
+"xenlight.ml" 142 4415 4418 "xenlight.ml" 142 4415 4443
+type(
+  channel_connection
+)
+"xenlight.ml" 142 4415 4447 "xenlight.ml" 142 4415 4455
+type(
+  string
+)
+"xenlight.ml" 139 4293 4328 "xenlight.ml" 142 4415 4455
+type(
+  channel_connection -> string
+)
+"xenlight.ml" 150 4648 4652 "xenlight.ml" 150 4648 4682
+type(
+  device_model_version -> string
+)
+ident(
+  def string_of_device_model_version "xenlight.ml" 156 4898 4898 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 151 4694 4697 "xenlight.ml" 151 4694 4725
+type(
+  device_model_version
+)
+"xenlight.ml" 151 4694 4729 "xenlight.ml" 151 4694 4738
+type(
+  string
+)
+"xenlight.ml" 152 4739 4742 "xenlight.ml" 152 4739 4783
+type(
+  device_model_version
+)
+"xenlight.ml" 152 4739 4787 "xenlight.ml" 152 4739 4809
+type(
+  string
+)
+"xenlight.ml" 153 4810 4813 "xenlight.ml" 153 4810 4842
+type(
+  device_model_version
+)
+"xenlight.ml" 153 4810 4846 "xenlight.ml" 153 4810 4856
+type(
+  string
+)
+"xenlight.ml" 150 4648 4685 "xenlight.ml" 153 4810 4856
+type(
+  device_model_version -> string
+)
+"xenlight.ml" 162 5012 5016 "xenlight.ml" 162 5012 5038
+type(
+  console_type -> string
+)
+ident(
+  def string_of_console_type "xenlight.ml" 169 5222 5222 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 163 5050 5053 "xenlight.ml" 163 5050 5073
+type(
+  console_type
+)
+"xenlight.ml" 163 5050 5077 "xenlight.ml" 163 5050 5086
+type(
+  string
+)
+"xenlight.ml" 164 5087 5090 "xenlight.ml" 164 5087 5109
+type(
+  console_type
+)
+"xenlight.ml" 164 5087 5113 "xenlight.ml" 164 5087 5121
+type(
+  string
+)
+"xenlight.ml" 165 5122 5125 "xenlight.ml" 165 5122 5140
+type(
+  console_type
+)
+"xenlight.ml" 165 5122 5144 "xenlight.ml" 165 5122 5148
+type(
+  string
+)
+"xenlight.ml" 166 5149 5152 "xenlight.ml" 166 5149 5170
+type(
+  console_type
+)
+"xenlight.ml" 166 5149 5174 "xenlight.ml" 166 5149 5181
+type(
+  string
+)
+"xenlight.ml" 162 5012 5041 "xenlight.ml" 166 5149 5181
+type(
+  console_type -> string
+)
+"xenlight.ml" 178 5392 5396 "xenlight.ml" 178 5392 5417
+type(
+  disk_format -> string
+)
+ident(
+  def string_of_disk_format "xenlight.ml" 188 5684 5684 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 179 5429 5432 "xenlight.ml" 179 5429 5451
+type(
+  disk_format
+)
+"xenlight.ml" 179 5429 5455 "xenlight.ml" 179 5429 5464
+type(
+  string
+)
+"xenlight.ml" 180 5465 5468 "xenlight.ml" 180 5465 5484
+type(
+  disk_format
+)
+"xenlight.ml" 180 5465 5488 "xenlight.ml" 180 5465 5494
+type(
+  string
+)
+"xenlight.ml" 181 5495 5498 "xenlight.ml" 181 5495 5515
+type(
+  disk_format
+)
+"xenlight.ml" 181 5495 5519 "xenlight.ml" 181 5495 5526
+type(
+  string
+)
+"xenlight.ml" 182 5527 5530 "xenlight.ml" 182 5527 5545
+type(
+  disk_format
+)
+"xenlight.ml" 182 5527 5549 "xenlight.ml" 182 5527 5554
+type(
+  string
+)
+"xenlight.ml" 183 5555 5558 "xenlight.ml" 183 5555 5573
+type(
+  disk_format
+)
+"xenlight.ml" 183 5555 5577 "xenlight.ml" 183 5555 5582
+type(
+  string
+)
+"xenlight.ml" 184 5583 5586 "xenlight.ml" 184 5583 5603
+type(
+  disk_format
+)
+"xenlight.ml" 184 5583 5607 "xenlight.ml" 184 5583 5614
+type(
+  string
+)
+"xenlight.ml" 185 5615 5618 "xenlight.ml" 185 5615 5633
+type(
+  disk_format
+)
+"xenlight.ml" 185 5615 5637 "xenlight.ml" 185 5615 5642
+type(
+  string
+)
+"xenlight.ml" 178 5392 5420 "xenlight.ml" 185 5615 5642
+type(
+  disk_format -> string
+)
+"xenlight.ml" 194 5796 5800 "xenlight.ml" 194 5796 5822
+type(
+  disk_backend -> string
+)
+ident(
+  def string_of_disk_backend "xenlight.ml" 201 5999 5999 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 195 5834 5837 "xenlight.ml" 195 5834 5857
+type(
+  disk_backend
+)
+"xenlight.ml" 195 5834 5861 "xenlight.ml" 195 5834 5870
+type(
+  string
+)
+"xenlight.ml" 196 5871 5874 "xenlight.ml" 196 5871 5890
+type(
+  disk_backend
+)
+"xenlight.ml" 196 5871 5894 "xenlight.ml" 196 5871 5899
+type(
+  string
+)
+"xenlight.ml" 197 5900 5903 "xenlight.ml" 197 5900 5919
+type(
+  disk_backend
+)
+"xenlight.ml" 197 5900 5923 "xenlight.ml" 197 5900 5928
+type(
+  string
+)
+"xenlight.ml" 198 5929 5932 "xenlight.ml" 198 5929 5950
+type(
+  disk_backend
+)
+"xenlight.ml" 198 5929 5954 "xenlight.ml" 198 5929 5961
+type(
+  string
+)
+"xenlight.ml" 194 5796 5825 "xenlight.ml" 198 5929 5961
+type(
+  disk_backend -> string
+)
+"xenlight.ml" 206 6078 6082 "xenlight.ml" 206 6078 6100
+type(
+  nic_type -> string
+)
+ident(
+  def string_of_nic_type "xenlight.ml" 212 6254 6254 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 207 6112 6115 "xenlight.ml" 207 6112 6131
+type(
+  nic_type
+)
+"xenlight.ml" 207 6112 6135 "xenlight.ml" 207 6112 6144
+type(
+  string
+)
+"xenlight.ml" 208 6145 6148 "xenlight.ml" 208 6145 6166
+type(
+  nic_type
+)
+"xenlight.ml" 208 6145 6170 "xenlight.ml" 208 6145 6181
+type(
+  string
+)
+"xenlight.ml" 209 6182 6185 "xenlight.ml" 209 6182 6197
+type(
+  nic_type
+)
+"xenlight.ml" 209 6182 6201 "xenlight.ml" 209 6182 6206
+type(
+  string
+)
+"xenlight.ml" 206 6078 6103 "xenlight.ml" 209 6182 6206
+type(
+  nic_type -> string
+)
+"xenlight.ml" 221 6528 6532 "xenlight.ml" 221 6528 6560
+type(
+  action_on_shutdown -> string
+)
+ident(
+  def string_of_action_on_shutdown "xenlight.ml" 231 6967 6967 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 222 6572 6575 "xenlight.ml" 222 6572 6601
+type(
+  action_on_shutdown
+)
+"xenlight.ml" 222 6572 6605 "xenlight.ml" 222 6572 6614
+type(
+  string
+)
+"xenlight.ml" 223 6615 6618 "xenlight.ml" 223 6615 6644
+type(
+  action_on_shutdown
+)
+"xenlight.ml" 223 6615 6648 "xenlight.ml" 223 6615 6657
+type(
+  string
+)
+"xenlight.ml" 224 6658 6661 "xenlight.ml" 224 6658 6694
+type(
+  action_on_shutdown
+)
+"xenlight.ml" 224 6658 6698 "xenlight.ml" 224 6658 6714
+type(
+  string
+)
+"xenlight.ml" 225 6715 6718 "xenlight.ml" 225 6715 6745
+type(
+  action_on_shutdown
+)
+"xenlight.ml" 225 6715 6749 "xenlight.ml" 225 6715 6759
+type(
+  string
+)
+"xenlight.ml" 226 6760 6763 "xenlight.ml" 226 6760 6798
+type(
+  action_on_shutdown
+)
+"xenlight.ml" 226 6760 6802 "xenlight.ml" 226 6760 6820
+type(
+  string
+)
+"xenlight.ml" 227 6821 6824 "xenlight.ml" 227 6821 6859
+type(
+  action_on_shutdown
+)
+"xenlight.ml" 227 6821 6863 "xenlight.ml" 227 6821 6881
+type(
+  string
+)
+"xenlight.ml" 228 6882 6885 "xenlight.ml" 228 6882 6914
+type(
+  action_on_shutdown
+)
+"xenlight.ml" 228 6882 6918 "xenlight.ml" 228 6882 6930
+type(
+  string
+)
+"xenlight.ml" 221 6528 6563 "xenlight.ml" 228 6882 6930
+type(
+  action_on_shutdown -> string
+)
+"xenlight.ml" 240 7112 7116 "xenlight.ml" 240 7112 7133
+type(
+  trigger -> string
+)
+ident(
+  def string_of_trigger "xenlight.ml" 250 7382 7382 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 241 7145 7148 "xenlight.ml" 241 7145 7163
+type(
+  trigger
+)
+"xenlight.ml" 241 7145 7167 "xenlight.ml" 241 7145 7176
+type(
+  string
+)
+"xenlight.ml" 242 7177 7180 "xenlight.ml" 242 7177 7193
+type(
+  trigger
+)
+"xenlight.ml" 242 7177 7197 "xenlight.ml" 242 7177 7204
+type(
+  string
+)
+"xenlight.ml" 243 7205 7208 "xenlight.ml" 243 7205 7221
+type(
+  trigger
+)
+"xenlight.ml" 243 7205 7225 "xenlight.ml" 243 7205 7232
+type(
+  string
+)
+"xenlight.ml" 244 7233 7236 "xenlight.ml" 244 7233 7247
+type(
+  trigger
+)
+"xenlight.ml" 244 7233 7251 "xenlight.ml" 244 7233 7256
+type(
+  string
+)
+"xenlight.ml" 245 7257 7260 "xenlight.ml" 245 7257 7272
+type(
+  trigger
+)
+"xenlight.ml" 245 7257 7276 "xenlight.ml" 245 7257 7282
+type(
+  string
+)
+"xenlight.ml" 246 7283 7286 "xenlight.ml" 246 7283 7299
+type(
+  trigger
+)
+"xenlight.ml" 246 7283 7303 "xenlight.ml" 246 7283 7310
+type(
+  string
+)
+"xenlight.ml" 247 7311 7314 "xenlight.ml" 247 7311 7330
+type(
+  trigger
+)
+"xenlight.ml" 247 7311 7334 "xenlight.ml" 247 7311 7344
+type(
+  string
+)
+"xenlight.ml" 240 7112 7136 "xenlight.ml" 247 7311 7344
+type(
+  trigger -> string
+)
+"xenlight.ml" 256 7498 7502 "xenlight.ml" 256 7498 7520
+type(
+  tsc_mode -> string
+)
+ident(
+  def string_of_tsc_mode "xenlight.ml" 263 7738 7738 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 257 7532 7535 "xenlight.ml" 257 7532 7551
+type(
+  tsc_mode
+)
+"xenlight.ml" 257 7532 7555 "xenlight.ml" 257 7532 7564
+type(
+  string
+)
+"xenlight.ml" 258 7565 7568 "xenlight.ml" 258 7565 7591
+type(
+  tsc_mode
+)
+"xenlight.ml" 258 7565 7595 "xenlight.ml" 258 7565 7611
+type(
+  string
+)
+"xenlight.ml" 259 7612 7615 "xenlight.ml" 259 7612 7630
+type(
+  tsc_mode
+)
+"xenlight.ml" 259 7612 7634 "xenlight.ml" 259 7612 7642
+type(
+  string
+)
+"xenlight.ml" 260 7643 7646 "xenlight.ml" 260 7643 7670
+type(
+  tsc_mode
+)
+"xenlight.ml" 260 7643 7674 "xenlight.ml" 260 7643 7691
+type(
+  string
+)
+"xenlight.ml" 256 7498 7523 "xenlight.ml" 260 7643 7691
+type(
+  tsc_mode -> string
+)
+"xenlight.ml" 267 7821 7825 "xenlight.ml" 267 7821 7852
+type(
+  gfx_passthru_kind -> string
+)
+ident(
+  def string_of_gfx_passthru_kind "xenlight.ml" 272 7979 7979 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 268 7864 7867 "xenlight.ml" 268 7864 7892
+type(
+  gfx_passthru_kind
+)
+"xenlight.ml" 268 7864 7896 "xenlight.ml" 268 7864 7905
+type(
+  string
+)
+"xenlight.ml" 269 7906 7909 "xenlight.ml" 269 7906 7930
+type(
+  gfx_passthru_kind
+)
+"xenlight.ml" 269 7906 7934 "xenlight.ml" 269 7906 7939
+type(
+  string
+)
+"xenlight.ml" 267 7821 7855 "xenlight.ml" 269 7906 7939
+type(
+  gfx_passthru_kind -> string
+)
+"xenlight.ml" 279 8179 8183 "xenlight.ml" 279 8179 8203
+type(
+  timer_mode -> string
+)
+ident(
+  def string_of_timer_mode "xenlight.ml" 287 8558 8558 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 280 8215 8218 "xenlight.ml" 280 8215 8236
+type(
+  timer_mode
+)
+"xenlight.ml" 280 8215 8240 "xenlight.ml" 280 8215 8249
+type(
+  string
+)
+"xenlight.ml" 281 8250 8253 "xenlight.ml" 281 8250 8286
+type(
+  timer_mode
+)
+"xenlight.ml" 281 8250 8290 "xenlight.ml" 281 8250 8314
+type(
+  string
+)
+"xenlight.ml" 282 8315 8318 "xenlight.ml" 282 8315 8354
+type(
+  timer_mode
+)
+"xenlight.ml" 282 8315 8358 "xenlight.ml" 282 8315 8385
+type(
+  string
+)
+"xenlight.ml" 283 8386 8389 "xenlight.ml" 283 8386 8423
+type(
+  timer_mode
+)
+"xenlight.ml" 283 8386 8427 "xenlight.ml" 283 8386 8452
+type(
+  string
+)
+"xenlight.ml" 284 8453 8456 "xenlight.ml" 284 8453 8490
+type(
+  timer_mode
+)
+"xenlight.ml" 284 8453 8494 "xenlight.ml" 284 8453 8519
+type(
+  string
+)
+"xenlight.ml" 279 8179 8206 "xenlight.ml" 284 8453 8519
+type(
+  timer_mode -> string
+)
+"xenlight.ml" 293 8662 8666 "xenlight.ml" 293 8662 8685
+type(
+  bios_type -> string
+)
+ident(
+  def string_of_bios_type "xenlight.ml" 300 8865 8865 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 294 8697 8700 "xenlight.ml" 294 8697 8717
+type(
+  bios_type
+)
+"xenlight.ml" 294 8697 8721 "xenlight.ml" 294 8697 8730
+type(
+  string
+)
+"xenlight.ml" 295 8731 8734 "xenlight.ml" 295 8731 8751
+type(
+  bios_type
+)
+"xenlight.ml" 295 8731 8755 "xenlight.ml" 295 8731 8764
+type(
+  string
+)
+"xenlight.ml" 296 8765 8768 "xenlight.ml" 296 8765 8785
+type(
+  bios_type
+)
+"xenlight.ml" 296 8765 8789 "xenlight.ml" 296 8765 8798
+type(
+  string
+)
+"xenlight.ml" 297 8799 8802 "xenlight.ml" 297 8799 8816
+type(
+  bios_type
+)
+"xenlight.ml" 297 8799 8820 "xenlight.ml" 297 8799 8826
+type(
+  string
+)
+"xenlight.ml" 293 8662 8688 "xenlight.ml" 297 8799 8826
+type(
+  bios_type -> string
+)
+"xenlight.ml" 310 9047 9051 "xenlight.ml" 310 9047 9070
+type(
+  scheduler -> string
+)
+ident(
+  def string_of_scheduler "xenlight.ml" 321 9372 9372 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 311 9082 9085 "xenlight.ml" 311 9082 9102
+type(
+  scheduler
+)
+"xenlight.ml" 311 9082 9106 "xenlight.ml" 311 9082 9115
+type(
+  string
+)
+"xenlight.ml" 312 9116 9119 "xenlight.ml" 312 9116 9133
+type(
+  scheduler
+)
+"xenlight.ml" 312 9116 9137 "xenlight.ml" 312 9116 9143
+type(
+  string
+)
+"xenlight.ml" 313 9144 9147 "xenlight.ml" 313 9144 9160
+type(
+  scheduler
+)
+"xenlight.ml" 313 9144 9164 "xenlight.ml" 313 9144 9169
+type(
+  string
+)
+"xenlight.ml" 314 9170 9173 "xenlight.ml" 314 9170 9189
+type(
+  scheduler
+)
+"xenlight.ml" 314 9170 9193 "xenlight.ml" 314 9170 9201
+type(
+  string
+)
+"xenlight.ml" 315 9202 9205 "xenlight.ml" 315 9202 9222
+type(
+  scheduler
+)
+"xenlight.ml" 315 9202 9226 "xenlight.ml" 315 9202 9235
+type(
+  string
+)
+"xenlight.ml" 316 9236 9239 "xenlight.ml" 316 9236 9257
+type(
+  scheduler
+)
+"xenlight.ml" 316 9236 9261 "xenlight.ml" 316 9236 9271
+type(
+  string
+)
+"xenlight.ml" 317 9272 9275 "xenlight.ml" 317 9272 9289
+type(
+  scheduler
+)
+"xenlight.ml" 317 9272 9293 "xenlight.ml" 317 9272 9299
+type(
+  string
+)
+"xenlight.ml" 318 9300 9303 "xenlight.ml" 318 9300 9317
+type(
+  scheduler
+)
+"xenlight.ml" 318 9300 9321 "xenlight.ml" 318 9300 9327
+type(
+  string
+)
+"xenlight.ml" 310 9047 9073 "xenlight.ml" 318 9300 9327
+type(
+  scheduler -> string
+)
+"xenlight.ml" 330 9595 9599 "xenlight.ml" 330 9595 9624
+type(
+  shutdown_reason -> string
+)
+ident(
+  def string_of_shutdown_reason "xenlight.ml" 340 9967 9967 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 331 9636 9639 "xenlight.ml" 331 9636 9662
+type(
+  shutdown_reason
+)
+"xenlight.ml" 331 9636 9666 "xenlight.ml" 331 9636 9675
+type(
+  string
+)
+"xenlight.ml" 332 9676 9679 "xenlight.ml" 332 9676 9703
+type(
+  shutdown_reason
+)
+"xenlight.ml" 332 9676 9707 "xenlight.ml" 332 9676 9717
+type(
+  string
+)
+"xenlight.ml" 333 9718 9721 "xenlight.ml" 333 9718 9743
+type(
+  shutdown_reason
+)
+"xenlight.ml" 333 9718 9747 "xenlight.ml" 333 9718 9755
+type(
+  string
+)
+"xenlight.ml" 334 9756 9759 "xenlight.ml" 334 9756 9782
+type(
+  shutdown_reason
+)
+"xenlight.ml" 334 9756 9786 "xenlight.ml" 334 9756 9795
+type(
+  string
+)
+"xenlight.ml" 335 9796 9799 "xenlight.ml" 335 9796 9820
+type(
+  shutdown_reason
+)
+"xenlight.ml" 335 9796 9824 "xenlight.ml" 335 9796 9831
+type(
+  string
+)
+"xenlight.ml" 336 9832 9835 "xenlight.ml" 336 9832 9859
+type(
+  shutdown_reason
+)
+"xenlight.ml" 336 9832 9863 "xenlight.ml" 336 9832 9873
+type(
+  string
+)
+"xenlight.ml" 337 9874 9877 "xenlight.ml" 337 9874 9903
+type(
+  shutdown_reason
+)
+"xenlight.ml" 337 9874 9907 "xenlight.ml" 337 9874 9919
+type(
+  string
+)
+"xenlight.ml" 330 9595 9627 "xenlight.ml" 337 9874 9919
+type(
+  shutdown_reason -> string
+)
+"xenlight.ml" 347 10138 10142 "xenlight.ml" 347 10138 10170
+type(
+  vga_interface_type -> string
+)
+ident(
+  def string_of_vga_interface_type "xenlight.ml" 355 10415 10415 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 348 10182 10185 "xenlight.ml" 348 10182 10211
+type(
+  vga_interface_type
+)
+"xenlight.ml" 348 10182 10215 "xenlight.ml" 348 10182 10224
+type(
+  string
+)
+"xenlight.ml" 349 10225 10228 "xenlight.ml" 349 10225 10253
+type(
+  vga_interface_type
+)
+"xenlight.ml" 349 10225 10257 "xenlight.ml" 349 10225 10265
+type(
+  string
+)
+"xenlight.ml" 350 10266 10269 "xenlight.ml" 350 10266 10291
+type(
+  vga_interface_type
+)
+"xenlight.ml" 350 10266 10295 "xenlight.ml" 350 10266 10300
+type(
+  string
+)
+"xenlight.ml" 351 10301 10304 "xenlight.ml" 351 10301 10327
+type(
+  vga_interface_type
+)
+"xenlight.ml" 351 10301 10331 "xenlight.ml" 351 10301 10337
+type(
+  string
+)
+"xenlight.ml" 352 10338 10341 "xenlight.ml" 352 10338 10363
+type(
+  vga_interface_type
+)
+"xenlight.ml" 352 10338 10367 "xenlight.ml" 352 10338 10372
+type(
+  string
+)
+"xenlight.ml" 347 10138 10173 "xenlight.ml" 352 10338 10372
+type(
+  vga_interface_type -> string
+)
+"xenlight.ml" 359 10489 10493 "xenlight.ml" 359 10489 10516
+type(
+  vendor_device -> string
+)
+ident(
+  def string_of_vendor_device "xenlight.ml" 364 10653 10653 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 360 10528 10531 "xenlight.ml" 360 10528 10549
+type(
+  vendor_device
+)
+"xenlight.ml" 360 10528 10553 "xenlight.ml" 360 10528 10559
+type(
+  string
+)
+"xenlight.ml" 361 10560 10563 "xenlight.ml" 361 10560 10586
+type(
+  vendor_device
+)
+"xenlight.ml" 361 10560 10590 "xenlight.ml" 361 10560 10601
+type(
+  string
+)
+"xenlight.ml" 359 10489 10519 "xenlight.ml" 361 10560 10601
+type(
+  vendor_device -> string
+)
+"xenlight.ml" 373 10958 10962 "xenlight.ml" 373 10958 10994
+type(
+  viridian_enlightenment -> string
+)
+ident(
+  def string_of_viridian_enlightenment "xenlight.ml" 383 11426 11426 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 374 11006 11009 "xenlight.ml" 374 11006 11036
+type(
+  viridian_enlightenment
+)
+"xenlight.ml" 374 11006 11040 "xenlight.ml" 374 11006 11046
+type(
+  string
+)
+"xenlight.ml" 375 11047 11050 "xenlight.ml" 375 11047 11077
+type(
+  viridian_enlightenment
+)
+"xenlight.ml" 375 11047 11081 "xenlight.ml" 375 11047 11087
+type(
+  string
+)
+"xenlight.ml" 376 11088 11091 "xenlight.ml" 376 11088 11128
+type(
+  viridian_enlightenment
+)
+"xenlight.ml" 376 11088 11132 "xenlight.ml" 376 11088 11148
+type(
+  string
+)
+"xenlight.ml" 377 11149 11152 "xenlight.ml" 377 11149 11188
+type(
+  viridian_enlightenment
+)
+"xenlight.ml" 377 11149 11192 "xenlight.ml" 377 11149 11207
+type(
+  string
+)
+"xenlight.ml" 378 11208 11211 "xenlight.ml" 378 11208 11256
+type(
+  viridian_enlightenment
+)
+"xenlight.ml" 378 11208 11260 "xenlight.ml" 378 11208 11284
+type(
+  string
+)
+"xenlight.ml" 379 11285 11288 "xenlight.ml" 379 11285 11322
+type(
+  viridian_enlightenment
+)
+"xenlight.ml" 379 11285 11326 "xenlight.ml" 379 11285 11339
+type(
+  string
+)
+"xenlight.ml" 380 11340 11343 "xenlight.ml" 380 11340 11375
+type(
+  viridian_enlightenment
+)
+"xenlight.ml" 380 11340 11379 "xenlight.ml" 380 11340 11390
+type(
+  string
+)
+"xenlight.ml" 373 10958 10997 "xenlight.ml" 380 11340 11390
+type(
+  viridian_enlightenment -> string
+)
+"xenlight.ml" 387 11473 11477 "xenlight.ml" 387 11473 11493
+type(
+  hdtype -> string
+)
+ident(
+  def string_of_hdtype "xenlight.ml" 392 11601 11601 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 388 11505 11508 "xenlight.ml" 388 11505 11518
+type(
+  hdtype
+)
+"xenlight.ml" 388 11505 11522 "xenlight.ml" 388 11505 11527
+type(
+  string
+)
+"xenlight.ml" 389 11528 11531 "xenlight.ml" 389 11528 11542
+type(
+  hdtype
+)
+"xenlight.ml" 389 11528 11546 "xenlight.ml" 389 11528 11552
+type(
+  string
+)
+"xenlight.ml" 387 11473 11496 "xenlight.ml" 389 11528 11552
+type(
+  hdtype -> string
+)
+"xenlight.ml" 397 11718 11722 "xenlight.ml" 397 11718 11751
+type(
+  checkpointed_stream -> string
+)
+ident(
+  def string_of_checkpointed_stream "xenlight.ml" 403 11918 11918 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 398 11763 11766 "xenlight.ml" 398 11763 11790
+type(
+  checkpointed_stream
+)
+"xenlight.ml" 398 11763 11794 "xenlight.ml" 398 11763 11800
+type(
+  string
+)
+"xenlight.ml" 399 11801 11804 "xenlight.ml" 399 11801 11829
+type(
+  checkpointed_stream
+)
+"xenlight.ml" 399 11801 11833 "xenlight.ml" 399 11801 11840
+type(
+  string
+)
+"xenlight.ml" 400 11841 11844 "xenlight.ml" 400 11841 11868
+type(
+  checkpointed_stream
+)
+"xenlight.ml" 400 11841 11872 "xenlight.ml" 400 11841 11878
+type(
+  string
+)
+"xenlight.ml" 397 11718 11754 "xenlight.ml" 400 11841 11878
+type(
+  checkpointed_stream -> string
+)
+"xenlight.ml" 407 11986 11990 "xenlight.ml" 407 11986 12010
+type(
+  vuart_type -> string
+)
+ident(
+  def string_of_vuart_type "xenlight.ml" 412 12136 12136 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 408 12022 12025 "xenlight.ml" 408 12022 12043
+type(
+  vuart_type
+)
+"xenlight.ml" 408 12022 12047 "xenlight.ml" 408 12022 12056
+type(
+  string
+)
+"xenlight.ml" 409 12057 12060 "xenlight.ml" 409 12057 12080
+type(
+  vuart_type
+)
+"xenlight.ml" 409 12057 12084 "xenlight.ml" 409 12057 12095
+type(
+  string
+)
+"xenlight.ml" 407 11986 12013 "xenlight.ml" 409 12057 12095
+type(
+  vuart_type -> string
+)
+"xenlight.ml" 417 12224 12228 "xenlight.ml" 417 12224 12249
+type(
+  vkb_backend -> string
+)
+ident(
+  def string_of_vkb_backend "xenlight.ml" 423 12400 12400 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 418 12261 12264 "xenlight.ml" 418 12261 12283
+type(
+  vkb_backend
+)
+"xenlight.ml" 418 12261 12287 "xenlight.ml" 418 12261 12296
+type(
+  string
+)
+"xenlight.ml" 419 12297 12300 "xenlight.ml" 419 12297 12316
+type(
+  vkb_backend
+)
+"xenlight.ml" 419 12297 12320 "xenlight.ml" 419 12297 12326
+type(
+  string
+)
+"xenlight.ml" 420 12327 12330 "xenlight.ml" 420 12327 12347
+type(
+  vkb_backend
+)
+"xenlight.ml" 420 12327 12351 "xenlight.ml" 420 12327 12358
+type(
+  string
+)
+"xenlight.ml" 417 12224 12252 "xenlight.ml" 420 12327 12358
+type(
+  vkb_backend -> string
+)
+"xenlight.ml" 677 18075 18079 "xenlight.ml" 677 18075 18100
+type(
+  gic_version -> string
+)
+ident(
+  def string_of_gic_version "xenlight.ml" 683 18240 18240 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 678 18112 18115 "xenlight.ml" 678 18112 18134
+type(
+  gic_version
+)
+"xenlight.ml" 678 18112 18138 "xenlight.ml" 678 18112 18147
+type(
+  string
+)
+"xenlight.ml" 679 18148 18151 "xenlight.ml" 679 18148 18165
+type(
+  gic_version
+)
+"xenlight.ml" 679 18148 18169 "xenlight.ml" 679 18148 18173
+type(
+  string
+)
+"xenlight.ml" 680 18174 18177 "xenlight.ml" 680 18174 18191
+type(
+  gic_version
+)
+"xenlight.ml" 680 18174 18195 "xenlight.ml" 680 18174 18199
+type(
+  string
+)
+"xenlight.ml" 677 18075 18103 "xenlight.ml" 680 18174 18199
+type(
+  gic_version -> string
+)
+"xenlight.ml" 699 18580 18584 "xenlight.ml" 699 18580 18605
+type(
+  altp2m_mode -> string
+)
+ident(
+  def string_of_altp2m_mode "xenlight.ml" 706 18807 18807 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 700 18617 18620 "xenlight.ml" 700 18617 18640
+type(
+  altp2m_mode
+)
+"xenlight.ml" 700 18617 18644 "xenlight.ml" 700 18617 18654
+type(
+  string
+)
+"xenlight.ml" 701 18655 18658 "xenlight.ml" 701 18655 18675
+type(
+  altp2m_mode
+)
+"xenlight.ml" 701 18655 18679 "xenlight.ml" 701 18655 18686
+type(
+  string
+)
+"xenlight.ml" 702 18687 18690 "xenlight.ml" 702 18687 18710
+type(
+  altp2m_mode
+)
+"xenlight.ml" 702 18687 18714 "xenlight.ml" 702 18687 18724
+type(
+  string
+)
+"xenlight.ml" 703 18725 18728 "xenlight.ml" 703 18725 18747
+type(
+  altp2m_mode
+)
+"xenlight.ml" 703 18725 18751 "xenlight.ml" 703 18725 18760
+type(
+  string
+)
+"xenlight.ml" 699 18580 18608 "xenlight.ml" 703 18725 18760
+type(
+  altp2m_mode -> string
+)
+"xenlight.ml" 1037 29500 29504 "xenlight.ml" 1037 29500 29526
+type(
+  usbctrl_type -> string
+)
+ident(
+  def string_of_usbctrl_type "xenlight.ml" 1044 29712 29712 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 1038 29538 29541 "xenlight.ml" 1038 29538 29558
+type(
+  usbctrl_type
+)
+"xenlight.ml" 1038 29538 29562 "xenlight.ml" 1038 29538 29568
+type(
+  string
+)
+"xenlight.ml" 1039 29569 29572 "xenlight.ml" 1039 29569 29587
+type(
+  usbctrl_type
+)
+"xenlight.ml" 1039 29569 29591 "xenlight.ml" 1039 29569 29595
+type(
+  string
+)
+"xenlight.ml" 1040 29596 29599 "xenlight.ml" 1040 29596 29623
+type(
+  usbctrl_type
+)
+"xenlight.ml" 1040 29596 29627 "xenlight.ml" 1040 29596 29640
+type(
+  string
+)
+"xenlight.ml" 1041 29641 29644 "xenlight.ml" 1041 29641 29661
+type(
+  usbctrl_type
+)
+"xenlight.ml" 1041 29641 29665 "xenlight.ml" 1041 29641 29671
+type(
+  string
+)
+"xenlight.ml" 1037 29500 29529 "xenlight.ml" 1041 29641 29671
+type(
+  usbctrl_type -> string
+)
+"xenlight.ml" 1047 29757 29761 "xenlight.ml" 1047 29757 29782
+type(
+  usbdev_type -> string
+)
+ident(
+  def string_of_usbdev_type "xenlight.ml" 1051 29873 29873 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 1048 29794 29797 "xenlight.ml" 1048 29794 29816
+type(
+  usbdev_type
+)
+"xenlight.ml" 1048 29794 29820 "xenlight.ml" 1048 29794 29829
+type(
+  string
+)
+"xenlight.ml" 1047 29757 29785 "xenlight.ml" 1048 29794 29829
+type(
+  usbdev_type -> string
+)
+"xenlight.ml" 1203 33238 33242 "xenlight.ml" 1203 33238 33267
+type(
+  vsnd_pcm_format -> string
+)
+ident(
+  def string_of_vsnd_pcm_format "xenlight.ml" 1231 34295 34295 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 1204 33279 33282 "xenlight.ml" 1204 33279 33300
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1204 33279 33304 "xenlight.ml" 1204 33279 33308
+type(
+  string
+)
+"xenlight.ml" 1205 33309 33312 "xenlight.ml" 1205 33309 33330
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1205 33309 33334 "xenlight.ml" 1205 33309 33338
+type(
+  string
+)
+"xenlight.ml" 1206 33339 33342 "xenlight.ml" 1206 33339 33364
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1206 33339 33368 "xenlight.ml" 1206 33339 33376
+type(
+  string
+)
+"xenlight.ml" 1207 33377 33380 "xenlight.ml" 1207 33377 33402
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1207 33377 33406 "xenlight.ml" 1207 33377 33414
+type(
+  string
+)
+"xenlight.ml" 1208 33415 33418 "xenlight.ml" 1208 33415 33440
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1208 33415 33444 "xenlight.ml" 1208 33415 33452
+type(
+  string
+)
+"xenlight.ml" 1209 33453 33456 "xenlight.ml" 1209 33453 33478
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1209 33453 33482 "xenlight.ml" 1209 33453 33490
+type(
+  string
+)
+"xenlight.ml" 1210 33491 33494 "xenlight.ml" 1210 33491 33516
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1210 33491 33520 "xenlight.ml" 1210 33491 33528
+type(
+  string
+)
+"xenlight.ml" 1211 33529 33532 "xenlight.ml" 1211 33529 33554
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1211 33529 33558 "xenlight.ml" 1211 33529 33566
+type(
+  string
+)
+"xenlight.ml" 1212 33567 33570 "xenlight.ml" 1212 33567 33592
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1212 33567 33596 "xenlight.ml" 1212 33567 33604
+type(
+  string
+)
+"xenlight.ml" 1213 33605 33608 "xenlight.ml" 1213 33605 33630
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1213 33605 33634 "xenlight.ml" 1213 33605 33642
+type(
+  string
+)
+"xenlight.ml" 1214 33643 33646 "xenlight.ml" 1214 33643 33668
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1214 33643 33672 "xenlight.ml" 1214 33643 33680
+type(
+  string
+)
+"xenlight.ml" 1215 33681 33684 "xenlight.ml" 1215 33681 33706
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1215 33681 33710 "xenlight.ml" 1215 33681 33718
+type(
+  string
+)
+"xenlight.ml" 1216 33719 33722 "xenlight.ml" 1216 33719 33744
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1216 33719 33748 "xenlight.ml" 1216 33719 33756
+type(
+  string
+)
+"xenlight.ml" 1217 33757 33760 "xenlight.ml" 1217 33757 33782
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1217 33757 33786 "xenlight.ml" 1217 33757 33794
+type(
+  string
+)
+"xenlight.ml" 1218 33795 33798 "xenlight.ml" 1218 33795 33820
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1218 33795 33824 "xenlight.ml" 1218 33795 33832
+type(
+  string
+)
+"xenlight.ml" 1219 33833 33836 "xenlight.ml" 1219 33833 33858
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1219 33833 33862 "xenlight.ml" 1219 33833 33870
+type(
+  string
+)
+"xenlight.ml" 1220 33871 33874 "xenlight.ml" 1220 33871 33896
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1220 33871 33900 "xenlight.ml" 1220 33871 33908
+type(
+  string
+)
+"xenlight.ml" 1221 33909 33912 "xenlight.ml" 1221 33909 33934
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1221 33909 33938 "xenlight.ml" 1221 33909 33946
+type(
+  string
+)
+"xenlight.ml" 1222 33947 33950 "xenlight.ml" 1222 33947 33984
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1222 33947 33988 "xenlight.ml" 1222 33947 34008
+type(
+  string
+)
+"xenlight.ml" 1223 34009 34012 "xenlight.ml" 1223 34009 34046
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1223 34009 34050 "xenlight.ml" 1223 34009 34070
+type(
+  string
+)
+"xenlight.ml" 1224 34071 34074 "xenlight.ml" 1224 34071 34096
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1224 34071 34100 "xenlight.ml" 1224 34071 34108
+type(
+  string
+)
+"xenlight.ml" 1225 34109 34112 "xenlight.ml" 1225 34109 34133
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1225 34109 34137 "xenlight.ml" 1225 34109 34144
+type(
+  string
+)
+"xenlight.ml" 1226 34145 34148 "xenlight.ml" 1226 34145 34173
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1226 34145 34177 "xenlight.ml" 1226 34145 34188
+type(
+  string
+)
+"xenlight.ml" 1227 34189 34192 "xenlight.ml" 1227 34189 34212
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1227 34189 34216 "xenlight.ml" 1227 34189 34222
+type(
+  string
+)
+"xenlight.ml" 1228 34223 34226 "xenlight.ml" 1228 34223 34245
+type(
+  vsnd_pcm_format
+)
+"xenlight.ml" 1228 34223 34249 "xenlight.ml" 1228 34223 34254
+type(
+  string
+)
+"xenlight.ml" 1203 33238 33270 "xenlight.ml" 1228 34223 34254
+type(
+  vsnd_pcm_format -> string
+)
+"xenlight.ml" 1248 34672 34676 "xenlight.ml" 1248 34672 34702
+type(
+  vsnd_stream_type -> string
+)
+ident(
+  def string_of_vsnd_stream_type "xenlight.ml" 1253 34812 34812 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 1249 34714 34717 "xenlight.ml" 1249 34714 34735
+type(
+  vsnd_stream_type
+)
+"xenlight.ml" 1249 34714 34739 "xenlight.ml" 1249 34714 34742
+type(
+  string
+)
+"xenlight.ml" 1250 34743 34746 "xenlight.ml" 1250 34743 34764
+type(
+  vsnd_stream_type
+)
+"xenlight.ml" 1250 34743 34768 "xenlight.ml" 1250 34743 34771
+type(
+  string
+)
+"xenlight.ml" 1248 34672 34705 "xenlight.ml" 1250 34743 34771
+type(
+  vsnd_stream_type -> string
+)
+"xenlight.ml" 1576 41858 41862 "xenlight.ml" 1576 41858 41882
+type(
+  event_type -> string
+)
+ident(
+  def string_of_event_type "xenlight.ml" 1584 42205 42205 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 1577 41894 41897 "xenlight.ml" 1577 41894 41923
+type(
+  event_type
+)
+"xenlight.ml" 1577 41894 41927 "xenlight.ml" 1577 41894 41944
+type(
+  string
+)
+"xenlight.ml" 1578 41945 41948 "xenlight.ml" 1578 41945 41971
+type(
+  event_type
+)
+"xenlight.ml" 1578 41945 41975 "xenlight.ml" 1578 41945 41989
+type(
+  string
+)
+"xenlight.ml" 1579 41990 41993 "xenlight.ml" 1579 41990 42014
+type(
+  event_type
+)
+"xenlight.ml" 1579 41990 42018 "xenlight.ml" 1579 41990 42030
+type(
+  string
+)
+"xenlight.ml" 1580 42031 42034 "xenlight.ml" 1580 42031 42063
+type(
+  event_type
+)
+"xenlight.ml" 1580 42031 42067 "xenlight.ml" 1580 42031 42087
+type(
+  string
+)
+"xenlight.ml" 1581 42088 42091 "xenlight.ml" 1581 42088 42133
+type(
+  event_type
+)
+"xenlight.ml" 1581 42088 42137 "xenlight.ml" 1581 42088 42170
+type(
+  string
+)
+"xenlight.ml" 1576 41858 41885 "xenlight.ml" 1581 42088 42170
+type(
+  event_type -> string
+)
+"xenlight.ml" 1620 42970 42974 "xenlight.ml" 1620 42970 42996
+type(
+  psr_cmt_type -> string
+)
+ident(
+  def string_of_psr_cmt_type "xenlight.ml" 1626 43208 43208 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 1621 43008 43011 "xenlight.ml" 1621 43008 43039
+type(
+  psr_cmt_type
+)
+"xenlight.ml" 1621 43008 43043 "xenlight.ml" 1621 43008 43060
+type(
+  string
+)
+"xenlight.ml" 1622 43061 43064 "xenlight.ml" 1622 43061 43092
+type(
+  psr_cmt_type
+)
+"xenlight.ml" 1622 43061 43096 "xenlight.ml" 1622 43061 43113
+type(
+  string
+)
+"xenlight.ml" 1623 43114 43117 "xenlight.ml" 1623 43114 43145
+type(
+  psr_cmt_type
+)
+"xenlight.ml" 1623 43114 43149 "xenlight.ml" 1623 43114 43166
+type(
+  string
+)
+"xenlight.ml" 1620 42970 42999 "xenlight.ml" 1623 43114 43166
+type(
+  psr_cmt_type -> string
+)
+"xenlight.ml" 1634 43388 43392 "xenlight.ml" 1634 43388 43414
+type(
+  psr_cbm_type -> string
+)
+ident(
+  def string_of_psr_cbm_type "xenlight.ml" 1643 43705 43705 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 1635 43426 43429 "xenlight.ml" 1635 43426 43449
+type(
+  psr_cbm_type
+)
+"xenlight.ml" 1635 43426 43453 "xenlight.ml" 1635 43426 43462
+type(
+  string
+)
+"xenlight.ml" 1636 43463 43466 "xenlight.ml" 1636 43463 43485
+type(
+  psr_cbm_type
+)
+"xenlight.ml" 1636 43463 43489 "xenlight.ml" 1636 43463 43497
+type(
+  string
+)
+"xenlight.ml" 1637 43498 43501 "xenlight.ml" 1637 43498 43525
+type(
+  psr_cbm_type
+)
+"xenlight.ml" 1637 43498 43529 "xenlight.ml" 1637 43498 43542
+type(
+  string
+)
+"xenlight.ml" 1638 43543 43546 "xenlight.ml" 1638 43543 43570
+type(
+  psr_cbm_type
+)
+"xenlight.ml" 1638 43543 43574 "xenlight.ml" 1638 43543 43587
+type(
+  string
+)
+"xenlight.ml" 1639 43588 43591 "xenlight.ml" 1639 43588 43610
+type(
+  psr_cbm_type
+)
+"xenlight.ml" 1639 43588 43614 "xenlight.ml" 1639 43588 43622
+type(
+  string
+)
+"xenlight.ml" 1640 43623 43626 "xenlight.ml" 1640 43623 43648
+type(
+  psr_cbm_type
+)
+"xenlight.ml" 1640 43623 43652 "xenlight.ml" 1640 43623 43663
+type(
+  string
+)
+"xenlight.ml" 1634 43388 43417 "xenlight.ml" 1640 43623 43663
+type(
+  psr_cbm_type -> string
+)
+"xenlight.ml" 1659 44007 44011 "xenlight.ml" 1659 44007 44034
+type(
+  psr_feat_type -> string
+)
+ident(
+  def string_of_psr_feat_type "xenlight.ml" 1664 44146 44146 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 1660 44046 44049 "xenlight.ml" 1660 44046 44066
+type(
+  psr_feat_type
+)
+"xenlight.ml" 1660 44046 44070 "xenlight.ml" 1660 44046 44075
+type(
+  string
+)
+"xenlight.ml" 1661 44076 44079 "xenlight.ml" 1661 44076 44096
+type(
+  psr_feat_type
+)
+"xenlight.ml" 1661 44076 44100 "xenlight.ml" 1661 44076 44105
+type(
+  string
+)
+"xenlight.ml" 1659 44007 44037 "xenlight.ml" 1661 44076 44105
+type(
+  psr_feat_type -> string
+)
+"xenlight.ml" 1741 46917 46922 "xenlight.ml" 1741 46917 46944
+type(
+  ctx ->
+  user:'a ->
+  fd_register:'b ->
+  fd_modify:'c ->
+  fd_deregister:'d ->
+  timeout_register:'e -> timeout_fire_now:'f -> osevent_hooks
+)
+ident(
+  def osevent_register_hooks "xenlight.ml" 1749 47353 47354 "xenlight.ml" 1759 47939 47942
+)
+"xenlight.ml" 1741 46917 46945 "xenlight.ml" 1741 46917 46948
+type(
+  ctx
+)
+ident(
+  def ctx "xenlight.ml" 1741 46917 46949 "xenlight.ml" 1747 47317 47351
+)
+"xenlight.ml" 1741 46917 46950 "xenlight.ml" 1741 46917 46954
+type(
+  'a
+)
+ident(
+  def user "xenlight.ml" 1741 46917 46955 "xenlight.ml" 1747 47317 47351
+)
+"xenlight.ml" 1741 46917 46956 "xenlight.ml" 1741 46917 46967
+type(
+  'b
+)
+ident(
+  def fd_register "xenlight.ml" 1741 46917 46968 "xenlight.ml" 1747 47317 47351
+)
+"xenlight.ml" 1741 46917 46969 "xenlight.ml" 1741 46917 46978
+type(
+  'c
+)
+ident(
+  def fd_modify "xenlight.ml" 1741 46917 46979 "xenlight.ml" 1747 47317 47351
+)
+"xenlight.ml" 1741 46917 46980 "xenlight.ml" 1741 46917 46993
+type(
+  'd
+)
+ident(
+  def fd_deregister "xenlight.ml" 1741 46917 46994 "xenlight.ml" 1747 47317 47351
+)
+"xenlight.ml" 1741 46917 46995 "xenlight.ml" 1741 46917 47011
+type(
+  'e
+)
+ident(
+  def timeout_register "xenlight.ml" 1741 46917 47012 "xenlight.ml" 1747 47317 47351
+)
+"xenlight.ml" 1741 46917 47013 "xenlight.ml" 1741 46917 47029
+type(
+  'f
+)
+ident(
+  def timeout_fire_now "xenlight.ml" 1742 47032 47034 "xenlight.ml" 1747 47317 47351
+)
+"xenlight.ml" 1742 47032 47034 "xenlight.ml" 1742 47032 47051
+type(
+  string -> 'b -> unit
+)
+ident(
+  ext_ref Callback.register
+)
+"xenlight.ml" 1742 47032 47052 "xenlight.ml" 1742 47032 47071
+type(
+  string
+)
+"xenlight.ml" 1742 47032 47072 "xenlight.ml" 1742 47032 47083
+type(
+  'b
+)
+ident(
+  int_ref fd_register "xenlight.ml" 1741 46917 46956 "xenlight.ml" 1741 46917 46967
+)
+"xenlight.ml" 1742 47032 47034 "xenlight.ml" 1742 47032 47083
+call(
+  stack
+)
+type(
+  unit
+)
+"xenlight.ml" 1743 47085 47087 "xenlight.ml" 1743 47085 47104
+type(
+  string -> 'c -> unit
+)
+ident(
+  ext_ref Callback.register
+)
+"xenlight.ml" 1743 47085 47105 "xenlight.ml" 1743 47085 47122
+type(
+  string
+)
+"xenlight.ml" 1743 47085 47123 "xenlight.ml" 1743 47085 47132
+type(
+  'c
+)
+ident(
+  int_ref fd_modify "xenlight.ml" 1741 46917 46969 "xenlight.ml" 1741 46917 46978
+)
+"xenlight.ml" 1743 47085 47087 "xenlight.ml" 1743 47085 47132
+call(
+  stack
+)
+type(
+  unit
+)
+"xenlight.ml" 1744 47134 47136 "xenlight.ml" 1744 47134 47153
+type(
+  string -> 'd -> unit
+)
+ident(
+  ext_ref Callback.register
+)
+"xenlight.ml" 1744 47134 47154 "xenlight.ml" 1744 47134 47175
+type(
+  string
+)
+"xenlight.ml" 1744 47134 47176 "xenlight.ml" 1744 47134 47189
+type(
+  'd
+)
+ident(
+  int_ref fd_deregister "xenlight.ml" 1741 46917 46980 "xenlight.ml" 1741 46917 46993
+)
+"xenlight.ml" 1744 47134 47136 "xenlight.ml" 1744 47134 47189
+call(
+  stack
+)
+type(
+  unit
+)
+"xenlight.ml" 1745 47191 47193 "xenlight.ml" 1745 47191 47210
+type(
+  string -> 'e -> unit
+)
+ident(
+  ext_ref Callback.register
+)
+"xenlight.ml" 1745 47191 47211 "xenlight.ml" 1745 47191 47235
+type(
+  string
+)
+"xenlight.ml" 1745 47191 47236 "xenlight.ml" 1745 47191 47252
+type(
+  'e
+)
+ident(
+  int_ref timeout_register "xenlight.ml" 1741 46917 46995 "xenlight.ml" 1741 46917 47011
+)
+"xenlight.ml" 1745 47191 47193 "xenlight.ml" 1745 47191 47252
+call(
+  stack
+)
+type(
+  unit
+)
+"xenlight.ml" 1746 47254 47256 "xenlight.ml" 1746 47254 47273
+type(
+  string -> 'f -> unit
+)
+ident(
+  ext_ref Callback.register
+)
+"xenlight.ml" 1746 47254 47274 "xenlight.ml" 1746 47254 47298
+type(
+  string
+)
+"xenlight.ml" 1746 47254 47299 "xenlight.ml" 1746 47254 47315
+type(
+  'f
+)
+ident(
+  int_ref timeout_fire_now "xenlight.ml" 1741 46917 47013 "xenlight.ml" 1741 46917 47029
+)
+"xenlight.ml" 1746 47254 47256 "xenlight.ml" 1746 47254 47315
+call(
+  stack
+)
+type(
+  unit
+)
+"xenlight.ml" 1747 47317 47319 "xenlight.ml" 1747 47317 47342
+type(
+  ctx -> 'a -> osevent_hooks
+)
+ident(
+  int_ref osevent_register_hooks' "xenlight.ml" 1737 46574 46575 "xenlight.ml" 1737 46574 46674
+)
+"xenlight.ml" 1747 47317 47343 "xenlight.ml" 1747 47317 47346
+type(
+  ctx
+)
+ident(
+  int_ref ctx "xenlight.ml" 1741 46917 46945 "xenlight.ml" 1741 46917 46948
+)
+"xenlight.ml" 1747 47317 47347 "xenlight.ml" 1747 47317 47351
+type(
+  'a
+)
+ident(
+  int_ref user "xenlight.ml" 1741 46917 46950 "xenlight.ml" 1741 46917 46954
+)
+"xenlight.ml" 1747 47317 47319 "xenlight.ml" 1747 47317 47351
+type(
+  osevent_hooks
+)
+"xenlight.ml" 1746 47254 47256 "xenlight.ml" 1747 47317 47351
+type(
+  osevent_hooks
+)
+"xenlight.ml" 1745 47191 47193 "xenlight.ml" 1747 47317 47351
+type(
+  osevent_hooks
+)
+"xenlight.ml" 1744 47134 47136 "xenlight.ml" 1747 47317 47351
+type(
+  osevent_hooks
+)
+"xenlight.ml" 1743 47085 47087 "xenlight.ml" 1747 47317 47351
+type(
+  osevent_hooks
+)
+"xenlight.ml" 1742 47032 47034 "xenlight.ml" 1747 47317 47351
+type(
+  osevent_hooks
+)
+"xenlight.ml" 1749 47353 47358 "xenlight.ml" 1749 47353 47381
+type(
+  async_callback:'g -> unit
+)
+ident(
+  def async_register_callback "xenlight.ml" 1752 47459 47460 "xenlight.ml" 1759 47939 47942
+)
+"xenlight.ml" 1749 47353 47383 "xenlight.ml" 1749 47353 47397
+type(
+  'g
+)
+ident(
+  def async_callback "xenlight.ml" 1750 47400 47402 "xenlight.ml" 1750 47400 47457
+)
+"xenlight.ml" 1750 47400 47402 "xenlight.ml" 1750 47400 47419
+type(
+  string -> 'g -> unit
+)
+ident(
+  ext_ref Callback.register
+)
+"xenlight.ml" 1750 47400 47420 "xenlight.ml" 1750 47400 47442
+type(
+  string
+)
+"xenlight.ml" 1750 47400 47443 "xenlight.ml" 1750 47400 47457
+type(
+  'g
+)
+ident(
+  int_ref async_callback "xenlight.ml" 1749 47353 47383 "xenlight.ml" 1749 47353 47397
+)
+"xenlight.ml" 1750 47400 47402 "xenlight.ml" 1750 47400 47457
+call(
+  tail
+)
+type(
+  unit
+)
+"xenlight.ml" 1755 47662 47667 "xenlight.ml" 1755 47662 47691
+type(
+  ctx ->
+  user:'h ->
+  event_occurs_callback:'i -> event_disaster_callback:'j -> event_hooks
+)
+ident(
+  def event_register_callbacks "xenlight.ml" 1758 47902 47938 "xenlight.ml" 1759 47939 47942
+)
+"xenlight.ml" 1755 47662 47692 "xenlight.ml" 1755 47662 47695
+type(
+  ctx
+)
+ident(
+  def ctx "xenlight.ml" 1755 47662 47696 "xenlight.ml" 1758 47902 47938
+)
+"xenlight.ml" 1755 47662 47697 "xenlight.ml" 1755 47662 47701
+type(
+  'h
+)
+ident(
+  def user "xenlight.ml" 1755 47662 47702 "xenlight.ml" 1758 47902 47938
+)
+"xenlight.ml" 1755 47662 47703 "xenlight.ml" 1755 47662 47724
+type(
+  'i
+)
+ident(
+  def event_occurs_callback "xenlight.ml" 1755 47662 47725 "xenlight.ml" 1758 47902 47938
+)
+"xenlight.ml" 1755 47662 47726 "xenlight.ml" 1755 47662 47749
+type(
+  'j
+)
+ident(
+  def event_disaster_callback "xenlight.ml" 1756 47752 47754 "xenlight.ml" 1758 47902 47938
+)
+"xenlight.ml" 1756 47752 47754 "xenlight.ml" 1756 47752 47771
+type(
+  string -> 'i -> unit
+)
+ident(
+  ext_ref Callback.register
+)
+"xenlight.ml" 1756 47752 47772 "xenlight.ml" 1756 47752 47801
+type(
+  string
+)
+"xenlight.ml" 1756 47752 47802 "xenlight.ml" 1756 47752 47823
+type(
+  'i
+)
+ident(
+  int_ref event_occurs_callback "xenlight.ml" 1755 47662 47703 "xenlight.ml" 1755 47662 47724
+)
+"xenlight.ml" 1756 47752 47754 "xenlight.ml" 1756 47752 47823
+call(
+  stack
+)
+type(
+  unit
+)
+"xenlight.ml" 1757 47825 47827 "xenlight.ml" 1757 47825 47844
+type(
+  string -> 'j -> unit
+)
+ident(
+  ext_ref Callback.register
+)
+"xenlight.ml" 1757 47825 47845 "xenlight.ml" 1757 47825 47876
+type(
+  string
+)
+"xenlight.ml" 1757 47825 47877 "xenlight.ml" 1757 47825 47900
+type(
+  'j
+)
+ident(
+  int_ref event_disaster_callback "xenlight.ml" 1755 47662 47726 "xenlight.ml" 1755 47662 47749
+)
+"xenlight.ml" 1757 47825 47827 "xenlight.ml" 1757 47825 47900
+call(
+  stack
+)
+type(
+  unit
+)
+"xenlight.ml" 1758 47902 47904 "xenlight.ml" 1758 47902 47929
+type(
+  ctx -> 'h -> event_hooks
+)
+ident(
+  int_ref event_register_callbacks' "xenlight.ml" 1753 47558 47559 "xenlight.ml" 1753 47558 47660
+)
+"xenlight.ml" 1758 47902 47930 "xenlight.ml" 1758 47902 47933
+type(
+  ctx
+)
+ident(
+  int_ref ctx "xenlight.ml" 1755 47662 47692 "xenlight.ml" 1755 47662 47695
+)
+"xenlight.ml" 1758 47902 47934 "xenlight.ml" 1758 47902 47938
+type(
+  'h
+)
+ident(
+  int_ref user "xenlight.ml" 1755 47662 47697 "xenlight.ml" 1755 47662 47701
+)
+"xenlight.ml" 1758 47902 47904 "xenlight.ml" 1758 47902 47938
+type(
+  event_hooks
+)
+"xenlight.ml" 1757 47825 47827 "xenlight.ml" 1758 47902 47938
+type(
+  event_hooks
+)
+"xenlight.ml" 1756 47752 47754 "xenlight.ml" 1758 47902 47938
+type(
+  event_hooks
+)
+"xenlight.ml" 1761 47944 47948 "xenlight.ml" 1761 47944 47967
+type(
+  unit -> unit
+)
+ident(
+  def register_exceptions "xenlight.ml" 1763 48044 48119 "xenlight.ml" 1 0 -1
+)
+"xenlight.ml" 1761 47944 47968 "xenlight.ml" 1761 47944 47970
+type(
+  unit
+)
+"xenlight.ml" 1762 47973 47974 "xenlight.ml" 1762 47973 48001
+type(
+  string -> exn -> unit
+)
+ident(
+  ext_ref Callback.register_exception
+)
+"xenlight.ml" 1762 47973 48002 "xenlight.ml" 1762 47973 48018
+type(
+  string
+)
+"xenlight.ml" 1762 47973 48026 "xenlight.ml" 1762 47973 48036
+type(
+  error
+)
+"xenlight.ml" 1762 47973 48038 "xenlight.ml" 1762 47973 48040
+type(
+  string
+)
+"xenlight.ml" 1762 47973 48025 "xenlight.ml" 1762 47973 48041
+type(
+  error * string
+)
+"xenlight.ml" 1762 47973 48019 "xenlight.ml" 1762 47973 48042
+type(
+  exn
+)
+"xenlight.ml" 1762 47973 47974 "xenlight.ml" 1762 47973 48042
+call(
+  stack
+)
+type(
+  unit
+)
+"xenlight.ml" 1763 48044 48045 "xenlight.ml" 1763 48044 48072
+type(
+  string -> exn -> unit
+)
+ident(
+  ext_ref Callback.register_exception
+)
+"xenlight.ml" 1763 48044 48073 "xenlight.ml" 1763 48044 48100
+type(
+  string
+)
+"xenlight.ml" 1763 48044 48101 "xenlight.ml" 1763 48044 48119
+type(
+  exn
+)
+"xenlight.ml" 1763 48044 48045 "xenlight.ml" 1763 48044 48119
+call(
+  tail
+)
+type(
+  unit
+)
+"xenlight.ml" 1762 47973 47974 "xenlight.ml" 1763 48044 48119
+type(
+  unit
+)

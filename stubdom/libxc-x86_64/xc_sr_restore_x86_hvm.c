@@ -1,0 +1,1 @@
+/root/xen/stubdom/../tools/libxc/xc_sr_restore_x86_hvm.c

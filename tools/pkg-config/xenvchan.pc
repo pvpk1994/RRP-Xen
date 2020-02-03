@@ -1,0 +1,10 @@
+prefix=/root/xen/tools/libvchan/../..
+includedir=/root/xen/tools/libvchan/../../tools/libvchan
+libdir=/root/xen/tools/libvchan
+
+Name: Xenvchan
+Description: The Xenvchan library for Xen hypervisor
+Version: 4.12.0
+Cflags: -I${includedir} -I/root/xen/tools/libvchan/../../tools/include
+Libs: -Wl,-rpath-link=${libdir} -lxenvchan
+Requires.private: xentoollog,xenstore,xenevtchn,xengnttab

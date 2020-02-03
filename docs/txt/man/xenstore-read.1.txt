@@ -1,0 +1,19 @@
+NAME
+    xenstore-read - read Xenstore values
+
+SYNOPSIS
+    xenstore-read [*OPTION*]... [*PATH*]...
+
+DESCRIPTION
+    Read values of one or more Xenstore *PATH*s.
+
+    -p  Prefix value with key name.
+
+    -s  Connect to the Xenstore daemon using a local socket only.
+
+    -R  Read raw value, skip escaping non-printable characters (\x..).
+
+BUGS
+    Send bugs to xen-devel@lists.xen.org, see
+    http://wiki.xen.org/xenwiki/ReportingBugs on how to send bug reports.
+

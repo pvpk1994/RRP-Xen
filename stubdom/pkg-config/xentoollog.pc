@@ -1,0 +1,9 @@
+prefix=/root/xen/stubdom/libs-x86_64/toollog/../../..
+includedir=/root/xen/stubdom/libs-x86_64/toollog/../../../tools/libs/toollog/include
+libdir=/root/xen/stubdom/libs-x86_64/toollog
+
+Name: Xentoollog
+Description: The Xentoollog library for Xen hypervisor
+Version: 1.0
+Cflags: -I${includedir}
+Libs: -Wl,-rpath-link=${libdir} -lxentoollog

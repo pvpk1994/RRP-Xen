@@ -1,0 +1,10 @@
+prefix=/root/xen/tools/libs/evtchn/../../..
+includedir=/root/xen/tools/libs/evtchn/../../../tools/libs/evtchn/include
+libdir=/root/xen/tools/libs/evtchn
+
+Name: Xenevtchn
+Description: The Xenevtchn library for Xen hypervisor
+Version: 1.1
+Cflags: -I${includedir}
+Libs: -Wl,-rpath-link=${libdir} -lxenevtchn
+Requires.private: xentoollog

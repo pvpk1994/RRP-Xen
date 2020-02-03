@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Revision 1" />
+  <title>RTDS Scheduler</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">RTDS Scheduler</h1>
+<h2 class="author">Revision 1</h2>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#basics"><span class="toc-section-number">1</span> Basics</a></li>
+<li><a href="#overview"><span class="toc-section-number">2</span> Overview</a></li>
+<li><a href="#user-details"><span class="toc-section-number">3</span> User details</a></li>
+<li><a href="#technical-details"><span class="toc-section-number">4</span> Technical details</a></li>
+<li><a href="#limitations"><span class="toc-section-number">5</span> Limitations</a></li>
+<li><a href="#testing"><span class="toc-section-number">6</span> Testing</a></li>
+<li><a href="#areas-for-improvement"><span class="toc-section-number">7</span> Areas for improvement</a></li>
+<li><a href="#known-issues"><span class="toc-section-number">8</span> Known issues</a></li>
+<li><a href="#references"><span class="toc-section-number">9</span> References</a></li>
+<li><a href="#history"><span class="toc-section-number">10</span> History</a></li>
+</ul>
+</div>
+<p></p>
+<h1 id="basics"><span class="header-section-number">1</span> Basics</h1>
+<table style="width:96%;">
+<colgroup>
+<col width="23%" />
+<col width="72%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="right">Status:</td>
+<td align="left"><strong>Experimental</strong></td>
+</tr>
+<tr class="even">
+<td align="right">Component:</td>
+<td align="left">Hypervisor</td>
+</tr>
+</tbody>
+</table>
+<h1 id="overview"><span class="header-section-number">2</span> Overview</h1>
+<p>RTDS is one of the virtual CPU (vCPU) scheduler available in the Xen hypervisor.</p>
+<p>RTDS is a real-time scheduler, so its purpose is enabling <strong>deterministic</strong> scheduling of the virtual machine's vCPUs. It has been originally developed in the context of the RT-Xen project.</p>
+<h1 id="user-details"><span class="header-section-number">3</span> User details</h1>
+<p>RTDS is not in use by default. In order to use it as the Xen scheduler the following parameter should be passed to the hypervisor at boot:</p>
+<pre><code>`sched=rtds`</code></pre>
+<p>Once the system is live, for creating a cpupool with RTDS as its scheduler, either compile a cpupool configuration file, as described in <code>docs/man/xlcpupool.cfg.pod.5</code> (and as exemplified in <code>tools/examples/cpupool</code>), or use just <code>xl</code> directly:</p>
+<pre><code>xl cpupool-create name=\&quot;pool-rt\&quot; sched=\&quot;rtds\&quot; cpus=[4,5,6,8]</code></pre>
+<p>For checking or changing a VM's scheduling parameters from xl, do as follows: * <code>xl sched-rtds -d vm-rt -v all</code> * <code>xl sched-rtds -d vm-rt -v all -p 10000 -b 2500</code></p>
+<p>It is possible, for a multiple vCPUs VM, to change the parameters of each vCPU individually: * <code>xl sched-rtds -d vm-rt -v 0 -p 20000 -b 10000 -e 1 -v 1 -p 45000 -b 12000 -e 0</code></p>
+<h1 id="technical-details"><span class="header-section-number">4</span> Technical details</h1>
+<p>Implementation entirely lives in the hypervisor. Xen has a pluggable, hook based, architecture for schedulers. Thanks to this, RTDS code is all contained in <code>xen/common/sched_rtds.c</code>.</p>
+<p>In libxl, the availability of the RTDS scheduler is advertised by the presence of the LIBXL_HAVE_SCHED_RTDS symbol. The ability of specifying different scheduling parameters for each vcpu has been introduced later, and is available if the following symbols are defined: * LIBXL_HAVE_VCPU_SCHED_PARAMS, * LIBXL_HAVE_SCHED_RTDS_VCPU_PARAMS, * LIBXL_HAVE_SCHED_RTDS_VCPU_EXTRA.</p>
+<h1 id="limitations"><span class="header-section-number">5</span> Limitations</h1>
+<p>RTDS is a special purpose scheduling. This is by design, and not at all a limitation, but it is certainly something to keep in mind when thinking about using it. The purpose of the scheduler is enabling deterministic and statically analyzable behavior (as per the real-time academic literature), according to the scheduling parameters assigned to each vCPU.</p>
+<p>Using RTDS a the Xen scheduler, and/or for general purpose workloads is definitely possible, but the vCPU scheduling parameters (of both Domain0 and of the various VMs) would probably require tweaking, with respect to their default values.</p>
+<h1 id="testing"><span class="header-section-number">6</span> Testing</h1>
+<p>Any change done in RTDS must be tested by doing the following:</p>
+<ul>
+<li>create a cpupool with RTDS as its scheduler,</li>
+<li>create a few virtual machines a move them in and out of the pool,</li>
+<li>create a few virtual machines, directly inside the pool, and verify that they boot and can run some basic workload (e.g., login into them and run simple commands),</li>
+<li>shutdown/reboot the virtual machines,</li>
+</ul>
+<p>The fact that the system boots fine when passing <code>sched=rtds</code> to Xen should also be verified.</p>
+<p>Finally, to check that the scheduler is working properly (although only at a macroscopic level), the following should be done:</p>
+<ul>
+<li>create a VM with 1 vCPU and put it in the RTDS cpupool,</li>
+<li>set the scheduling parameters such as it has a 50% reservation, with <code>xl sched-rtds -d vm -v all -p 100000 -b 50000</code>,</li>
+<li>run a CPU-burning process inside the VM (e.g., <code>yes</code>),</li>
+<li>check with <code>xentop</code> (in Domain0) that the VM is getting no more than 50% pCPU time.</li>
+</ul>
+<h1 id="areas-for-improvement"><span class="header-section-number">7</span> Areas for improvement</h1>
+<ul>
+<li>performance assessment, especially focusing on what level of real-time behavior the scheduler enables.</li>
+</ul>
+<h1 id="known-issues"><span class="header-section-number">8</span> Known issues</h1>
+<ul>
+<li>OSSTest reports occasional failures on ARM.</li>
+</ul>
+<h1 id="references"><span class="header-section-number">9</span> References</h1>
+<ul>
+<li>&quot;RT-Xen: Real-Time Virtualization&quot; <a href="http://events.linuxfoundation.org/sites/events/files/slides/2014_Xen_Developer_Summit_0.pdf">XPDS14 Presentation</a></li>
+<li>&quot;Scheduling in Xen&quot; <a href="http://events.linuxfoundation.org/sites/events/files/slides/Faggioli_XenSummit.pdf">XPDS15 Presentation</a></li>
+<li><a href="https://sites.google.com/site/realtimexen/">RT-Xen Project</a></li>
+<li><a href="https://wiki.xenproject.org/wiki/RTDS-Based-Scheduler">RTDS-Based-Scheduler</a></li>
+<li>&quot;The RTDS Scheduler&quot; <a href="https://wiki.xenproject.org/wiki/RTDS-Based-Scheduler">on the Xen-Project wiki</a></li>
+<li>&quot;Xen Project Schedulers&quot; <a href="https://wiki.xenproject.org/wiki/Xen_Project_Schedulers">on the Xen-Project wiki</a></li>
+</ul>
+<h1 id="history"><span class="header-section-number">10</span> History</h1>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="12%" />
+<col width="12%" />
+<col width="59%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Date</th>
+<th align="left">Revision</th>
+<th align="left">Version</th>
+<th align="left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2016-10-14 2017-08-31</td>
+<td align="left">1 2</td>
+<td align="left">Xen 4.8 Xen 4.10</td>
+<td align="left">Document written Revise for work conserving feature</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

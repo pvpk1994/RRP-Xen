@@ -1,0 +1,1 @@
+/root/xen/stubdom/../tools/libxc/xc_altp2m.c

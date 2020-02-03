@@ -372,7 +372,7 @@ static void list_domains(bool verbose, bool context, bool claim, bool numa,
     if (verbose) printf("   UUID                            Reason-Code\tSecurity Label");
     if (context && !verbose) printf("   Security Label");
     if (claim) printf("  Claimed");
-    if (cpupool) printf("         Cpupool");
+    if (cpupool) printf("         Cpupool	POOLID");
     if (numa) {
         if (libxl_node_bitmap_alloc(ctx, &nodemap, 0)) {
             fprintf(stderr, "libxl_node_bitmap_alloc_failed.\n");
@@ -420,6 +420,9 @@ static void list_domains(bool verbose, bool context, bool claim, bool numa,
         if (cpupool) {
             char *poolname = libxl_cpupoolid_to_name(ctx, info[i].cpupool);
             printf("%16s", poolname);
+            // Pool ID api included for arinc & aaf schedulers
+            uint32_t pool_num = info[i].cpupool;
+            printf("%5d",pool_num);
             free(poolname);
         }
         if (numa) {

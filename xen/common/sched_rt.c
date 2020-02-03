@@ -1540,7 +1540,7 @@ static void repl_timer_handler(void *data){
     spin_unlock_irq(&prv->lock);
 }
 
-static const struct scheduler sched_rtds_def = {
+const struct scheduler sched_rtds_def = {
     .name           = "SMP RTDS Scheduler",
     .opt_name       = "rtds",
     .sched_id       = XEN_SCHEDULER_RTDS,

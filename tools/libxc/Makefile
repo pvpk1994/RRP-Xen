@@ -25,6 +25,9 @@ CTRL_SRCS-y       += xc_private.c
 CTRL_SRCS-y       += xc_csched.c
 CTRL_SRCS-y       += xc_csched2.c
 CTRL_SRCS-y       += xc_arinc653.c
+# AAF's .o
+CTRL_SRCS-y       += xc_aaf.c
+
 CTRL_SRCS-y       += xc_rt.c
 CTRL_SRCS-y       += xc_tbuf.c
 CTRL_SRCS-y       += xc_pm.c

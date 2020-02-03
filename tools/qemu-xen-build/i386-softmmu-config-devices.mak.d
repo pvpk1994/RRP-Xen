@@ -1,0 +1,1 @@
+i386-softmmu/config-devices.mak:  /root/xen/tools/qemu-xen-dir/default-configs/pci.mak /root/xen/tools/qemu-xen-dir/default-configs/sound.mak /root/xen/tools/qemu-xen-dir/default-configs/usb.mak  /root/xen/tools/qemu-xen-dir/default-configs/virtio.mak  

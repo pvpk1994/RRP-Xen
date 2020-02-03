@@ -1,0 +1,1 @@
+/root/xen/tools/firmware/xen-dir/../../../config/arm32.mk

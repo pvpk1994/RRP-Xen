@@ -1,0 +1,10 @@
+prefix=/root/xen/stubdom/libs-x86_64/evtchn/../../..
+includedir=/root/xen/stubdom/libs-x86_64/evtchn/../../../tools/libs/evtchn/include
+libdir=/root/xen/stubdom/libs-x86_64/evtchn
+
+Name: Xenevtchn
+Description: The Xenevtchn library for Xen hypervisor
+Version: 1.1
+Cflags: -I${includedir}
+Libs: -Wl,-rpath-link=${libdir} -lxenevtchn
+Requires.private: xentoollog

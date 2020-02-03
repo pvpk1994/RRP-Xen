@@ -1,0 +1,1 @@
+/root/xen/stubdom/../tools/libs/call/netbsd.c

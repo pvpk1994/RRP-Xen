@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="TOC">
+<ul>
+<li><a href="#xen-x86-pv-bootloader-protocol"><span class="toc-section-number">1</span> Xen x86 PV Bootloader Protocol</a><ul>
+<li><a href="#introduction"><span class="toc-section-number">1.1</span> Introduction</a></li>
+<li><a href="#protocol"><span class="toc-section-number">1.2</span> Protocol</a></li>
+<li><a href="#path"><span class="toc-section-number">1.3</span> Path</a></li>
+</ul></li>
+</ul>
+</div>
+<h1 id="xen-x86-pv-bootloader-protocol"><span class="header-section-number">1</span> Xen x86 PV Bootloader Protocol</h1>
+<h2 id="introduction"><span class="header-section-number">1.1</span> Introduction</h2>
+<p>One method for booting an x86 Xen PV guest is to use a PV bootloader, that is, a bootloader which is itself a PV kernel but which behaves as a bootloader (examples include the pvgrub-legacy and grub2 targeting Xen).</p>
+<p>In many cases the user wishes to manage this PV bootloader from within the guest, and therefore wishes to chainload something from the guest filesystem, most likely via a stage 1 PV bootloader provided by dom0.</p>
+<p>The purpose of this document is to define the paths within the guest filesystem where a stage 1 bootloader should look for the in-guest PV bootloader to load and the protocol/format expected from the to-be-chainloaded bootloader.</p>
+<h2 id="protocol"><span class="header-section-number">1.2</span> Protocol</h2>
+<p>The bootloader binary should be an ELF file of the appropriate type (32- or 64-bit). It should contain the standard Xen ELF notes allowing it to be loaded by the Xen toolstack domain builder (TBD: Reference).</p>
+<h2 id="path"><span class="header-section-number">1.3</span> Path</h2>
+<p>The second stage bootloader should be installed into the guest filesystem as:</p>
+<ul>
+<li><code>/boot/xen/pvboot-&lt;ARCH&gt;.elf</code></li>
+</ul>
+<p>Where <code>&lt;ARCH&gt;</code> is the first element of the GNU triplet e.g. one of:</p>
+<ul>
+<li><code>i386</code> (nb only <code>i386</code>, not <code>i686</code> etc), corresponding to the Xen <code>x86_32(p)</code> arch;</li>
+<li><code>x86_64</code>, corresponding to the Xen <code>x86_64</code> arch;</li>
+</ul>
+<p>It is allowable for <code>/boot</code> to be a separate filesystem from <code>/</code> and therefore stage 1 bootloaders should search <code>/boot/xen/pvboot-&lt;ARCH&gt;.elf</code> and <code>/xen/pvboot-&lt;ARCH&gt;.elf</code> (in that order). The <code>xen</code> directory should be on the same filesystem as /boot and therefore it is not necessary to search for /pvboot-<ARCH>.elf.</p>
+<p>It is not in general possible under Xen for a bootloader to boot a kernel of a different width from itself, and this extends to chainloading from a stage one. Therefore it is permissible to have both <code>/boot/xen/pvboot-i386.elf</code> and <code>/boot/xen/pvboot-x86_64.elf</code> present in a guest to be used by the appropriate stage 1 (e.g. for systems with 32-bit userspace and an optional 64-bit kernel).</p>
+</body>
+</html>

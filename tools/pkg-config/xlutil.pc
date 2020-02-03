@@ -1,0 +1,10 @@
+prefix=/root/xen/tools/libxl/../..
+includedir=/root/xen/tools/libxl
+libdir=/root/xen/tools/libxl
+
+Name: Xlutil
+Description: The xl utility library for Xen hypervisor
+Version: 4.12.0
+Cflags: -I${includedir}
+Libs: -Wl,-rpath-link=${libdir} -lxlutil
+Requires.private: xenlight

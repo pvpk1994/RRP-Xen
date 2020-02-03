@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="TOC">
+<ul>
+<li><a href="#xenstore-paths"><span class="toc-section-number">1</span> XenStore Paths</a><ul>
+<li><a href="#notation"><span class="toc-section-number">1.1</span> Notation</a></li>
+<li><a href="#domain-home-path"><span class="toc-section-number">1.2</span> Domain Home Path</a></li>
+<li><a href="#per-domain-paths"><span class="toc-section-number">1.3</span> Per Domain Paths</a></li>
+<li><a href="#general-paths"><span class="toc-section-number">1.4</span> General Paths</a><ul>
+<li><a href="#frontend-device-paths"><span class="toc-section-number">1.4.1</span> Frontend device paths</a></li>
+<li><a href="#backend-device-paths"><span class="toc-section-number">1.4.2</span> Backend Device Paths</a></li>
+<li><a href="#platform-feature-and-control-paths"><span class="toc-section-number">1.4.3</span> Platform Feature and Control Paths</a></li>
+<li><a href="#domain-controlled-paths"><span class="toc-section-number">1.4.4</span> Domain Controlled Paths</a></li>
+<li><a href="#paths-private-to-the-toolstack"><span class="toc-section-number">1.4.5</span> Paths private to the toolstack</a></li>
+</ul></li>
+<li><a href="#virtual-machine-paths"><span class="toc-section-number">1.5</span> Virtual Machine Paths</a><ul>
+<li><a href="#vmuuiduuid-uuid-ninternal"><span class="toc-section-number">1.5.1</span> /vm/$UUID/uuid = UUID [n,INTERNAL]</a></li>
+<li><a href="#vmuuidname-string-ninternal"><span class="toc-section-number">1.5.2</span> /vm/$UUID/name = STRING [n,INTERNAL]</a></li>
+<li><a href="#vmuuidimage-ninternal"><span class="toc-section-number">1.5.3</span> /vm/$UUID/image/* [n,INTERNAL]</a></li>
+<li><a href="#vmuuidstart_time-integer-.-integer-ninternal"><span class="toc-section-number">1.5.4</span> /vm/$UUID/start_time = INTEGER &quot;.&quot; INTEGER [n,INTERNAL]</a></li>
+<li><a href="#vmuuidrtctimeoffset-integer-nhvminternal"><span class="toc-section-number">1.5.5</span> /vm/$UUID/rtc/timeoffset = &quot;&quot;|INTEGER [n,HVM,INTERNAL]</a></li>
+</ul></li>
+<li><a href="#platform-level-paths"><span class="toc-section-number">1.6</span> Platform-Level paths</a><ul>
+<li><a href="#libxl-specific-paths"><span class="toc-section-number">1.6.1</span> libxl Specific Paths</a></li>
+<li><a href="#xenstored-specific-paths"><span class="toc-section-number">1.6.2</span> xenstored specific paths</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<h1 id="xenstore-paths"><span class="header-section-number">1</span> XenStore Paths</h1>
+<p>This document attempts to defines all the paths which are in common use by either guests, front-/back-end drivers, toolstacks etc.</p>
+<p>The XenStore wire protocol itself is described in <a href="xenstore.txt" class="uri">xenstore.txt</a>.</p>
+<h2 id="notation"><span class="header-section-number">1.1</span> Notation</h2>
+<p>This document is intended to be partially machine readable, such that test system etc can use it to validate whether the xenstore paths used by a test are allowable etc.</p>
+<p>Therefore the following notation conventions apply:</p>
+<p>A xenstore path is generically defined as:</p>
+<pre><code>    PATH = VALUES [TAGS]
+
+    PATH/* [TAGS]</code></pre>
+<p>The first syntax defines a simple path with a single value. The second syntax defines an aggregated set of paths which are usually described externally to this document. The text will give a pointer to the appropriate external documentation.</p>
+<p>PATH can contain simple regex constructs following the Perl compatible regexp syntax described in pcre(3) or perlre(1). In addition the following additional wild card names are defined and are evaluated before regexp expansion:</p>
+<ul>
+<li>~ -- expands to an arbitrary a domain's home path (described below). Only valid at the begining of a path.</li>
+<li>$DEVID -- a per-device type device identifier. Typically an integer.</li>
+<li>$DOMID -- a domain identifier, an integer. Typically this refers to the &quot;other&quot; domain. i.e. ~ refers to the domain providing a service while $DOMID is the consumer of that service.</li>
+<li>$UUID -- a UUID in the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</li>
+<li>$INDEX -- an integer used as part of a path when listing a set of values. Typically these integers are contiguous.</li>
+</ul>
+<p>VALUES are strings and can take the following forms:</p>
+<ul>
+<li>PATH -- a XenStore path.</li>
+<li>STRING -- an arbitrary string.</li>
+<li>INTEGER -- An integer, in decimal representation unless otherwise noted.</li>
+<li>MEMKB -- the decimal representation of a number of kilobytes.</li>
+<li>EVTCHN -- the decimal representation of an event channel.</li>
+<li>GNTREF -- the decimal representation of a grant reference.</li>
+<li>&quot;a literal string&quot; -- literal strings are contained within quotes.</li>
+<li>(VALUE | VALUE | ... ) -- a set of alternatives. Alternatives are separated by a &quot;|&quot; and all the alternatives are enclosed in &quot;(&quot; and &quot;)&quot;.</li>
+<li><p>DISTRIBUTION -- information about a software distribution, comprised of 3 or 4 space separated UTF-8 strings as follows:</p>
+<pre><code>          VENDOR -- Commonly used vendor short name,
+                    e.g &quot;Citrix&quot; rather than &quot;Citrix Systems
+                    Inc.&quot;
+
+          PRODUCT -- Commonly used product (e.g. driver) name
+                     without version information.
+
+          If the toolstack needs to match on either of the above
+          values it should support Unix glob style matching.
+
+          VERSION -- A version number that will sort properly
+                     under coreutils version sorting (sort -V)
+                     rules.
+
+          ATTRIBUTES -- Optional human readable text to denote
+                        attributes of the software, e.g. &quot;debug&quot;.
+                        This text is freeform and no meaning
+                        should be inferred. It is intended for
+                        display purposes only.</code></pre></li>
+<li>MAC_ADDRESS -- 6 integers, in hexadecimal form, separated by ':', specifying an IEEE 802.3 ethernet MAC address.</li>
+<li>IPV4_ADDRESS -- 4 integers, in decimal form, separated by '.', specifying an IP version 4 address as described IETF RFC 791.</li>
+<li><p>IPV6_ADDRESS -- Up to 8 integers, in hexadecimal form, separated by ':', specifying an IP version 6 address as described in IETF RFC 4291.</p></li>
+</ul>
+<p>Additional TAGS may follow as a comma separated set of the following tags enclosed in square brackets.</p>
+<ul>
+<li>w -- Path is writable by the containing domain, that is the domain whose home path ~ this key is under or which /vm/$UUID refers to. By default paths under both of these locations are read only for the domain.</li>
+<li>n -- Path is neither readable nor writeable for guest domains.</li>
+<li>HVM -- Path is valid for HVM domains only</li>
+<li>PV -- Path is valid for PV domains only</li>
+<li>BACKEND -- Path is valid for a backend domain (AKA driver domain)</li>
+<li>INTERNAL -- Although a path is visible to the domain its use is reserved for the virtual firmware or Xen platform code. Guest Operating Systems must not read this key or otherwise rely on its presence or contents.</li>
+<li>DEPRECATED -- This path is deprecated and may be removed in its current form in the future. Guests should not add new dependencies on such paths.</li>
+</ul>
+<p>Owning domain means the domain whose home path this tag is found under.</p>
+<p>Lack of either a <strong>HVM</strong> or <strong>PV</strong> tag indicates that the path is valid for either type of domain (including PVonHVM and similar mixed domain types).</p>
+<h2 id="domain-home-path"><span class="header-section-number">1.2</span> Domain Home Path</h2>
+<p>Every domain has a home path within the xenstore hierarchy. This is the path where the majority of the domain-visible information about each domain is stored.</p>
+<p>This path is:</p>
+<pre><code>  /local/domain/$DOMID</code></pre>
+<p>All non-absolute paths are relative to this path.</p>
+<p>Although this path could be considered a &quot;Home Directory&quot; for the domain it would not usually be writable by the domain. The tools will create writable subdirectories as necessary.</p>
+<h2 id="per-domain-paths"><span class="header-section-number">1.3</span> Per Domain Paths</h2>
+<h2 id="general-paths"><span class="header-section-number">1.4</span> General Paths</h2>
+<h4 id="vm-path"><span class="header-section-number">1.4.0.1</span> ~/vm = PATH []</h4>
+<p>A pointer back to the domain's /vm/$UUID path (described below).</p>
+<h4 id="name-string"><span class="header-section-number">1.4.0.2</span> ~/name = STRING []</h4>
+<p>The guests name.</p>
+<h4 id="domid-integer"><span class="header-section-number">1.4.0.3</span> ~/domid = INTEGER []</h4>
+<p>The domain's own ID.</p>
+<h4 id="imagedevice-model-pid-integer-internal"><span class="header-section-number">1.4.0.4</span> ~/image/device-model-pid = INTEGER [INTERNAL]</h4>
+<p>The process ID of the device model associated with this domain, if it has one.</p>
+<h4 id="cpu0-9availability-onlineoffline-pv"><span class="header-section-number">1.4.0.5</span> ~/cpu/[0-9]+/availability = (&quot;online&quot;|&quot;offline&quot;) [PV]</h4>
+<p>One node for each virtual CPU up to the guest's configured maximum. Valid values are &quot;online&quot; and &quot;offline&quot;. The guest is expected to react to changes in this path by bringing the appropriate VCPU on or offline using the VCPUOP interface described in <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,vcpu.h.html">xen/include/public/vcpu.h</a></p>
+<p>This protocol is not currently well documented.</p>
+<h4 id="memorystatic-max-memkb"><span class="header-section-number">1.4.0.6</span> ~/memory/static-max = MEMKB []</h4>
+<p>Specifies a static maximum amount memory which this domain should expect to be given. In the absence of in-guest memory hotplug support this set on domain boot and is usually the maximum amount of RAM which a guest can make use of. See <a href="http://xenbits.xen.org/docs/unstable/misc/libxl_memory.txt">docs/misc/libxl_memory.txt</a> for a description of how memory is accounted for in toolstacks using the libxl library.</p>
+<h4 id="memorytarget-memkb"><span class="header-section-number">1.4.0.7</span> ~/memory/target = MEMKB []</h4>
+<p>The current balloon target for the domain. The balloon driver within the guest is expected to make every effort to every effort use no more than this amount of RAM.</p>
+<h4 id="memoryvideoram-memkb-hvminternal"><span class="header-section-number">1.4.0.8</span> ~/memory/videoram = MEMKB [HVM,INTERNAL]</h4>
+<p>The size of the video RAM this domain is configured with.</p>
+<h4 id="devicesuspendevent-channel-evtchn-w"><span class="header-section-number">1.4.0.9</span> ~/device/suspend/event-channel = &quot;&quot;|EVTCHN [w]</h4>
+<p>The domain's suspend event channel. The toolstack will create this path with an empty value which the guest may choose to overwrite.</p>
+<p>If the guest overwrites this, it will be with the number of an unbound event channel port it has acquired. The toolstack is expected to use an interdomain bind, and then, when it wishes to ask the guest to suspend, to signal the event channel.</p>
+<p>The guest does not need to explicitly acknowledge the request; indeed, there is no explicit signalling by the guest in the reverse direction. The guest, when it is ready, simply shuts down (<code>SCHEDOP_shutdown</code>) with reason code <code>SHUTDOWN_suspend</code>. The toolstack is expected to use <code>XEN_DOMCTL_subscribe</code> to be alerted to guest state changes, and <code>XEN_SYSCTL_getdomaininfolist</code> to verify that the domain has suspended.</p>
+<p>Note that the use of this event channel suspend protocol is optional for both sides. By writing a non-empty string to the node, the guest is advertising its support. However, the toolstack is at liberty to use the xenstore-based protocol instead (see ~/control/shutdown, below) even if the guest has advertised support for the event channel protocol.</p>
+<h4 id="hvmloaderallow-memory-relocate-10-hvminternal"><span class="header-section-number">1.4.0.10</span> ~/hvmloader/allow-memory-relocate = (&quot;1&quot;|&quot;0&quot;) [HVM,INTERNAL]</h4>
+<p>If the default low MMIO hole (below 4GiB) is not big enough for all the devices, this indicates if hvmloader should relocate guest memory into the high memory region (above 4GiB). If &quot;1&quot;, hvmloader will relocate memory as needed, until 2GiB is reached; if &quot;0&quot;, hvmloader will not relocate guest memory.</p>
+<h4 id="hvmloaderbios-rombiosseabiosovmf-hvminternal"><span class="header-section-number">1.4.0.11</span> ~/hvmloader/bios = (&quot;rombios&quot;|&quot;seabios&quot;|&quot;OVMF&quot;) [HVM,INTERNAL]</h4>
+<p>The BIOS used by this domain.</p>
+<h4 id="bios-stringsbios-vendor-string-hvminternal"><span class="header-section-number">1.4.0.12</span> ~/bios-strings/bios-vendor = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringsbios-version-string-hvminternal"><span class="header-section-number">1.4.0.13</span> ~/bios-strings/bios-version = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringssystem-manufacturer-string-hvminternal"><span class="header-section-number">1.4.0.14</span> ~/bios-strings/system-manufacturer = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringssystem-product-name-string-hvminternal"><span class="header-section-number">1.4.0.15</span> ~/bios-strings/system-product-name = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringssystem-version-string-hvminternal"><span class="header-section-number">1.4.0.16</span> ~/bios-strings/system-version = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringssystem-serial-number-string-hvminternal"><span class="header-section-number">1.4.0.17</span> ~/bios-strings/system-serial-number = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringsenclosure-manufacturer-string-hvminternal"><span class="header-section-number">1.4.0.18</span> ~/bios-strings/enclosure-manufacturer = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringsenclosure-serial-number-string-hvminternal"><span class="header-section-number">1.4.0.19</span> ~/bios-strings/enclosure-serial-number = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringsenclosure-asset-tag-string-hvminternal"><span class="header-section-number">1.4.0.20</span> ~/bios-strings/enclosure-asset-tag = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringsbattery-manufacturer-string-hvminternal"><span class="header-section-number">1.4.0.21</span> ~/bios-strings/battery-manufacturer = STRING [HVM,INTERNAL]</h4>
+<h4 id="bios-stringsbattery-device-name-string-hvminternal"><span class="header-section-number">1.4.0.22</span> ~/bios-strings/battery-device-name = STRING [HVM,INTERNAL]</h4>
+<p>These xenstore values are used to override some of the default string values in the SMBIOS table constructed in hvmloader. See the SMBIOS table specification at http://www.dmtf.org/standards/smbios/</p>
+<h4 id="bios-stringsoem--string-hvminternal"><span class="header-section-number">1.4.0.23</span> ~/bios-strings/oem-* = STRING [HVM,INTERNAL]</h4>
+<p>1 to 99 OEM strings can be set in xenstore using values of the form '~/bios-strings/oem-1' to '~/bios-strings/oem-99'. These strings will be loaded into the SMBIOS type 11 structure.</p>
+<h4 id="platform-01-hvminternal"><span class="header-section-number">1.4.0.24</span> ~/platform/* = (&quot;0&quot;|&quot;1&quot;) [HVM,INTERNAL]</h4>
+<p>Various boolean platform properties.</p>
+<ul>
+<li>acpi -- is ACPI enabled for this domain</li>
+<li>acpi_s3 -- is ACPI S3 support enabled for this domain</li>
+<li>acpi_s4 -- is ACPI S4 support enabled for this domain</li>
+<li>acpi_laptop_slate -- is the ACPI laptop/slate device present in this domain</li>
+</ul>
+<h4 id="platformgeneration-id-integer-integer-hvminternal"><span class="header-section-number">1.4.0.25</span> ~/platform/generation-id = INTEGER &quot;:&quot; INTEGER [HVM,INTERNAL]</h4>
+<p>The lower and upper 64-bit words of the 128-bit VM Generation ID.</p>
+<p>This key is used by hvmloader to create the ACPI VM Generation ID device. It initialises a 16 octet region of guest memory with this value. The guest physical address of this region is saved in the HVM_PARAM_VM_GENERATION_ID_ADDR HVM parameter.</p>
+<p>If this key is not present, is empty, or is all-zeros (&quot;0:0&quot;) then the ACPI device is not created.</p>
+<p>When restoring a guest, the toolstack may (in certain circumstances) need generate a new random generation ID and write it to guest memory at the guest physical address in HVM_PARAM_VM_GENERATION_ID_ADDR.</p>
+<p>See Microsoft's &quot;Virtual Machine Generation ID&quot; specification for the circumstances where the generation ID needs to be changed.</p>
+<h3 id="frontend-device-paths"><span class="header-section-number">1.4.1</span> Frontend device paths</h3>
+<p>Paravirtual device frontends are generally specified by their own directory within the XenStore hierarchy. Usually this is under ~/device/<span class="math inline"><em>T</em><em>Y</em><em>P</em><em>E</em>/</span>DEVID although there are exceptions, e.g. ~/console for the first PV console.</p>
+<h4 id="devicevbddevid"><span class="header-section-number">1.4.1.1</span> ~/device/vbd/$DEVID/* []</h4>
+<p>A virtual block device frontend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,blkif.h.html">xen/include/public/io/blkif.h</a></p>
+<h4 id="devicevfbdevid"><span class="header-section-number">1.4.1.2</span> ~/device/vfb/$DEVID/* []</h4>
+<p>A virtual framebuffer frontend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,fbif.h.html">xen/include/public/io/fbif.h</a></p>
+<h4 id="devicevkbddevid"><span class="header-section-number">1.4.1.3</span> ~/device/vkbd/$DEVID/* []</h4>
+<p>A virtual keyboard device frontend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,kbdif.h.html">xen/include/public/io/kbdif.h</a></p>
+<h4 id="devicevifdevid"><span class="header-section-number">1.4.1.4</span> ~/device/vif/$DEVID/* []</h4>
+<p>A virtual network device frontend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,netif.h.html">xen/include/public/io/netif.h</a></p>
+<h4 id="devicevscsidevid"><span class="header-section-number">1.4.1.5</span> ~/device/vscsi/$DEVID/* []</h4>
+<p>A virtual scsi device frontend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,vscsiif.h.html">xen/include/public/io/vscsiif.h</a></p>
+<h4 id="devicevusbdevid"><span class="header-section-number">1.4.1.6</span> ~/device/vusb/$DEVID/* []</h4>
+<p>A virtual usb device frontend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,usbif.h.html">xen/include/public/io/usbif.h</a></p>
+<h4 id="devicepvcallsdevid"><span class="header-section-number">1.4.1.7</span> ~/device/pvcalls/$DEVID/* []</h4>
+<p>Paravirtualized POSIX function calls frontend. Described by [docs/misc/pvcalls.markdown][PVCALLS]</p>
+<h4 id="console"><span class="header-section-number">1.4.1.8</span> ~/console/* []</h4>
+<p>The primary PV console device. Described in <a href="console.txt" class="uri">console.txt</a></p>
+<h4 id="deviceconsoledevid"><span class="header-section-number">1.4.1.9</span> ~/device/console/$DEVID/* []</h4>
+<p>A secondary PV console device. Described in <a href="console.txt" class="uri">console.txt</a></p>
+<h4 id="serialdevid-hvm"><span class="header-section-number">1.4.1.10</span> ~/serial/$DEVID/* [HVM]</h4>
+<p>An emulated serial device. Described in <a href="console.txt" class="uri">console.txt</a></p>
+<h4 id="storeport-evtchn-deprecated"><span class="header-section-number">1.4.1.11</span> ~/store/port = EVTCHN [DEPRECATED]</h4>
+<p>The event channel used by the domain's connection to XenStore.</p>
+<p>This path is deprecated since the same information is provided via the <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,xen.h.html#Struct_start_info">start_info</a> for PV guests and as an <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,hvm,params.h.html">HVM param</a> for HVM guests. There is an obvious chicken and egg problem with extracting this value from xenstore in order to setup the xenstore communication ring.</p>
+<h4 id="storering-ref-gntref-deprecated"><span class="header-section-number">1.4.1.12</span> ~/store/ring-ref = GNTREF [DEPRECATED]</h4>
+<p>The grant reference of the domain's XenStore ring.</p>
+<p>As with ~/store/port this path is deprecated.</p>
+<h3 id="backend-device-paths"><span class="header-section-number">1.4.2</span> Backend Device Paths</h3>
+<p>Paravirtual device backends are generally specified by their own directory within the XenStore hierarchy. Usually this is under ~/backend/<span class="math inline"><em>T</em><em>Y</em><em>P</em><em>E</em>/</span>DOMID/$DEVID.</p>
+<h4 id="backendvbddomiddevid"><span class="header-section-number">1.4.2.1</span> ~/backend/vbd/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A virtual block device backend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,blkif.h.html">xen/include/public/io/blkif.h</a></p>
+<p>Uses the in-kernel blkback driver.</p>
+<h4 id="backendqdiskdomiddevid"><span class="header-section-number">1.4.2.2</span> ~/backend/qdisk/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A virtual block device backend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,blkif.h.html">xen/include/public/io/blkif.h</a></p>
+<p>Uses the qemu based disk backend.</p>
+<h4 id="backendtapdomiddevid"><span class="header-section-number">1.4.2.3</span> ~/backend/tap/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A virtual block device backend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,blkif.h.html">xen/include/public/io/blkif.h</a></p>
+<p>Uses the in-kernel blktap (v1) disk backend (deprecated).</p>
+<h4 id="backendvfbdomiddevid"><span class="header-section-number">1.4.2.4</span> ~/backend/vfb/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A virtual framebuffer backend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,fbif.h.html">xen/include/public/io/fbif.h</a></p>
+<h4 id="backendvkbddomiddevid"><span class="header-section-number">1.4.2.5</span> ~/backend/vkbd/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A virtual keyboard device backend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,kbdif.h.html">xen/include/public/io/kbdif.h</a></p>
+<h4 id="backendvifdomiddevid"><span class="header-section-number">1.4.2.6</span> ~/backend/vif/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A virtual network device backend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,netif.h.html">xen/include/public/io/netif.h</a></p>
+<h4 id="backendvscsidomiddevid"><span class="header-section-number">1.4.2.7</span> ~/backend/vscsi/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A PV SCSI backend.</p>
+<h4 id="backendvusbdomiddevid"><span class="header-section-number">1.4.2.8</span> ~/backend/vusb/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A PV USB backend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,usbif.h.html">xen/include/public/io/usbif.h</a></p>
+<h4 id="backendpvcallsdomiddevid"><span class="header-section-number">1.4.2.9</span> ~/backend/pvcalls/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A PVCalls backend. Described in [docs/misc/pvcalls.markdown][PVCALLS].</p>
+<h4 id="backendconsoledomiddevid"><span class="header-section-number">1.4.2.10</span> ~/backend/console/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A PV console backend. Described in <a href="console.txt" class="uri">console.txt</a></p>
+<h4 id="backendqusbdomiddevid"><span class="header-section-number">1.4.2.11</span> ~/backend/qusb/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID/* []</h4>
+<p>A PV USB device backend. Described by <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,usbif.h.html">xen/include/public/io/usbif.h</a></p>
+<p>Uses the qemu based USB backend.</p>
+<h4 id="device-modeldomid-internal"><span class="header-section-number">1.4.2.12</span> ~/device-model/$DOMID/* [INTERNAL]</h4>
+<p>Information relating to device models running in the domain. $DOMID is the target domain of the device model.</p>
+<h4 id="libxldisable_udev-10"><span class="header-section-number">1.4.2.13</span> ~/libxl/disable_udev = (&quot;1&quot;|&quot;0&quot;) []</h4>
+<p>Indicates whether device hotplug scripts in this domain should be run by udev (&quot;0&quot;) or will be run by the toolstack directly (&quot;1&quot;).</p>
+<h3 id="platform-feature-and-control-paths"><span class="header-section-number">1.4.3</span> Platform Feature and Control Paths</h3>
+<h4 id="controlsysrq-command-w"><span class="header-section-number">1.4.3.1</span> ~/control/sysrq = (&quot;&quot;|COMMAND) [w]</h4>
+<p>This is the PV SysRq control node. A toolstack can write a single character representing a magic SysRq key understood by the Linux kernel. The guest acknowledges a request by writing the empty string back to the command node.</p>
+<p>This protocol is Linux only.</p>
+<h4 id="controlshutdown-command-w"><span class="header-section-number">1.4.3.2</span> ~/control/shutdown = (&quot;&quot;|COMMAND) [w]</h4>
+<p>This is the PV shutdown control node. A toolstack can write various commands here to cause various guest shutdown, reboot or suspend activities. The guest acknowledges a request by writing the empty string back to the command node.</p>
+<p>The precise protocol is not yet documented.</p>
+<h4 id="controlfeature-poweroff-01-w"><span class="header-section-number">1.4.3.3</span> ~/control/feature-poweroff = (&quot;&quot;|&quot;0&quot;|&quot;1&quot;) [w]</h4>
+<h4 id="controlfeature-reboot-01-w"><span class="header-section-number">1.4.3.4</span> ~/control/feature-reboot = (&quot;&quot;|&quot;0&quot;|&quot;1&quot;) [w]</h4>
+<h4 id="controlfeature-suspend-01-w"><span class="header-section-number">1.4.3.5</span> ~/control/feature-suspend = (&quot;&quot;|&quot;0&quot;|&quot;1&quot;) [w]</h4>
+<p>These may be initialized to &quot;&quot; by the toolstack and may then be set to 0 or 1 by a guest to indicate whether it is capable or incapable, respectively, of responding to the corresponding command when written to ~/control/shutdown. A toolstack may then sample the feature- value at the point of issuing a PV control command and respond accordingly:</p>
+<p>&quot;0&quot; -&gt; the frontend should not be expected to respond, so fail the control operation &quot;1&quot; -&gt; the frontend should be expected to respond, so wait for it to do so and maybe fail the control operation after some reasonable timeout. &quot;&quot; -&gt; the frontend may or may not respond, so wait for it to do so and then maybe try an alternative control mechanism after some reasonable timeout.</p>
+<p>Since a toolstack may not initialize these paths, and the parent ~/control path is read-only to a guest, a guest should not expect a write to succeed. If it fails the guest may log the failure but should continue to process the corresponding command when written to ~/control/shutdown regardless.</p>
+<h4 id="controlfeature-s3-01-whvm"><span class="header-section-number">1.4.3.6</span> ~/control/feature-s3 = (&quot;&quot;|&quot;0&quot;|&quot;1&quot;) [w,HVM]</h4>
+<h4 id="controlfeature-s4-01-whvm"><span class="header-section-number">1.4.3.7</span> ~/control/feature-s4 = (&quot;&quot;|&quot;0&quot;|&quot;1&quot;) [w,HVM]</h4>
+<p>These purpose of these feature flags is identical to feature-poweroff, feature-reboot and feature-suspend above but concern triggering the S3 or S4 power states of HVM guests. A toolstack may create these values, but should not sample them unless the corresponding acpi_ feature flag is set in ~/platform.</p>
+<h4 id="controlplatform-feature-multiprocessor-suspend-01"><span class="header-section-number">1.4.3.8</span> ~/control/platform-feature-multiprocessor-suspend = (0|1) []</h4>
+<p>Indicates to the guest that this platform supports the multiprocessor suspend feature.</p>
+<h4 id="controlplatform-feature-xs_reset_watches-01"><span class="header-section-number">1.4.3.9</span> ~/control/platform-feature-xs_reset_watches = (0|1) []</h4>
+<p>Indicates to the guest that this platform supports the XS_RESET_WATCHES xenstore message. See <a href="http://xenbits.xen.org/docs/unstable/hypercall/x86_64/include,public,io,xs_wire.h.html">xen/include/public/io/xs_wire.h</a> for the XenStore wire protocol definition.</p>
+<h4 id="controllaptop-slate-mode-laptopslate-w"><span class="header-section-number">1.4.3.10</span> ~/control/laptop-slate-mode = (&quot;&quot;|&quot;laptop&quot;|&quot;slate&quot;) [w]</h4>
+<p>This is the PV laptop/slate mode control node. If the toolstack has provisioned a guest with the ACPI laptop/slate mode device then it can write the desired mode here to cause the guest to switch modes if necessary. The guest acknowledges a request by writing the empty string back to the control node.</p>
+<h4 id="controlfeature-laptop-slate-mode-01-w"><span class="header-section-number">1.4.3.11</span> ~/control/feature-laptop-slate-mode = (&quot;&quot;|&quot;0&quot;|&quot;1&quot;) [w]</h4>
+<p>This may be initialized to &quot;&quot; by the toolstack and may then be set to 0 or 1 by a guest to indicate whether it is capable or incapable, respectively, of responding to a mode value written to ~/control/laptop-slate-mode.</p>
+<h3 id="domain-controlled-paths"><span class="header-section-number">1.4.4</span> Domain Controlled Paths</h3>
+<h4 id="data-w"><span class="header-section-number">1.4.4.1</span> ~/data/* [w]</h4>
+<p>A domain writable path. Available for arbitrary domain use.</p>
+<h4 id="driversindex-distribution-w"><span class="header-section-number">1.4.4.2</span> ~/drivers/$INDEX = DISTRIBUTION [w]</h4>
+<p>A domain may write information about installed PV drivers using paths of this form.</p>
+<h4 id="featurehotplugvif-01-w"><span class="header-section-number">1.4.4.3</span> ~/feature/hotplug/vif = (&quot;0&quot;|&quot;1&quot;) [w]</h4>
+<h4 id="featurehotplugvbd-01-w"><span class="header-section-number">1.4.4.4</span> ~/feature/hotplug/vbd = (&quot;0&quot;|&quot;1&quot;) [w]</h4>
+<p>By setting these paths to &quot;1&quot; a guest can indicate to a toolstack that it is capable of responding immediately to instantiation of, respectively, new vif by bringing online a new PV network device or a new vbd by bringing online a new PV block device. If the guest sets this path to &quot;0&quot; then it is indicating that it is definitely unable to respond immediately and hence the toolstack should defer instantiaton to the next VM start. However, if the path is absent then the toolstack may attempt the operation.</p>
+<h4 id="attrvifdevidname-string-w"><span class="header-section-number">1.4.4.5</span> ~/attr/vif/$DEVID/name = STRING [w]</h4>
+<p>A domain may write its internal 'friendly' name for a network device using this path using UTF-8 encoding. A toolstack or UI may use this for display purposes. No particular meaning should be inferred from the name.</p>
+<h4 id="attrvifdevidmacindex-mac_address-w"><span class="header-section-number">1.4.4.6</span> ~/attr/vif/<span class="math inline"><em>D</em><em>E</em><em>V</em><em>I</em><em>D</em>/<em>m</em><em>a</em><em>c</em>/</span>INDEX = MAC_ADDRESS [w]</h4>
+<p>Paths of this form may be written by the guest to indicate MAC addresses it is currently using. These may be multicast or unicast addresses. For any of the paths the value of $INDEX is arbitrary. The values written are primarily for display purposes and must not be used for packet filtering or routing purposes.</p>
+<h4 id="attrvifdevidipv4index-ipv4_address-w"><span class="header-section-number">1.4.4.7</span> ~/attr/vif/<span class="math inline"><em>D</em><em>E</em><em>V</em><em>I</em><em>D</em>/<em>i</em><em>p</em><em>v</em>4/</span>INDEX = IPV4_ADDRESS [w]</h4>
+<h4 id="attrvifdevidipv6index-ipv6_address-w"><span class="header-section-number">1.4.4.8</span> ~/attr/vif/<span class="math inline"><em>D</em><em>E</em><em>V</em><em>I</em><em>D</em>/<em>i</em><em>p</em><em>v</em>6/</span>INDEX = IPV6_ADDRESS [w]</h4>
+<p>Paths of this form may be written by the guest to indicate IP addresses in use by the stack bound to the network frontend. For any of the paths the value of $INDEX is arbitrary. The values written are primarily for display purposes and must not be used for packet filtering or routing purposes. A toolstack may attempt to use an address written in one of these paths to, for example, establish a VNC session to the guest (although clearly some level of trust is placed in the value supplied by the guest in this case).</p>
+<h3 id="paths-private-to-the-toolstack"><span class="header-section-number">1.4.5</span> Paths private to the toolstack</h3>
+<h4 id="device-modeldomidstate-w"><span class="header-section-number">1.4.5.1</span> ~/device-model/$DOMID/state [w]</h4>
+<p>Contains the status of the device models running on the domain.</p>
+<h4 id="device-modeldomidbackends-w"><span class="header-section-number">1.4.5.2</span> ~/device-model/$DOMID/backends/* [w]</h4>
+<p>Backend types the device model is supporting. Each entry below backends is a directory which may contain further nodes specific to the backend type. The name of each backend directory is the same as the backend type (e.g. &quot;qdisk&quot;).</p>
+<h4 id="libxldomidqdisk-backend-pid-w"><span class="header-section-number">1.4.5.3</span> ~/libxl/$DOMID/qdisk-backend-pid [w]</h4>
+<p>Contains the PIDs of the device models running on the domain.</p>
+<h2 id="virtual-machine-paths"><span class="header-section-number">1.5</span> Virtual Machine Paths</h2>
+<p>The /vm/$UUID namespace is used by toolstacks to store various information relating to the domain which is not intended to be guest visible (hence they are all tagged [n,INTERNAL]).</p>
+<p>Several of the keys here are not well defined and/or not well located and are liable to be replaced with more fully defined paths in the future.</p>
+<h3 id="vmuuiduuid-uuid-ninternal"><span class="header-section-number">1.5.1</span> /vm/$UUID/uuid = UUID [n,INTERNAL]</h3>
+<p>Value is the same UUID as the path.</p>
+<h3 id="vmuuidname-string-ninternal"><span class="header-section-number">1.5.2</span> /vm/$UUID/name = STRING [n,INTERNAL]</h3>
+<p>The domain's name.</p>
+<h3 id="vmuuidimage-ninternal"><span class="header-section-number">1.5.3</span> /vm/$UUID/image/* [n,INTERNAL]</h3>
+<p>Various information relating to the domain builder used for this guest.</p>
+<h3 id="vmuuidstart_time-integer-.-integer-ninternal"><span class="header-section-number">1.5.4</span> /vm/$UUID/start_time = INTEGER &quot;.&quot; INTEGER [n,INTERNAL]</h3>
+<p>The time which the guest was started in SECONDS.MICROSECONDS format</p>
+<h3 id="vmuuidrtctimeoffset-integer-nhvminternal"><span class="header-section-number">1.5.5</span> /vm/$UUID/rtc/timeoffset = &quot;&quot;|INTEGER [n,HVM,INTERNAL]</h3>
+<p>The guest's virtual time offset from UTC in seconds.</p>
+<h2 id="platform-level-paths"><span class="header-section-number">1.6</span> Platform-Level paths</h2>
+<h3 id="libxl-specific-paths"><span class="header-section-number">1.6.1</span> libxl Specific Paths</h3>
+<h4 id="libxldomiddevicekinddevid"><span class="header-section-number">1.6.1.1</span> /libxl/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/<em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>/</span>KIND/$DEVID</h4>
+<p>Created by libxl for every frontend/backend pair created for $DOMID. Used by libxl for enumeration and management of the device.</p>
+<h4 id="libxldomiddevicekinddevidfrontend"><span class="header-section-number">1.6.1.2</span> /libxl/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/<em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>/</span>KIND/$DEVID/frontend</h4>
+<p>Path in xenstore to the frontend, normally /local/domain/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/<em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>/</span>KIND/$DEVID</p>
+<h4 id="libxldomiddevicekinddevidbackend"><span class="header-section-number">1.6.1.3</span> /libxl/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/<em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>/</span>KIND/$DEVID/backend</h4>
+<p>Path in xenstore to the backend, normally /local/domain/<span class="math inline"><em>B</em><em>A</em><em>C</em><em>K</em><em>E</em><em>N</em><em>D</em><sub><em>D</em></sub><em>O</em><em>M</em><em>I</em><em>D</em>/<em>b</em><em>a</em><em>c</em><em>k</em><em>e</em><em>n</em><em>d</em>/</span>KIND/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/</span>DEVID</p>
+<h4 id="libxldomiddevicekinddevidnode"><span class="header-section-number">1.6.1.4</span> /libxl/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/<em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>/</span>KIND/<span class="math inline"><em>D</em><em>E</em><em>V</em><em>I</em><em>D</em>/</span>NODE</h4>
+<p>Trustworthy copy of /local/domain/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/<em>b</em><em>a</em><em>c</em><em>k</em><em>e</em><em>n</em><em>d</em>/</span>KIND/<span class="math inline"><em>D</em><em>E</em><em>V</em><em>I</em><em>D</em>/</span>NODE.</p>
+<h4 id="libxldomiddm-version-qemu_xenqemu_xen_traditional-ninternal"><span class="header-section-number">1.6.1.5</span> /libxl/$DOMID/dm-version (&quot;qemu_xen&quot;|&quot;qemu_xen_traditional&quot;) = [n,INTERNAL]</h4>
+<p>The device model version for a domain.</p>
+<h4 id="libxldomidremusnetbufdevidifb-string-ninternal"><span class="header-section-number">1.6.1.6</span> /libxl/<span class="math inline"><em>D</em><em>O</em><em>M</em><em>I</em><em>D</em>/<em>r</em><em>e</em><em>m</em><em>u</em><em>s</em>/<em>n</em><em>e</em><em>t</em><em>b</em><em>u</em><em>f</em>/</span>DEVID/ifb = STRING [n,INTERNAL]</h4>
+<p>ifb device used by Remus to buffer network output from the associated vif.</p>
+<h3 id="xenstored-specific-paths"><span class="header-section-number">1.6.2</span> xenstored specific paths</h3>
+<p>The /tool/xenstored namespace is created by the xenstore daemon or domain for the toolstack to obtain e.g. the domain id of a xenstore domain.</p>
+<h4 id="toolxenstoreddomid-integer-ninternal"><span class="header-section-number">1.6.2.1</span> /tool/xenstored/domid = INTEGER [n,INTERNAL]</h4>
+<p>Domain Id of the xenstore domain in case xenstore is provided via a domain instead of a daemon in dom0.</p>
+</body>
+</html>

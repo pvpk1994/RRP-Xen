@@ -8692,7 +8692,7 @@ $as_echo "$ax_cv_pthread_flags" >&6; }
 
     saved_CPPFLAGS="$CPPFLAGS"
 
-    CPPFLAGS="$CPPFLAGS -Werror"
+    /*  CPPFLAGS="$CPPFLAGS -Werror" */
     ac_fn_c_check_header_mongrel "$LINENO" "libutil.h" "ac_cv_header_libutil_h" "$ac_includes_default"
 if test "x$ac_cv_header_libutil_h" = xyes; then :
 

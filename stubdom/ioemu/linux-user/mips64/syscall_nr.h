@@ -1,0 +1,1 @@
+/root/xen/stubdom/../tools/qemu-xen-traditional-dir/linux-user/mips64/syscall_nr.h

@@ -185,6 +185,15 @@ struct scheduler {
     void         (*tick_resume)     (const struct scheduler *, unsigned int);
 };
 
+/* Scheduler definitions external */
+extern const struct scheduler sched_credit_def;
+extern const struct scheduler sched_credit2_def;
+extern const struct scheduler sched_arinc653_def;
+extern const struct scheduler sched_aaf_def;
+extern const struct scheduler sched_rt_def;
+extern const struct scheduler sched_ttxen_def;
+/* Defs end here */
+
 static inline void *sched_alloc_domdata(const struct scheduler *s,
                                         struct domain *d)
 {

@@ -1,0 +1,11 @@
+prefix=/root/xen/tools/xenstore/../..
+includedir=/root/xen/tools/xenstore/../../tools/xenstore/include
+libdir=/root/xen/tools/xenstore
+
+Name: Xenstore
+Description: The Xenstore library for Xen hypervisor
+Version: 3.0.3
+Cflags: -I${includedir} -I/root/xen/tools/xenstore/../../tools/include
+Libs: -Wl,-rpath-link=${libdir} -lxenstore
+Libs.private: -ldl
+Requires.private: xenevtchn,xencontrol,xengnttab,xentoolcore

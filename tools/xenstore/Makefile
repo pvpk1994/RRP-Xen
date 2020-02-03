@@ -4,7 +4,7 @@ include $(XEN_ROOT)/tools/Rules.mk
 MAJOR = 3.0
 MINOR = 3
 
-CFLAGS += -Werror
+#CFLAGS += -Werror
 CFLAGS += -I.
 # Include configure output (config.h)
 CFLAGS += -include $(XEN_ROOT)/tools/config.h

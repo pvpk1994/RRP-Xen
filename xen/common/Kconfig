@@ -246,6 +246,13 @@ config SCHED_RTDS
 	  multicore, targeted for embedded, automotive, graphics and gaming
 	  in the cloud, and general low-latency workloads.
 
+
+config SCHED_AAF
+	bool "AAF scheduler support (EXPERIMENTAL)"
+	default y
+	---help---
+	  The AAF scheduler is a hard real-time scheduler for single core with static schedule          generated in the Dom0.
+
 config SCHED_ARINC653
 	bool "ARINC653 scheduler support (EXPERIMENTAL)"
 	default DEBUG
@@ -260,7 +267,6 @@ config SCHED_NULL
 	  The null scheduler is a static, zero overhead scheduler,
 	  for when there always are less vCPUs than pCPUs, typically
 	  in embedded or HPC scenarios.
-
 choice
 	prompt "Default Scheduler?"
 	default SCHED_CREDIT2_DEFAULT
@@ -284,6 +290,7 @@ config SCHED_DEFAULT
 	default "rtds" if SCHED_RTDS_DEFAULT
 	default "arinc653" if SCHED_ARINC653_DEFAULT
 	default "null" if SCHED_NULL_DEFAULT
+	default "aaf" if SCHED_AAF_DEFAULT
 	default "credit2"
 
 endmenu

@@ -67,6 +67,20 @@ DEFINE_PER_CPU(struct scheduler *, scheduler);
 /* Scratch space for cpumasks. */
 DEFINE_PER_CPU(cpumask_t, cpumask_scratch);
 
+/* Scheduler Definitions */
+static const struct scheduler  *schedulers[] = {
+        &sched_arinc653_def,
+        &sched_credit_def,
+        &sched_credit2_def,
+        &sched_aaf_def,
+        &sched_rt_def,
+	&sched_ttxen_def,
+        //&sched_trivial_def,
+        NULL
+};
+
+
+
 extern const struct scheduler *__start_schedulers_array[], *__end_schedulers_array[];
 #define NUM_SCHEDULERS (__end_schedulers_array - __start_schedulers_array)
 #define schedulers __start_schedulers_array

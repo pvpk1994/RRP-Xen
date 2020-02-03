@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Revision 1" />
+  <title>QEMU Deprivileging / dm_restrict</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">QEMU Deprivileging / dm_restrict</h1>
+<h2 class="author">Revision 1</h2>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#basics"><span class="toc-section-number">1</span> Basics</a></li>
+<li><a href="#overview"><span class="toc-section-number">2</span> Overview</a></li>
+<li><a href="#user-details"><span class="toc-section-number">3</span> User details</a><ul>
+<li><a href="#getting-the-right-versions-of-software"><span class="toc-section-number">3.1</span> Getting the right versions of software</a></li>
+<li><a href="#setting-up-a-group-and-userid-range"><span class="toc-section-number">3.2</span> Setting up a group and userid range</a></li>
+<li><a href="#domain-config-changes"><span class="toc-section-number">3.3</span> Domain config changes</a></li>
+</ul></li>
+<li><a href="#technical-details"><span class="toc-section-number">4</span> Technical details</a></li>
+<li><a href="#limitations"><span class="toc-section-number">5</span> Limitations</a></li>
+<li><a href="#history"><span class="toc-section-number">6</span> History</a></li>
+</ul>
+</div>
+<p></p>
+<h1 id="basics"><span class="header-section-number">1</span> Basics</h1>
+<table style="width:96%;">
+<colgroup>
+<col width="23%" />
+<col width="72%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="right">Status:</td>
+<td align="left"><strong>Tech Preview</strong></td>
+</tr>
+<tr class="even">
+<td align="right">Architecture(s):</td>
+<td align="left">x86</td>
+</tr>
+<tr class="odd">
+<td align="right">Component(s):</td>
+<td align="left">toolstack</td>
+</tr>
+</tbody>
+</table>
+<h1 id="overview"><span class="header-section-number">2</span> Overview</h1>
+<p>By default, the QEMU device model is run in domain 0. If an attacker can gain control of a QEMU process, it could easily take control of a system.</p>
+<p>dm_restrict is a set of operations to restrict QEMU running in domain 0. It consists of two halves:</p>
+<ol style="list-style-type: decimal">
+<li>Mechanisms to restrict QEMU to only being able to affect its own domain</li>
+<li>Mechanisms to restruct QEMU's ability to interact with domain 0.</li>
+</ol>
+<h1 id="user-details"><span class="header-section-number">3</span> User details</h1>
+<h2 id="getting-the-right-versions-of-software"><span class="header-section-number">3.1</span> Getting the right versions of software</h2>
+<p>Linux: 4.11+</p>
+<p>Qemu: 3.0+ (Or the version that comes with Xen 4.12+)</p>
+<h2 id="setting-up-a-group-and-userid-range"><span class="header-section-number">3.2</span> Setting up a group and userid range</h2>
+<p>For maximum security, libxl needs to run the devicemodel for each domain under a user id (UID) corresponding to its domain id. There are 32752 possible domain IDs, and so libxl needs 32752 user ids set aside for it. Setting up a group for all devicemodels to run at is also recommended.</p>
+<p>The simplest and most effective way to do this is to allocate a contiguous block of UIDs, and create a single user named <code>xen-qemuuser-range-base</code> with the first UID. For example, under Debian:</p>
+<pre><code>adduser --system --uid 131072 --group --no-create-home xen-qemuuser-range-base</code></pre>
+<p>Two comments on this method:</p>
+<ol style="list-style-type: decimal">
+<li>Most modern systems have 32-bit UIDs, and so can in theory go up to 2^31 (or 2^32 if uids are unsigned). POSIX only guarantees 16-bit UIDs however; UID 65535 is reserved for an invalid value, and 65534 is normally allocated to &quot;nobody&quot;.</li>
+<li>Additionally, some container systems have proposed using the upper 16 bits of the uid for a container ID. Using a multiple of 2^16 for the range base (as is done above) will result in all UIDs being interpreted by such systems as a single container ID.</li>
+</ol>
+<p>Another, less-secure way is to run all QEMUs as the same UID. To do this, create a user named <code>xen-qemuuser-shared</code>; for example:</p>
+<pre><code>adduser --no-create-home --system xen-qemuuser-shared</code></pre>
+<p>A final way to set up a separate process for qemus is to allocate one UID per VM, and set the UID in the domain config file with the <code>device_model_user</code> argument. For example, suppose you have a VM named <code>c6-01</code>. You might do the following:</p>
+<pre><code>adduser --system --no-create-home --group xen-qemuuser-c6-01</code></pre>
+<p>And then in your config file, the following line:</p>
+<pre><code>device_model_user=&quot;xen-qemuuser-c6-01&quot;</code></pre>
+<p>If you use this method, you should also allocate one &quot;reaper&quot; user to be used for killing device models:</p>
+<pre><code>adduser --system --no-create-home --group xen-qemuuser-reaper</code></pre>
+<p>NOTE: It is important when using <code>device_model_user</code> that EACH VM HAVE A SEPARATE UID, and that none of these UIDs map to root. xl will throw an error a uid maps to zero, but not if multiple VMs have the same uid. Multiple VMs with the same device model uid will cause problems.</p>
+<p>It is also important that <code>xen-qemuuser-reaper</code> not have any processes associated with it, as they will be destroyed when deprivileged qemu processes are destroyed.</p>
+<h2 id="domain-config-changes"><span class="header-section-number">3.3</span> Domain config changes</h2>
+<p>The core domain config change is to add the following line to the domain configuration:</p>
+<pre><code>dm_restrict=1</code></pre>
+<p>This will perform a number of restrictions, outlined below in the 'Technical details' section.</p>
+<h1 id="technical-details"><span class="header-section-number">4</span> Technical details</h1>
+<p>See docs/design/qemu-deprivilege.md for technical details.</p>
+<h1 id="limitations"><span class="header-section-number">5</span> Limitations</h1>
+<p>The following features still need to be implemented:</p>
+<ul>
+<li>Inserting a new cdrom while the guest is running (xl cdrom-insert)</li>
+<li>Support for qdisk backends</li>
+</ul>
+<p>A number of restrictions still need to be implemented. A compromised device model may be able to do the following:</p>
+<ul>
+<li>Delay or exploit weaknesses in the toolstack</li>
+<li>Launch &quot;fork bombs&quot; or other resource exhaustion attacks</li>
+<li>Make network connections on the management network</li>
+<li>Break out of the restrictions after migration</li>
+</ul>
+<p>Additionally, getting PCI passthrough to work securely would require a significant rework of how passthrough works at the moment. It may be implemented at some point but is not a near-term priority.</p>
+<p>See SUPPORT.md for security support status.</p>
+<h1 id="history"><span class="header-section-number">6</span> History</h1>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="12%" />
+<col width="12%" />
+<col width="59%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Date</th>
+<th align="left">Revision</th>
+<th align="left">Version</th>
+<th align="left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2018-09-14</td>
+<td align="left">1</td>
+<td align="left">Xen 4.12</td>
+<td align="left">Imported from docs/misc</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

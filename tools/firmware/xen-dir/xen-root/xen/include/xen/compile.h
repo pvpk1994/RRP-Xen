@@ -1,0 +1,14 @@
+#define XEN_COMPILE_DATE	"Sat Feb  1 09:18:47 CST 2020"
+#define XEN_COMPILE_TIME	"09:18:47"
+#define XEN_COMPILE_BY		"root"
+#define XEN_COMPILE_DOMAIN	""
+#define XEN_COMPILE_HOST	"rtlabuser-XPS-8500"
+#define XEN_COMPILER		"gcc (Ubuntu 5.4.0-6ubuntu1~16.04.12) 5.4.0 20160609"
+
+#define XEN_VERSION		4
+#define XEN_SUBVERSION		12
+#define XEN_EXTRAVERSION	".2-pre"
+
+#define XEN_CHANGESET		""
+#define XEN_BANNER		\
+"\040\130\145\156\040\064\056\061\062\056\062\055\160\162\145\012"

@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="TOC">
+<ul>
+<li><a href="#dmop"><span class="toc-section-number">1</span> DMOP</a><ul>
+<li><a href="#introduction"><span class="toc-section-number">1.1</span> Introduction</a></li>
+<li><a href="#the-design"><span class="toc-section-number">1.2</span> The Design</a></li>
+<li><a href="#validation-by-privcmd-driver"><span class="toc-section-number">1.3</span> Validation by privcmd driver</a></li>
+<li><a href="#xen-implementation"><span class="toc-section-number">1.4</span> Xen Implementation</a></li>
+</ul></li>
+</ul>
+</div>
+<h1 id="dmop"><span class="header-section-number">1</span> DMOP</h1>
+<h2 id="introduction"><span class="header-section-number">1.1</span> Introduction</h2>
+<p>The aim of DMOP is to prevent a compromised device model from compromising domains other than the one it is providing emulation for (which is therefore likely already compromised).</p>
+<p>The problem occurs when you a device model issues an hypercall that includes references to user memory other than the operation structure itself, such as with Track dirty VRAM (as used in VGA emulation). Is this case, the address of this other user memory needs to be vetted, to ensure it is not within restricted address ranges, such as kernel memory. The real problem comes down to how you would vet this address - the idea place to do this is within the privcmd driver, without privcmd having to have specific knowledge of the hypercall's semantics.</p>
+<h2 id="the-design"><span class="header-section-number">1.2</span> The Design</h2>
+<p>The privcmd driver implements a new restriction ioctl, which takes a domid parameter. After that restriction ioctl is issued, all unaudited operations on the privcmd driver will cease to function, including regular hypercalls. DMOP hypercalls will continue to function as they can be audited.</p>
+<p>A DMOP hypercall consists of a domid (which is audited to verify that it matches any restriction in place) and an array of buffers and lengths, with the first one containing the specific DMOP parameters. These can then reference further buffers from within in the array. Since the only user buffers passed are that found with that array, they can all can be audited by privcmd.</p>
+<p>The following code illustrates this idea:</p>
+<p>struct xen_dm_op { uint32_t op; };</p>
+<p>struct xen_dm_op_buf { XEN_GUEST_HANDLE(void) h; unsigned long size; }; typedef struct xen_dm_op_buf xen_dm_op_buf_t;</p>
+<p>enum neg_errnoval HYPERVISOR_dm_op(domid_t domid, xen_dm_op_buf_t bufs[], unsigned int nr_bufs)</p>
+<p><span class="citation">@domid</span> is the domain the hypercall operates on. <span class="citation">@bufs</span> points to an array of buffers where <span class="citation">@bufs [0]</span> contains a struct dm_op, describing the specific device model operation and its parameters. <span class="citation">@bufs [1..]</span> may be referenced in the parameters for the purposes of passing extra information to or from the domain. <span class="citation">@nr_bufs</span> is the number of buffers in the <span class="citation">@bufs</span> array.</p>
+<p>It is forbidden for the above struct (xen_dm_op) to contain any guest handles. If they are needed, they should instead be in HYPERVISOR_dm_op-&gt;bufs.</p>
+<h2 id="validation-by-privcmd-driver"><span class="header-section-number">1.3</span> Validation by privcmd driver</h2>
+<p>If the privcmd driver has been restricted to specific domain (using a new ioctl), when it received an op, it will:</p>
+<ol style="list-style-type: decimal">
+<li><p>Check hypercall is DMOP.</p></li>
+<li><p>Check domid == restricted domid.</p></li>
+<li><p>For each <span class="citation">@nr_bufs</span> in <span class="citation">@bufs</span>: Check <span class="citation">@h</span> and <span class="citation">@size</span> give a buffer wholly in the user space part of the virtual address space. (e.g. Linux will use access_ok()).</p></li>
+</ol>
+<h2 id="xen-implementation"><span class="header-section-number">1.4</span> Xen Implementation</h2>
+<p>Since a DMOP buffers need to be copied from or to the guest, functions for doing this would be written as below. Note that care is taken to prevent damage from buffer under- or over-run situations. If the DMOP is called with incorrectly sized buffers, zeros will be read, while extra is ignored.</p>
+<p>static bool copy_buf_from_guest(xen_dm_op_buf_t bufs[], unsigned int nr_bufs, void *dst, unsigned int idx, size_t dst_size) { size_t size;</p>
+<pre><code>if ( idx &gt;= nr_bufs )
+    return false;
+
+memset(dst, 0, dst_size);
+
+size = min_t(size_t, dst_size, bufs[idx].size);
+
+return !copy_from_guest(dst, bufs[idx].h, size);</code></pre>
+<p>}</p>
+<p>static bool copy_buf_to_guest(xen_dm_op_buf_t bufs[], unsigned int nr_bufs, unsigned int idx, void *src, size_t src_size) { size_t size;</p>
+<pre><code>if ( idx &gt;= nr_bufs )
+    return false;
+
+size = min_t(size_t, bufs[idx].size, src_size);
+
+return !copy_to_guest(bufs[idx].h, src, size);</code></pre>
+<p>}</p>
+<p>This leaves do_dm_op easy to implement as below:</p>
+<p>static int dm_op(domid_t domid, unsigned int nr_bufs, xen_dm_op_buf_t bufs[]) { struct domain *d; struct xen_dm_op op; bool const_op = true; long rc;</p>
+<pre><code>rc = rcu_lock_remote_domain_by_id(domid, &amp;d);
+if ( rc )
+    return rc;
+
+if ( !is_hvm_domain(d) )
+    goto out;
+
+rc = xsm_dm_op(XSM_DM_PRIV, d);
+if ( rc )
+    goto out;
+
+if ( !copy_buf_from_guest(bufs, nr_bufs, &amp;op, 0, sizeof(op)) )
+{
+    rc = -EFAULT;
+    goto out;
+}
+
+switch ( op.op )
+{
+default:
+    rc = -EOPNOTSUPP;
+    break;
+}
+
+if ( !rc &amp;&amp;
+     !const_op &amp;&amp;
+     !copy_buf_to_guest(bufs, nr_bufs, 0, &amp;op, sizeof(op)) )
+    rc = -EFAULT;</code></pre>
+<p>out: rcu_unlock_domain(d);</p>
+<pre><code>return rc;</code></pre>
+<p>}</p>
+<p>long do_dm_op(domid_t domid, unsigned int nr_bufs, XEN_GUEST_HANDLE_PARAM(xen_dm_op_buf_t) bufs) { struct xen_dm_op_buf nat[MAX_NR_BUFS];</p>
+<pre><code>if ( nr_bufs &gt; MAX_NR_BUFS )
+    return -EINVAL;
+
+if ( copy_from_guest_offset(nat, bufs, 0, nr_bufs) )
+    return -EFAULT;
+
+return dm_op(domid, nr_bufs, nat);</code></pre>
+<p>}</p>
+</body>
+</html>

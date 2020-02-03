@@ -1,0 +1,18 @@
+NAME
+    xenstore-write - write Xenstore values
+
+SYNOPSIS
+    xenstore-read [*OPTION*]... *PATH* *VALUE*...
+
+DESCRIPTION
+    Write *VALUE*s to Xenstore *PATH*s. Multiple pairs *PATH* *VALUE* can be
+    provided to write them at once - in one Xenstore transaction.
+
+    -s  Connect to the Xenstore daemon using a local socket only.
+
+    -R  Write raw value, skip parsing escaped characters (\x..).
+
+BUGS
+    Send bugs to xen-devel@lists.xen.org, see
+    http://wiki.xen.org/xenwiki/ReportingBugs on how to send bug reports.
+

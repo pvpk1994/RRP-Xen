@@ -1,0 +1,3050 @@
+"trie.ml" 24 743 748 "trie.ml" 24 743 755
+type(
+  'a -> 'b -> ('a, 'b) t
+)
+ident(
+  def _create "trie.ml" 30 826 827 "trie.ml" 51 1283 1286
+)
+"trie.ml" 24 743 756 "trie.ml" 24 743 759
+type(
+  'a
+)
+ident(
+  def key "trie.ml" 24 743 760 "trie.ml" 28 822 824
+)
+"trie.ml" 24 743 760 "trie.ml" 24 743 765
+type(
+  'b
+)
+ident(
+  def value "trie.ml" 24 743 768 "trie.ml" 28 822 824
+)
+"trie.ml" 25 770 778 "trie.ml" 25 770 781
+type(
+  'a
+)
+ident(
+  int_ref key "trie.ml" 24 743 756 "trie.ml" 24 743 759
+)
+"trie.ml" 26 783 798 "trie.ml" 26 783 803
+type(
+  'b
+)
+ident(
+  int_ref value "trie.ml" 24 743 760 "trie.ml" 24 743 765
+)
+"trie.ml" 26 783 793 "trie.ml" 26 783 803
+type(
+  'b option
+)
+"trie.ml" 27 805 818 "trie.ml" 27 805 820
+type(
+  ('a, 'b) t list
+)
+"trie.ml" 24 743 768 "trie.ml" 28 822 824
+type(
+  ('a, 'b) t
+)
+"trie.ml" 30 826 831 "trie.ml" 30 826 836
+type(
+  'c -> ('c, 'd) t
+)
+ident(
+  def empty "trie.ml" 36 894 895 "trie.ml" 51 1283 1286
+)
+"trie.ml" 30 826 837 "trie.ml" 30 826 840
+type(
+  'c
+)
+ident(
+  def key "trie.ml" 30 826 843 "trie.ml" 34 890 892
+)
+"trie.ml" 31 845 853 "trie.ml" 31 845 856
+type(
+  'c
+)
+ident(
+  int_ref key "trie.ml" 30 826 837 "trie.ml" 30 826 840
+)
+"trie.ml" 32 858 868 "trie.ml" 32 858 872
+type(
+  'd option
+)
+"trie.ml" 33 874 887 "trie.ml" 33 874 889
+type(
+  ('c, 'd) t list
+)
+"trie.ml" 30 826 843 "trie.ml" 34 890 892
+type(
+  ('c, 'd) t
+)
+"trie.ml" 36 894 899 "trie.ml" 36 894 907
+type(
+  ('e, 'f) t -> 'e
+)
+ident(
+  def _get_key "trie.ml" 37 924 925 "trie.ml" 51 1283 1286
+)
+"trie.ml" 36 894 908 "trie.ml" 36 894 912
+type(
+  ('e, 'f) t
+)
+ident(
+  def node "trie.ml" 36 894 915 "trie.ml" 36 894 923
+)
+"trie.ml" 36 894 915 "trie.ml" 36 894 919
+type(
+  ('e, 'f) t
+)
+ident(
+  int_ref node "trie.ml" 36 894 908 "trie.ml" 36 894 912
+)
+"trie.ml" 36 894 915 "trie.ml" 36 894 923
+type(
+  'e
+)
+"trie.ml" 37 924 929 "trie.ml" 37 924 938
+type(
+  ('g, 'h) t -> 'h
+)
+ident(
+  def get_value "trie.ml" 42 1029 1030 "trie.ml" 51 1283 1286
+)
+"trie.ml" 37 924 939 "trie.ml" 37 924 943
+type(
+  ('g, 'h) t
+)
+ident(
+  def node "trie.ml" 38 946 948 "trie.ml" 40 1004 1027
+)
+"trie.ml" 38 946 954 "trie.ml" 38 946 958
+type(
+  ('g, 'h) t
+)
+ident(
+  int_ref node "trie.ml" 37 924 939 "trie.ml" 37 924 943
+)
+"trie.ml" 38 946 954 "trie.ml" 38 946 964
+type(
+  'h option
+)
+"trie.ml" 39 970 974 "trie.ml" 39 970 978
+type(
+  'h option
+)
+"trie.ml" 39 970 988 "trie.ml" 39 970 993
+type(
+  exn -> 'h
+)
+ident(
+  ext_ref Pervasives.raise
+)
+"trie.ml" 39 970 994 "trie.ml" 39 970 1003
+type(
+  exn
+)
+"trie.ml" 39 970 988 "trie.ml" 39 970 1003
+type(
+  'h
+)
+"trie.ml" 40 1004 1013 "trie.ml" 40 1004 1018
+type(
+  'h
+)
+ident(
+  def value "trie.ml" 40 1004 1022 "trie.ml" 40 1004 1027
+)
+"trie.ml" 40 1004 1008 "trie.ml" 40 1004 1018
+type(
+  'h option
+)
+"trie.ml" 40 1004 1022 "trie.ml" 40 1004 1027
+type(
+  'h
+)
+ident(
+  int_ref value "trie.ml" 40 1004 1013 "trie.ml" 40 1004 1018
+)
+"trie.ml" 38 946 948 "trie.ml" 40 1004 1027
+type(
+  'h
+)
+"trie.ml" 42 1029 1034 "trie.ml" 42 1029 1047
+type(
+  ('i, 'j) t -> ('i, 'j) t list
+)
+ident(
+  def _get_children "trie.ml" 44 1070 1071 "trie.ml" 51 1283 1286
+)
+"trie.ml" 42 1029 1048 "trie.ml" 42 1029 1052
+type(
+  ('i, 'j) t
+)
+ident(
+  def node "trie.ml" 42 1029 1055 "trie.ml" 42 1029 1068
+)
+"trie.ml" 42 1029 1055 "trie.ml" 42 1029 1059
+type(
+  ('i, 'j) t
+)
+ident(
+  int_ref node "trie.ml" 42 1029 1048 "trie.ml" 42 1029 1052
+)
+"trie.ml" 42 1029 1055 "trie.ml" 42 1029 1068
+type(
+  ('i, 'j) t list
+)
+"trie.ml" 44 1070 1075 "trie.ml" 44 1070 1084
+type(
+  ('k, 'l) t -> 'l -> ('k, 'l) t
+)
+ident(
+  def set_value "trie.ml" 46 1133 1134 "trie.ml" 51 1283 1286
+)
+"trie.ml" 44 1070 1085 "trie.ml" 44 1070 1089
+type(
+  ('k, 'l) t
+)
+ident(
+  def node "trie.ml" 44 1070 1090 "trie.ml" 45 1098 1132
+)
+"trie.ml" 44 1070 1090 "trie.ml" 44 1070 1095
+type(
+  'l
+)
+ident(
+  def value "trie.ml" 45 1098 1100 "trie.ml" 45 1098 1132
+)
+"trie.ml" 45 1098 1102 "trie.ml" 45 1098 1106
+type(
+  ('k, 'l) t
+)
+ident(
+  int_ref node "trie.ml" 44 1070 1085 "trie.ml" 44 1070 1089
+)
+"trie.ml" 45 1098 1125 "trie.ml" 45 1098 1130
+type(
+  'l
+)
+ident(
+  int_ref value "trie.ml" 44 1070 1090 "trie.ml" 44 1070 1095
+)
+"trie.ml" 45 1098 1120 "trie.ml" 45 1098 1130
+type(
+  'l option
+)
+"trie.ml" 45 1098 1100 "trie.ml" 45 1098 1132
+type(
+  ('k, 'l) t
+)
+"trie.ml" 46 1133 1138 "trie.ml" 46 1133 1150
+type(
+  ('m, 'n) t -> ('m, 'n) t list -> ('m, 'n) t
+)
+ident(
+  def set_children "trie.ml" 49 1204 1205 "trie.ml" 51 1283 1286
+)
+"trie.ml" 46 1133 1151 "trie.ml" 46 1133 1155
+type(
+  ('m, 'n) t
+)
+ident(
+  def node "trie.ml" 46 1133 1156 "trie.ml" 47 1167 1202
+)
+"trie.ml" 46 1133 1156 "trie.ml" 46 1133 1164
+type(
+  ('m, 'n) t list
+)
+ident(
+  def children "trie.ml" 47 1167 1169 "trie.ml" 47 1167 1202
+)
+"trie.ml" 47 1167 1171 "trie.ml" 47 1167 1175
+type(
+  ('m, 'n) t
+)
+ident(
+  int_ref node "trie.ml" 46 1133 1151 "trie.ml" 46 1133 1155
+)
+"trie.ml" 47 1167 1192 "trie.ml" 47 1167 1200
+type(
+  ('m, 'n) t list
+)
+ident(
+  int_ref children "trie.ml" 46 1133 1156 "trie.ml" 46 1133 1164
+)
+"trie.ml" 47 1167 1169 "trie.ml" 47 1167 1202
+type(
+  ('m, 'n) t
+)
+"trie.ml" 49 1204 1209 "trie.ml" 49 1204 1219
+type(
+  ('o, 'p) t -> ('o, 'p) t -> ('o, 'p) t
+)
+ident(
+  def _add_child "trie.ml" 50 1233 1282 "trie.ml" 51 1283 1286
+)
+"trie.ml" 49 1204 1220 "trie.ml" 49 1204 1224
+type(
+  ('o, 'p) t
+)
+ident(
+  def node "trie.ml" 49 1204 1225 "trie.ml" 50 1233 1282
+)
+"trie.ml" 49 1204 1225 "trie.ml" 49 1204 1230
+type(
+  ('o, 'p) t
+)
+ident(
+  def child "trie.ml" 50 1233 1235 "trie.ml" 50 1233 1282
+)
+"trie.ml" 50 1233 1237 "trie.ml" 50 1233 1241
+type(
+  ('o, 'p) t
+)
+ident(
+  int_ref node "trie.ml" 49 1204 1220 "trie.ml" 49 1204 1224
+)
+"trie.ml" 50 1233 1258 "trie.ml" 50 1233 1263
+type(
+  ('o, 'p) t
+)
+ident(
+  int_ref child "trie.ml" 49 1204 1225 "trie.ml" 49 1204 1230
+)
+"trie.ml" 50 1233 1267 "trie.ml" 50 1233 1271
+type(
+  ('o, 'p) t
+)
+ident(
+  int_ref node "trie.ml" 49 1204 1220 "trie.ml" 49 1204 1224
+)
+"trie.ml" 50 1233 1267 "trie.ml" 50 1233 1280
+type(
+  ('o, 'p) t list
+)
+"trie.ml" 50 1233 1258 "trie.ml" 50 1233 1280
+type(
+  ('o, 'p) t list
+)
+"trie.ml" 50 1233 1235 "trie.ml" 50 1233 1282
+type(
+  ('o, 'p) t
+)
+"trie.ml" 55 1326 1330 "trie.ml" 55 1326 1338
+type(
+  ('a, 'b) Node.t list -> 'a -> bool
+)
+ident(
+  def mem_node "trie.ml" 58 1399 1399 "trie.ml" 1 0 -1
+)
+"trie.ml" 55 1326 1339 "trie.ml" 55 1326 1344
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def nodes "trie.ml" 55 1326 1345 "trie.ml" 56 1351 1397
+)
+"trie.ml" 55 1326 1345 "trie.ml" 55 1326 1348
+type(
+  'a
+)
+ident(
+  def key "trie.ml" 56 1351 1352 "trie.ml" 56 1351 1397
+)
+"trie.ml" 56 1351 1352 "trie.ml" 56 1351 1363
+type(
+  (('a, 'b) Node.t -> bool) -> ('a, 'b) Node.t list -> bool
+)
+ident(
+  ext_ref List.exists
+)
+"trie.ml" 56 1351 1369 "trie.ml" 56 1351 1370
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def n "trie.ml" 56 1351 1374 "trie.ml" 56 1351 1390
+)
+"trie.ml" 56 1351 1374 "trie.ml" 56 1351 1375
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref n "trie.ml" 56 1351 1369 "trie.ml" 56 1351 1370
+)
+"trie.ml" 56 1351 1374 "trie.ml" 56 1351 1384
+type(
+  'a
+)
+"trie.ml" 56 1351 1385 "trie.ml" 56 1351 1386
+type(
+  'a -> 'a -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 56 1351 1387 "trie.ml" 56 1351 1390
+type(
+  'a
+)
+ident(
+  int_ref key "trie.ml" 55 1326 1345 "trie.ml" 55 1326 1348
+)
+"trie.ml" 56 1351 1374 "trie.ml" 56 1351 1390
+type(
+  bool
+)
+"trie.ml" 56 1351 1364 "trie.ml" 56 1351 1391
+type(
+  ('a, 'b) Node.t -> bool
+)
+"trie.ml" 56 1351 1392 "trie.ml" 56 1351 1397
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref nodes "trie.ml" 55 1326 1339 "trie.ml" 55 1326 1344
+)
+"trie.ml" 56 1351 1352 "trie.ml" 56 1351 1397
+call(
+  tail
+)
+type(
+  bool
+)
+"trie.ml" 58 1399 1403 "trie.ml" 58 1399 1412
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t
+)
+ident(
+  def find_node "trie.ml" 61 1471 1471 "trie.ml" 1 0 -1
+)
+"trie.ml" 58 1399 1413 "trie.ml" 58 1399 1418
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def nodes "trie.ml" 58 1399 1419 "trie.ml" 59 1425 1469
+)
+"trie.ml" 58 1399 1419 "trie.ml" 58 1399 1422
+type(
+  'a
+)
+ident(
+  def key "trie.ml" 59 1425 1426 "trie.ml" 59 1425 1469
+)
+"trie.ml" 59 1425 1426 "trie.ml" 59 1425 1435
+type(
+  (('a, 'b) Node.t -> bool) -> ('a, 'b) Node.t list -> ('a, 'b) Node.t
+)
+ident(
+  ext_ref List.find
+)
+"trie.ml" 59 1425 1441 "trie.ml" 59 1425 1442
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def n "trie.ml" 59 1425 1446 "trie.ml" 59 1425 1462
+)
+"trie.ml" 59 1425 1446 "trie.ml" 59 1425 1447
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref n "trie.ml" 59 1425 1441 "trie.ml" 59 1425 1442
+)
+"trie.ml" 59 1425 1446 "trie.ml" 59 1425 1456
+type(
+  'a
+)
+"trie.ml" 59 1425 1457 "trie.ml" 59 1425 1458
+type(
+  'a -> 'a -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 59 1425 1459 "trie.ml" 59 1425 1462
+type(
+  'a
+)
+ident(
+  int_ref key "trie.ml" 58 1399 1419 "trie.ml" 58 1399 1422
+)
+"trie.ml" 59 1425 1446 "trie.ml" 59 1425 1462
+type(
+  bool
+)
+"trie.ml" 59 1425 1436 "trie.ml" 59 1425 1463
+type(
+  ('a, 'b) Node.t -> bool
+)
+"trie.ml" 59 1425 1464 "trie.ml" 59 1425 1469
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref nodes "trie.ml" 58 1399 1413 "trie.ml" 58 1399 1418
+)
+"trie.ml" 59 1425 1426 "trie.ml" 59 1425 1469
+call(
+  tail
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 61 1471 1475 "trie.ml" 61 1471 1487
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t -> ('a, 'b) Node.t list
+)
+ident(
+  def replace_node "trie.ml" 69 1682 1682 "trie.ml" 1 0 -1
+)
+"trie.ml" 61 1471 1488 "trie.ml" 61 1471 1493
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def nodes "trie.ml" 61 1471 1494 "trie.ml" 67 1670 1680
+)
+"trie.ml" 61 1471 1494 "trie.ml" 61 1471 1497
+type(
+  'a
+)
+ident(
+  def key "trie.ml" 61 1471 1498 "trie.ml" 67 1670 1680
+)
+"trie.ml" 61 1471 1498 "trie.ml" 61 1471 1502
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def node "trie.ml" 62 1505 1506 "trie.ml" 67 1670 1680
+)
+"trie.ml" 62 1505 1514 "trie.ml" 62 1505 1517
+type(
+  ('a, 'b) Node.t list -> ('a, 'b) Node.t list
+)
+ident(
+  def aux "trie.ml" 62 1505 1506 "trie.ml" 67 1670 1680
+)
+"trie.ml" 63 1529 1533 "trie.ml" 63 1529 1535
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 63 1529 1566 "trie.ml" 63 1529 1568
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 64 1569 1573 "trie.ml" 64 1569 1574
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def h "trie.ml" 64 1569 1586 "trie.ml" 64 1569 1616
+)
+"trie.ml" 64 1569 1578 "trie.ml" 64 1569 1580
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tl "trie.ml" 64 1569 1586 "trie.ml" 64 1569 1616
+)
+"trie.ml" 64 1569 1573 "trie.ml" 64 1569 1580
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 64 1569 1586 "trie.ml" 64 1569 1587
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref h "trie.ml" 64 1569 1573 "trie.ml" 64 1569 1574
+)
+"trie.ml" 64 1569 1586 "trie.ml" 64 1569 1596
+type(
+  'a
+)
+"trie.ml" 64 1569 1597 "trie.ml" 64 1569 1598
+type(
+  'a -> 'a -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 64 1569 1599 "trie.ml" 64 1569 1602
+type(
+  'a
+)
+ident(
+  int_ref key "trie.ml" 61 1471 1494 "trie.ml" 61 1471 1497
+)
+"trie.ml" 64 1569 1586 "trie.ml" 64 1569 1602
+type(
+  bool
+)
+"trie.ml" 64 1569 1606 "trie.ml" 64 1569 1610
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 61 1471 1498 "trie.ml" 61 1471 1502
+)
+"trie.ml" 64 1569 1614 "trie.ml" 64 1569 1616
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tl "trie.ml" 64 1569 1578 "trie.ml" 64 1569 1580
+)
+"trie.ml" 64 1569 1606 "trie.ml" 64 1569 1616
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 65 1617 1621 "trie.ml" 65 1617 1622
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def h "trie.ml" 65 1617 1654 "trie.ml" 65 1617 1665
+)
+"trie.ml" 65 1617 1626 "trie.ml" 65 1617 1628
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tl "trie.ml" 65 1617 1654 "trie.ml" 65 1617 1665
+)
+"trie.ml" 65 1617 1621 "trie.ml" 65 1617 1628
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 65 1617 1654 "trie.ml" 65 1617 1655
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref h "trie.ml" 65 1617 1621 "trie.ml" 65 1617 1622
+)
+"trie.ml" 65 1617 1659 "trie.ml" 65 1617 1662
+type(
+  ('a, 'b) Node.t list -> ('a, 'b) Node.t list
+)
+ident(
+  int_ref aux "trie.ml" 62 1505 1514 "trie.ml" 62 1505 1517
+)
+"trie.ml" 65 1617 1663 "trie.ml" 65 1617 1665
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tl "trie.ml" 65 1617 1626 "trie.ml" 65 1617 1628
+)
+"trie.ml" 65 1617 1659 "trie.ml" 65 1617 1665
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 65 1617 1654 "trie.ml" 65 1617 1665
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 62 1505 1520 "trie.ml" 65 1617 1665
+type(
+  ('a, 'b) Node.t list -> ('a, 'b) Node.t list
+)
+"trie.ml" 67 1670 1671 "trie.ml" 67 1670 1674
+type(
+  ('a, 'b) Node.t list -> ('a, 'b) Node.t list
+)
+ident(
+  int_ref aux "trie.ml" 62 1505 1514 "trie.ml" 62 1505 1517
+)
+"trie.ml" 67 1670 1675 "trie.ml" 67 1670 1680
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref nodes "trie.ml" 61 1471 1488 "trie.ml" 61 1471 1493
+)
+"trie.ml" 67 1670 1671 "trie.ml" 67 1670 1680
+call(
+  tail
+)
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 62 1505 1506 "trie.ml" 67 1670 1680
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 69 1682 1686 "trie.ml" 69 1682 1697
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t list
+)
+ident(
+  def remove_node "trie.ml" 77 1892 1892 "trie.ml" 1 0 -1
+)
+"trie.ml" 69 1682 1698 "trie.ml" 69 1682 1703
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def nodes "trie.ml" 69 1682 1704 "trie.ml" 75 1880 1890
+)
+"trie.ml" 69 1682 1704 "trie.ml" 69 1682 1707
+type(
+  'a
+)
+ident(
+  def key "trie.ml" 70 1710 1711 "trie.ml" 75 1880 1890
+)
+"trie.ml" 70 1710 1719 "trie.ml" 70 1710 1722
+type(
+  ('a, 'c) Node.t list -> ('a, 'c) Node.t list
+)
+ident(
+  def aux "trie.ml" 70 1710 1711 "trie.ml" 75 1880 1890
+)
+"trie.ml" 71 1734 1738 "trie.ml" 71 1734 1740
+type(
+  ('a, 'c) Node.t list
+)
+"trie.ml" 71 1734 1771 "trie.ml" 71 1734 1776
+type(
+  exn -> ('a, 'c) Node.t list
+)
+ident(
+  ext_ref Pervasives.raise
+)
+"trie.ml" 71 1734 1777 "trie.ml" 71 1734 1786
+type(
+  exn
+)
+"trie.ml" 71 1734 1771 "trie.ml" 71 1734 1786
+type(
+  ('a, 'c) Node.t list
+)
+"trie.ml" 72 1787 1791 "trie.ml" 72 1787 1792
+type(
+  ('a, 'c) Node.t
+)
+ident(
+  def h "trie.ml" 72 1787 1804 "trie.ml" 72 1787 1826
+)
+"trie.ml" 72 1787 1796 "trie.ml" 72 1787 1798
+type(
+  ('a, 'c) Node.t list
+)
+ident(
+  def tl "trie.ml" 72 1787 1804 "trie.ml" 72 1787 1826
+)
+"trie.ml" 72 1787 1791 "trie.ml" 72 1787 1798
+type(
+  ('a, 'c) Node.t list
+)
+"trie.ml" 72 1787 1804 "trie.ml" 72 1787 1805
+type(
+  ('a, 'c) Node.t
+)
+ident(
+  int_ref h "trie.ml" 72 1787 1791 "trie.ml" 72 1787 1792
+)
+"trie.ml" 72 1787 1804 "trie.ml" 72 1787 1814
+type(
+  'a
+)
+"trie.ml" 72 1787 1815 "trie.ml" 72 1787 1816
+type(
+  'a -> 'a -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 72 1787 1817 "trie.ml" 72 1787 1820
+type(
+  'a
+)
+ident(
+  int_ref key "trie.ml" 69 1682 1704 "trie.ml" 69 1682 1707
+)
+"trie.ml" 72 1787 1804 "trie.ml" 72 1787 1820
+type(
+  bool
+)
+"trie.ml" 72 1787 1824 "trie.ml" 72 1787 1826
+type(
+  ('a, 'c) Node.t list
+)
+ident(
+  int_ref tl "trie.ml" 72 1787 1796 "trie.ml" 72 1787 1798
+)
+"trie.ml" 73 1827 1831 "trie.ml" 73 1827 1832
+type(
+  ('a, 'c) Node.t
+)
+ident(
+  def h "trie.ml" 73 1827 1864 "trie.ml" 73 1827 1875
+)
+"trie.ml" 73 1827 1836 "trie.ml" 73 1827 1838
+type(
+  ('a, 'c) Node.t list
+)
+ident(
+  def tl "trie.ml" 73 1827 1864 "trie.ml" 73 1827 1875
+)
+"trie.ml" 73 1827 1831 "trie.ml" 73 1827 1838
+type(
+  ('a, 'c) Node.t list
+)
+"trie.ml" 73 1827 1864 "trie.ml" 73 1827 1865
+type(
+  ('a, 'c) Node.t
+)
+ident(
+  int_ref h "trie.ml" 73 1827 1831 "trie.ml" 73 1827 1832
+)
+"trie.ml" 73 1827 1869 "trie.ml" 73 1827 1872
+type(
+  ('a, 'c) Node.t list -> ('a, 'c) Node.t list
+)
+ident(
+  int_ref aux "trie.ml" 70 1710 1719 "trie.ml" 70 1710 1722
+)
+"trie.ml" 73 1827 1873 "trie.ml" 73 1827 1875
+type(
+  ('a, 'c) Node.t list
+)
+ident(
+  int_ref tl "trie.ml" 73 1827 1836 "trie.ml" 73 1827 1838
+)
+"trie.ml" 73 1827 1869 "trie.ml" 73 1827 1875
+call(
+  stack
+)
+type(
+  ('a, 'c) Node.t list
+)
+"trie.ml" 73 1827 1864 "trie.ml" 73 1827 1875
+type(
+  ('a, 'c) Node.t list
+)
+"trie.ml" 70 1710 1725 "trie.ml" 73 1827 1875
+type(
+  ('a, 'c) Node.t list -> ('a, 'c) Node.t list
+)
+"trie.ml" 75 1880 1881 "trie.ml" 75 1880 1884
+type(
+  ('a, 'b) Node.t list -> ('a, 'b) Node.t list
+)
+ident(
+  int_ref aux "trie.ml" 70 1710 1719 "trie.ml" 70 1710 1722
+)
+"trie.ml" 75 1880 1885 "trie.ml" 75 1880 1890
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref nodes "trie.ml" 69 1682 1698 "trie.ml" 69 1682 1703
+)
+"trie.ml" 75 1880 1881 "trie.ml" 75 1880 1890
+call(
+  tail
+)
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 70 1710 1711 "trie.ml" 75 1880 1890
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 77 1892 1896 "trie.ml" 77 1892 1902
+type(
+  unit -> 'a list
+)
+ident(
+  def create "trie.ml" 79 1912 1912 "trie.ml" 1 0 -1
+)
+"trie.ml" 77 1892 1903 "trie.ml" 77 1892 1905
+type(
+  unit
+)
+"trie.ml" 77 1892 1908 "trie.ml" 77 1892 1910
+type(
+  'a list
+)
+"trie.ml" 79 1912 1920 "trie.ml" 79 1912 1924
+type(
+  ('a -> 'b option -> 'c) -> ('a, 'b) Node.t list -> unit
+)
+ident(
+  def iter "trie.ml" 79 1912 1912 "trie.ml" 1 0 -1
+)
+"trie.ml" 79 1912 1925 "trie.ml" 79 1912 1926
+type(
+  'a -> 'b option -> 'c
+)
+ident(
+  def f "trie.ml" 79 1912 1927 "trie.ml" 84 2017 2036
+)
+"trie.ml" 79 1912 1927 "trie.ml" 79 1912 1931
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tree "trie.ml" 80 1934 1935 "trie.ml" 84 2017 2036
+)
+"trie.ml" 80 1934 1939 "trie.ml" 80 1934 1942
+type(
+  ('a, 'b) Node.t -> unit
+)
+ident(
+  def aux "trie.ml" 84 2017 2018 "trie.ml" 84 2017 2036
+)
+"trie.ml" 80 1934 1943 "trie.ml" 80 1934 1947
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def node "trie.ml" 81 1950 1952 "trie.ml" 82 1985 2012
+)
+"trie.ml" 81 1950 1952 "trie.ml" 81 1950 1953
+type(
+  'a -> 'b option -> 'c
+)
+ident(
+  int_ref f "trie.ml" 79 1912 1925 "trie.ml" 79 1912 1926
+)
+"trie.ml" 81 1950 1954 "trie.ml" 81 1950 1958
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 80 1934 1943 "trie.ml" 80 1934 1947
+)
+"trie.ml" 81 1950 1954 "trie.ml" 81 1950 1967
+type(
+  'a
+)
+"trie.ml" 81 1950 1968 "trie.ml" 81 1950 1972
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 80 1934 1943 "trie.ml" 80 1934 1947
+)
+"trie.ml" 81 1950 1968 "trie.ml" 81 1950 1983
+type(
+  'b option
+)
+"trie.ml" 81 1950 1952 "trie.ml" 81 1950 1983
+call(
+  stack
+)
+type(
+  'c
+)
+"trie.ml" 82 1985 1987 "trie.ml" 82 1985 1991
+type(
+  ('a -> 'b option -> 'c) -> ('a, 'b) Node.t list -> unit
+)
+ident(
+  int_ref iter "trie.ml" 79 1912 1920 "trie.ml" 79 1912 1924
+)
+"trie.ml" 82 1985 1992 "trie.ml" 82 1985 1993
+type(
+  'a -> 'b option -> 'c
+)
+ident(
+  int_ref f "trie.ml" 79 1912 1925 "trie.ml" 79 1912 1926
+)
+"trie.ml" 82 1985 1994 "trie.ml" 82 1985 1998
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 80 1934 1943 "trie.ml" 80 1934 1947
+)
+"trie.ml" 82 1985 1994 "trie.ml" 82 1985 2012
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 82 1985 1987 "trie.ml" 82 1985 2012
+call(
+  tail
+)
+type(
+  unit
+)
+"trie.ml" 81 1950 1952 "trie.ml" 82 1985 2012
+type(
+  unit
+)
+"trie.ml" 84 2017 2018 "trie.ml" 84 2017 2027
+type(
+  (('a, 'b) Node.t -> unit) -> ('a, 'b) Node.t list -> unit
+)
+ident(
+  ext_ref List.iter
+)
+"trie.ml" 84 2017 2028 "trie.ml" 84 2017 2031
+type(
+  ('a, 'b) Node.t -> unit
+)
+ident(
+  int_ref aux "trie.ml" 80 1934 1939 "trie.ml" 80 1934 1942
+)
+"trie.ml" 84 2017 2032 "trie.ml" 84 2017 2036
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 79 1912 1927 "trie.ml" 79 1912 1931
+)
+"trie.ml" 84 2017 2018 "trie.ml" 84 2017 2036
+call(
+  tail
+)
+type(
+  unit
+)
+"trie.ml" 80 1934 1935 "trie.ml" 84 2017 2036
+type(
+  unit
+)
+"trie.ml" 86 2038 2046 "trie.ml" 86 2038 2049
+type(
+  ('a -> 'b option) -> ('c, 'a) Node.t list -> ('c, 'b) Node.t list
+)
+ident(
+  def map "trie.ml" 86 2038 2038 "trie.ml" 1 0 -1
+)
+"trie.ml" 86 2038 2050 "trie.ml" 86 2038 2051
+type(
+  'a -> 'b option
+)
+ident(
+  def f "trie.ml" 86 2038 2052 "trie.ml" 95 2256 2345
+)
+"trie.ml" 86 2038 2052 "trie.ml" 86 2038 2056
+type(
+  ('c, 'a) Node.t list
+)
+ident(
+  def tree "trie.ml" 87 2059 2060 "trie.ml" 95 2256 2345
+)
+"trie.ml" 87 2059 2064 "trie.ml" 87 2059 2067
+type(
+  ('c, 'a) Node.t -> ('c, 'b) Node.t
+)
+ident(
+  def aux "trie.ml" 95 2256 2257 "trie.ml" 95 2256 2345
+)
+"trie.ml" 87 2059 2068 "trie.ml" 87 2059 2072
+type(
+  ('c, 'a) Node.t
+)
+ident(
+  def node "trie.ml" 88 2075 2077 "trie.ml" 93 2175 2251
+)
+"trie.ml" 88 2075 2081 "trie.ml" 88 2075 2086
+type(
+  'b option
+)
+ident(
+  def value "trie.ml" 93 2175 2177 "trie.ml" 93 2175 2251
+)
+"trie.ml" 89 2089 2098 "trie.ml" 89 2089 2102
+type(
+  ('c, 'a) Node.t
+)
+ident(
+  int_ref node "trie.ml" 87 2059 2068 "trie.ml" 87 2059 2072
+)
+"trie.ml" 89 2089 2098 "trie.ml" 89 2089 2113
+type(
+  'a option
+)
+"trie.ml" 90 2119 2124 "trie.ml" 90 2119 2128
+type(
+  'a option
+)
+"trie.ml" 90 2119 2138 "trie.ml" 90 2119 2142
+type(
+  'b option
+)
+"trie.ml" 91 2143 2153 "trie.ml" 91 2143 2158
+type(
+  'a
+)
+ident(
+  def value "trie.ml" 91 2143 2162 "trie.ml" 91 2143 2169
+)
+"trie.ml" 91 2143 2148 "trie.ml" 91 2143 2158
+type(
+  'a option
+)
+"trie.ml" 91 2143 2162 "trie.ml" 91 2143 2163
+type(
+  'a -> 'b option
+)
+ident(
+  int_ref f "trie.ml" 86 2038 2050 "trie.ml" 86 2038 2051
+)
+"trie.ml" 91 2143 2164 "trie.ml" 91 2143 2169
+type(
+  'a
+)
+ident(
+  int_ref value "trie.ml" 91 2143 2153 "trie.ml" 91 2143 2158
+)
+"trie.ml" 91 2143 2162 "trie.ml" 91 2143 2169
+call(
+  stack
+)
+type(
+  'b option
+)
+"trie.ml" 89 2089 2092 "trie.ml" 91 2143 2169
+type(
+  'b option
+)
+"trie.ml" 93 2175 2179 "trie.ml" 93 2175 2183
+type(
+  ('c, 'a) Node.t
+)
+ident(
+  int_ref node "trie.ml" 87 2059 2068 "trie.ml" 87 2059 2072
+)
+"trie.ml" 93 2175 2202 "trie.ml" 93 2175 2207
+type(
+  'b option
+)
+ident(
+  int_ref value "trie.ml" 88 2075 2081 "trie.ml" 88 2075 2086
+)
+"trie.ml" 93 2175 2225 "trie.ml" 93 2175 2228
+type(
+  ('a -> 'b option) -> ('c, 'a) Node.t list -> ('c, 'b) Node.t list
+)
+ident(
+  int_ref map "trie.ml" 86 2038 2046 "trie.ml" 86 2038 2049
+)
+"trie.ml" 93 2175 2229 "trie.ml" 93 2175 2230
+type(
+  'a -> 'b option
+)
+ident(
+  int_ref f "trie.ml" 86 2038 2050 "trie.ml" 86 2038 2051
+)
+"trie.ml" 93 2175 2231 "trie.ml" 93 2175 2235
+type(
+  ('c, 'a) Node.t
+)
+ident(
+  int_ref node "trie.ml" 87 2059 2068 "trie.ml" 87 2059 2072
+)
+"trie.ml" 93 2175 2231 "trie.ml" 93 2175 2249
+type(
+  ('c, 'a) Node.t list
+)
+"trie.ml" 93 2175 2225 "trie.ml" 93 2175 2249
+call(
+  stack
+)
+type(
+  ('c, 'b) Node.t list
+)
+"trie.ml" 93 2175 2177 "trie.ml" 93 2175 2251
+type(
+  ('c, 'b) Node.t
+)
+"trie.ml" 88 2075 2077 "trie.ml" 93 2175 2251
+type(
+  ('c, 'b) Node.t
+)
+"trie.ml" 95 2256 2257 "trie.ml" 95 2256 2268
+type(
+  (('c, 'b) Node.t -> bool) -> ('c, 'b) Node.t list -> ('c, 'b) Node.t list
+)
+ident(
+  ext_ref List.filter
+)
+"trie.ml" 95 2256 2274 "trie.ml" 95 2256 2275
+type(
+  ('c, 'b) Node.t
+)
+ident(
+  def n "trie.ml" 95 2256 2279 "trie.ml" 95 2256 2324
+)
+"trie.ml" 95 2256 2279 "trie.ml" 95 2256 2280
+type(
+  ('c, 'b) Node.t
+)
+ident(
+  int_ref n "trie.ml" 95 2256 2274 "trie.ml" 95 2256 2275
+)
+"trie.ml" 95 2256 2279 "trie.ml" 95 2256 2291
+type(
+  'b option
+)
+"trie.ml" 95 2256 2292 "trie.ml" 95 2256 2294
+type(
+  'b option -> 'b option -> bool
+)
+ident(
+  ext_ref Pervasives.( <> )
+)
+"trie.ml" 95 2256 2295 "trie.ml" 95 2256 2299
+type(
+  'b option
+)
+"trie.ml" 95 2256 2279 "trie.ml" 95 2256 2299
+type(
+  bool
+)
+"trie.ml" 95 2256 2300 "trie.ml" 95 2256 2302
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( || )
+)
+"trie.ml" 95 2256 2303 "trie.ml" 95 2256 2304
+type(
+  ('c, 'b) Node.t
+)
+ident(
+  int_ref n "trie.ml" 95 2256 2274 "trie.ml" 95 2256 2275
+)
+"trie.ml" 95 2256 2303 "trie.ml" 95 2256 2318
+type(
+  ('c, 'b) Node.t list
+)
+"trie.ml" 95 2256 2319 "trie.ml" 95 2256 2321
+type(
+  ('c, 'b) Node.t list -> ('c, 'b) Node.t list -> bool
+)
+ident(
+  ext_ref Pervasives.( <> )
+)
+"trie.ml" 95 2256 2322 "trie.ml" 95 2256 2324
+type(
+  ('c, 'b) Node.t list
+)
+"trie.ml" 95 2256 2303 "trie.ml" 95 2256 2324
+type(
+  bool
+)
+"trie.ml" 95 2256 2279 "trie.ml" 95 2256 2324
+type(
+  bool
+)
+"trie.ml" 95 2256 2269 "trie.ml" 95 2256 2325
+type(
+  ('c, 'b) Node.t -> bool
+)
+"trie.ml" 95 2256 2327 "trie.ml" 95 2256 2335
+type(
+  (('c, 'a) Node.t -> ('c, 'b) Node.t) ->
+  ('c, 'a) Node.t list -> ('c, 'b) Node.t list
+)
+ident(
+  ext_ref List.map
+)
+"trie.ml" 95 2256 2336 "trie.ml" 95 2256 2339
+type(
+  ('c, 'a) Node.t -> ('c, 'b) Node.t
+)
+ident(
+  int_ref aux "trie.ml" 87 2059 2064 "trie.ml" 87 2059 2067
+)
+"trie.ml" 95 2256 2340 "trie.ml" 95 2256 2344
+type(
+  ('c, 'a) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 86 2038 2052 "trie.ml" 86 2038 2056
+)
+"trie.ml" 95 2256 2326 "trie.ml" 95 2256 2345
+call(
+  stack
+)
+type(
+  ('c, 'b) Node.t list
+)
+"trie.ml" 95 2256 2257 "trie.ml" 95 2256 2345
+call(
+  tail
+)
+type(
+  ('c, 'b) Node.t list
+)
+"trie.ml" 87 2059 2060 "trie.ml" 95 2256 2345
+type(
+  ('c, 'b) Node.t list
+)
+"trie.ml" 97 2347 2355 "trie.ml" 97 2347 2359
+type(
+  ('a -> 'b option -> 'c -> 'c) -> ('a, 'b) Node.t list -> 'c -> 'c
+)
+ident(
+  def fold "trie.ml" 97 2347 2347 "trie.ml" 1 0 -1
+)
+"trie.ml" 97 2347 2360 "trie.ml" 97 2347 2361
+type(
+  'a -> 'b option -> 'c -> 'c
+)
+ident(
+  def f "trie.ml" 97 2347 2362 "trie.ml" 101 2465 2493
+)
+"trie.ml" 97 2347 2362 "trie.ml" 97 2347 2366
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tree "trie.ml" 97 2347 2367 "trie.ml" 101 2465 2493
+)
+"trie.ml" 97 2347 2367 "trie.ml" 97 2347 2370
+type(
+  'c
+)
+ident(
+  def acc "trie.ml" 98 2373 2374 "trie.ml" 101 2465 2493
+)
+"trie.ml" 98 2373 2378 "trie.ml" 98 2373 2381
+type(
+  'c -> ('a, 'b) Node.t -> 'c
+)
+ident(
+  def aux "trie.ml" 101 2465 2466 "trie.ml" 101 2465 2493
+)
+"trie.ml" 98 2373 2382 "trie.ml" 98 2373 2386
+type(
+  'c
+)
+ident(
+  def accu "trie.ml" 98 2373 2387 "trie.ml" 99 2394 2460
+)
+"trie.ml" 98 2373 2387 "trie.ml" 98 2373 2391
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def node "trie.ml" 99 2394 2396 "trie.ml" 99 2394 2460
+)
+"trie.ml" 99 2394 2396 "trie.ml" 99 2394 2400
+type(
+  ('a -> 'b option -> 'c -> 'c) -> ('a, 'b) Node.t list -> 'c -> 'c
+)
+ident(
+  int_ref fold "trie.ml" 97 2347 2355 "trie.ml" 97 2347 2359
+)
+"trie.ml" 99 2394 2401 "trie.ml" 99 2394 2402
+type(
+  'a -> 'b option -> 'c -> 'c
+)
+ident(
+  int_ref f "trie.ml" 97 2347 2360 "trie.ml" 97 2347 2361
+)
+"trie.ml" 99 2394 2403 "trie.ml" 99 2394 2407
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 98 2373 2387 "trie.ml" 98 2373 2391
+)
+"trie.ml" 99 2394 2403 "trie.ml" 99 2394 2421
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 99 2394 2423 "trie.ml" 99 2394 2424
+type(
+  'a -> 'b option -> 'c -> 'c
+)
+ident(
+  int_ref f "trie.ml" 97 2347 2360 "trie.ml" 97 2347 2361
+)
+"trie.ml" 99 2394 2425 "trie.ml" 99 2394 2429
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 98 2373 2387 "trie.ml" 98 2373 2391
+)
+"trie.ml" 99 2394 2425 "trie.ml" 99 2394 2438
+type(
+  'a
+)
+"trie.ml" 99 2394 2439 "trie.ml" 99 2394 2443
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 98 2373 2387 "trie.ml" 98 2373 2391
+)
+"trie.ml" 99 2394 2439 "trie.ml" 99 2394 2454
+type(
+  'b option
+)
+"trie.ml" 99 2394 2455 "trie.ml" 99 2394 2459
+type(
+  'c
+)
+ident(
+  int_ref accu "trie.ml" 98 2373 2382 "trie.ml" 98 2373 2386
+)
+"trie.ml" 99 2394 2422 "trie.ml" 99 2394 2460
+call(
+  stack
+)
+type(
+  'c
+)
+"trie.ml" 99 2394 2396 "trie.ml" 99 2394 2460
+call(
+  tail
+)
+type(
+  'c
+)
+"trie.ml" 101 2465 2466 "trie.ml" 101 2465 2480
+type(
+  ('c -> ('a, 'b) Node.t -> 'c) -> 'c -> ('a, 'b) Node.t list -> 'c
+)
+ident(
+  ext_ref List.fold_left
+)
+"trie.ml" 101 2465 2481 "trie.ml" 101 2465 2484
+type(
+  'c -> ('a, 'b) Node.t -> 'c
+)
+ident(
+  int_ref aux "trie.ml" 98 2373 2378 "trie.ml" 98 2373 2381
+)
+"trie.ml" 101 2465 2485 "trie.ml" 101 2465 2488
+type(
+  'c
+)
+ident(
+  int_ref acc "trie.ml" 97 2347 2367 "trie.ml" 97 2347 2370
+)
+"trie.ml" 101 2465 2489 "trie.ml" 101 2465 2493
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 97 2347 2362 "trie.ml" 97 2347 2366
+)
+"trie.ml" 101 2465 2466 "trie.ml" 101 2465 2493
+call(
+  tail
+)
+type(
+  'c
+)
+"trie.ml" 98 2373 2374 "trie.ml" 101 2465 2493
+type(
+  'c
+)
+"trie.ml" 104 2519 2527 "trie.ml" 104 2519 2535
+type(
+  ('a, 'b) Node.t list -> 'a list -> ('a, 'b) Node.t
+)
+ident(
+  def sub_node "trie.ml" 104 2519 2519 "trie.ml" 1 0 -1
+)
+"trie.ml" 104 2519 2536 "trie.ml" 104 2519 2540
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tree "trie.ml" 104 2519 2543 "trie.ml" 114 2747 2767
+)
+"trie.ml" 105 2552 2555 "trie.ml" 105 2552 2557
+type(
+  'a list
+)
+"trie.ml" 105 2552 2563 "trie.ml" 105 2552 2568
+type(
+  exn -> ('a, 'b) Node.t
+)
+ident(
+  ext_ref Pervasives.raise
+)
+"trie.ml" 105 2552 2569 "trie.ml" 105 2552 2578
+type(
+  exn
+)
+"trie.ml" 105 2552 2563 "trie.ml" 105 2552 2578
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 106 2579 2582 "trie.ml" 106 2579 2583
+type(
+  'a
+)
+ident(
+  def h "trie.ml" 107 2590 2594 "trie.ml" 114 2747 2767
+)
+"trie.ml" 106 2579 2585 "trie.ml" 106 2579 2586
+type(
+  'a list
+)
+ident(
+  def t "trie.ml" 107 2590 2594 "trie.ml" 114 2747 2767
+)
+"trie.ml" 106 2579 2582 "trie.ml" 106 2579 2586
+type(
+  'a list
+)
+"trie.ml" 107 2590 2597 "trie.ml" 107 2590 2605
+type(
+  ('a, 'b) Node.t list -> 'a -> bool
+)
+ident(
+  int_ref mem_node "trie.ml" 55 1326 1330 "trie.ml" 55 1326 1338
+)
+"trie.ml" 107 2590 2606 "trie.ml" 107 2590 2610
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 104 2519 2536 "trie.ml" 104 2519 2540
+)
+"trie.ml" 107 2590 2611 "trie.ml" 107 2590 2612
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 106 2579 2582 "trie.ml" 106 2579 2583
+)
+"trie.ml" 107 2590 2597 "trie.ml" 107 2590 2612
+call(
+  stack
+)
+type(
+  bool
+)
+"trie.ml" 109 2628 2637 "trie.ml" 109 2628 2641
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def node "trie.ml" 110 2664 2669 "trie.ml" 112 2694 2733
+)
+"trie.ml" 109 2628 2644 "trie.ml" 109 2628 2653
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t
+)
+ident(
+  int_ref find_node "trie.ml" 58 1399 1403 "trie.ml" 58 1399 1412
+)
+"trie.ml" 109 2628 2654 "trie.ml" 109 2628 2658
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 104 2519 2536 "trie.ml" 104 2519 2540
+)
+"trie.ml" 109 2628 2659 "trie.ml" 109 2628 2660
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 106 2579 2582 "trie.ml" 106 2579 2583
+)
+"trie.ml" 109 2628 2644 "trie.ml" 109 2628 2660
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 110 2664 2672 "trie.ml" 110 2664 2673
+type(
+  'a list
+)
+ident(
+  int_ref t "trie.ml" 106 2579 2585 "trie.ml" 106 2579 2586
+)
+"trie.ml" 110 2664 2674 "trie.ml" 110 2664 2675
+type(
+  'a list -> 'a list -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 110 2664 2676 "trie.ml" 110 2664 2678
+type(
+  'a list
+)
+"trie.ml" 110 2664 2672 "trie.ml" 110 2664 2678
+type(
+  bool
+)
+"trie.ml" 111 2679 2689 "trie.ml" 111 2679 2693
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 109 2628 2637 "trie.ml" 109 2628 2641
+)
+"trie.ml" 112 2694 2704 "trie.ml" 112 2694 2712
+type(
+  ('a, 'b) Node.t list -> 'a list -> ('a, 'b) Node.t
+)
+ident(
+  int_ref sub_node "trie.ml" 104 2519 2527 "trie.ml" 104 2519 2535
+)
+"trie.ml" 112 2694 2713 "trie.ml" 112 2694 2717
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 109 2628 2637 "trie.ml" 109 2628 2641
+)
+"trie.ml" 112 2694 2713 "trie.ml" 112 2694 2731
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 112 2694 2732 "trie.ml" 112 2694 2733
+type(
+  'a list
+)
+ident(
+  int_ref t "trie.ml" 106 2579 2585 "trie.ml" 106 2579 2586
+)
+"trie.ml" 112 2694 2704 "trie.ml" 112 2694 2733
+call(
+  tail
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 110 2664 2669 "trie.ml" 112 2694 2733
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 108 2613 2622 "trie.ml" 113 2734 2741
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 114 2747 2752 "trie.ml" 114 2747 2757
+type(
+  exn -> ('a, 'b) Node.t
+)
+ident(
+  ext_ref Pervasives.raise
+)
+"trie.ml" 114 2747 2758 "trie.ml" 114 2747 2767
+type(
+  exn
+)
+"trie.ml" 114 2747 2752 "trie.ml" 114 2747 2767
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 107 2590 2594 "trie.ml" 114 2747 2767
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 104 2519 2543 "trie.ml" 114 2747 2767
+type(
+  'a list -> ('a, 'b) Node.t
+)
+"trie.ml" 116 2769 2773 "trie.ml" 116 2769 2776
+type(
+  ('a, 'b) Node.t list -> 'a list -> ('a, 'b) Node.t list
+)
+ident(
+  def sub "trie.ml" 120 2852 2852 "trie.ml" 1 0 -1
+)
+"trie.ml" 116 2769 2777 "trie.ml" 116 2769 2781
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tree "trie.ml" 116 2769 2782 "trie.ml" 118 2829 2850
+)
+"trie.ml" 116 2769 2782 "trie.ml" 116 2769 2786
+type(
+  'a list
+)
+ident(
+  def path "trie.ml" 117 2789 2790 "trie.ml" 118 2829 2850
+)
+"trie.ml" 117 2789 2795 "trie.ml" 117 2789 2803
+type(
+  ('a, 'b) Node.t list -> 'a list -> ('a, 'b) Node.t
+)
+ident(
+  int_ref sub_node "trie.ml" 104 2519 2527 "trie.ml" 104 2519 2535
+)
+"trie.ml" 117 2789 2804 "trie.ml" 117 2789 2808
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 116 2769 2777 "trie.ml" 116 2769 2781
+)
+"trie.ml" 117 2789 2809 "trie.ml" 117 2789 2813
+type(
+  'a list
+)
+ident(
+  int_ref path "trie.ml" 116 2769 2782 "trie.ml" 116 2769 2786
+)
+"trie.ml" 117 2789 2794 "trie.ml" 117 2789 2814
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 117 2789 2794 "trie.ml" 117 2789 2828
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 118 2829 2835 "trie.ml" 118 2829 2844
+type(
+  exn
+)
+"trie.ml" 118 2829 2848 "trie.ml" 118 2829 2850
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 117 2789 2790 "trie.ml" 118 2829 2850
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 120 2852 2856 "trie.ml" 120 2852 2860
+type(
+  ('a, 'b) Node.t list -> 'a list -> 'b
+)
+ident(
+  def find "trie.ml" 124 2997 2997 "trie.ml" 1 0 -1
+)
+"trie.ml" 120 2852 2861 "trie.ml" 120 2852 2865
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tree "trie.ml" 120 2852 2866 "trie.ml" 121 2873 2909
+)
+"trie.ml" 120 2852 2866 "trie.ml" 120 2852 2870
+type(
+  'a list
+)
+ident(
+  def path "trie.ml" 121 2873 2874 "trie.ml" 121 2873 2909
+)
+"trie.ml" 121 2873 2874 "trie.ml" 121 2873 2888
+type(
+  ('a, 'b) Node.t -> 'b
+)
+ident(
+  int_ref Node.get_value "trie.ml" 37 924 929 "trie.ml" 37 924 938
+)
+"trie.ml" 121 2873 2890 "trie.ml" 121 2873 2898
+type(
+  ('a, 'b) Node.t list -> 'a list -> ('a, 'b) Node.t
+)
+ident(
+  int_ref sub_node "trie.ml" 104 2519 2527 "trie.ml" 104 2519 2535
+)
+"trie.ml" 121 2873 2899 "trie.ml" 121 2873 2903
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 120 2852 2861 "trie.ml" 120 2852 2865
+)
+"trie.ml" 121 2873 2904 "trie.ml" 121 2873 2908
+type(
+  'a list
+)
+ident(
+  int_ref path "trie.ml" 120 2852 2866 "trie.ml" 120 2852 2870
+)
+"trie.ml" 121 2873 2889 "trie.ml" 121 2873 2909
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 121 2873 2874 "trie.ml" 121 2873 2909
+call(
+  tail
+)
+type(
+  'b
+)
+"trie.ml" 124 2997 3005 "trie.ml" 124 2997 3008
+type(
+  ('a, 'b) Node.t list -> 'a list -> bool
+)
+ident(
+  def mem "trie.ml" 124 2997 2997 "trie.ml" 1 0 -1
+)
+"trie.ml" 124 2997 3009 "trie.ml" 124 2997 3013
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tree "trie.ml" 124 2997 3016 "trie.ml" 131 3161 3196
+)
+"trie.ml" 125 3025 3028 "trie.ml" 125 3025 3030
+type(
+  'a list
+)
+"trie.ml" 125 3025 3036 "trie.ml" 125 3025 3041
+type(
+  bool
+)
+"trie.ml" 126 3042 3045 "trie.ml" 126 3042 3046
+type(
+  'a
+)
+ident(
+  def h "trie.ml" 127 3053 3057 "trie.ml" 131 3161 3196
+)
+"trie.ml" 126 3042 3048 "trie.ml" 126 3042 3049
+type(
+  'a list
+)
+ident(
+  def t "trie.ml" 127 3053 3057 "trie.ml" 131 3161 3196
+)
+"trie.ml" 126 3042 3045 "trie.ml" 126 3042 3049
+type(
+  'a list
+)
+"trie.ml" 127 3053 3057 "trie.ml" 127 3053 3065
+type(
+  ('a, 'b) Node.t list -> 'a -> bool
+)
+ident(
+  int_ref mem_node "trie.ml" 55 1326 1330 "trie.ml" 55 1326 1338
+)
+"trie.ml" 127 3053 3066 "trie.ml" 127 3053 3070
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 124 2997 3009 "trie.ml" 124 2997 3013
+)
+"trie.ml" 127 3053 3071 "trie.ml" 127 3053 3072
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 126 3042 3045 "trie.ml" 126 3042 3046
+)
+"trie.ml" 127 3053 3057 "trie.ml" 127 3053 3072
+call(
+  stack
+)
+type(
+  bool
+)
+"trie.ml" 128 3073 3077 "trie.ml" 128 3073 3079
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( && )
+)
+"trie.ml" 128 3073 3085 "trie.ml" 128 3073 3089
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def node "trie.ml" 129 3112 3117 "trie.ml" 131 3161 3195
+)
+"trie.ml" 128 3073 3092 "trie.ml" 128 3073 3101
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t
+)
+ident(
+  int_ref find_node "trie.ml" 58 1399 1403 "trie.ml" 58 1399 1412
+)
+"trie.ml" 128 3073 3102 "trie.ml" 128 3073 3106
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 124 2997 3009 "trie.ml" 124 2997 3013
+)
+"trie.ml" 128 3073 3107 "trie.ml" 128 3073 3108
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 126 3042 3045 "trie.ml" 126 3042 3046
+)
+"trie.ml" 128 3073 3092 "trie.ml" 128 3073 3108
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 129 3112 3120 "trie.ml" 129 3112 3121
+type(
+  'a list
+)
+ident(
+  int_ref t "trie.ml" 126 3042 3048 "trie.ml" 126 3042 3049
+)
+"trie.ml" 129 3112 3122 "trie.ml" 129 3112 3123
+type(
+  'a list -> 'a list -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 129 3112 3124 "trie.ml" 129 3112 3126
+type(
+  'a list
+)
+"trie.ml" 129 3112 3120 "trie.ml" 129 3112 3126
+type(
+  bool
+)
+"trie.ml" 130 3127 3137 "trie.ml" 130 3127 3141
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 128 3073 3085 "trie.ml" 128 3073 3089
+)
+"trie.ml" 130 3127 3137 "trie.ml" 130 3127 3152
+type(
+  'b option
+)
+"trie.ml" 130 3127 3153 "trie.ml" 130 3127 3155
+type(
+  'b option -> 'b option -> bool
+)
+ident(
+  ext_ref Pervasives.( <> )
+)
+"trie.ml" 130 3127 3156 "trie.ml" 130 3127 3160
+type(
+  'b option
+)
+"trie.ml" 130 3127 3137 "trie.ml" 130 3127 3160
+type(
+  bool
+)
+"trie.ml" 131 3161 3171 "trie.ml" 131 3161 3174
+type(
+  ('a, 'b) Node.t list -> 'a list -> bool
+)
+ident(
+  int_ref mem "trie.ml" 124 2997 3005 "trie.ml" 124 2997 3008
+)
+"trie.ml" 131 3161 3175 "trie.ml" 131 3161 3179
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 128 3073 3085 "trie.ml" 128 3073 3089
+)
+"trie.ml" 131 3161 3175 "trie.ml" 131 3161 3193
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 131 3161 3194 "trie.ml" 131 3161 3195
+type(
+  'a list
+)
+ident(
+  int_ref t "trie.ml" 126 3042 3048 "trie.ml" 126 3042 3049
+)
+"trie.ml" 131 3161 3171 "trie.ml" 131 3161 3195
+call(
+  tail
+)
+type(
+  bool
+)
+"trie.ml" 129 3112 3117 "trie.ml" 131 3161 3195
+type(
+  bool
+)
+"trie.ml" 128 3073 3080 "trie.ml" 131 3161 3196
+type(
+  bool
+)
+"trie.ml" 127 3053 3057 "trie.ml" 131 3161 3196
+type(
+  bool
+)
+"trie.ml" 124 2997 3016 "trie.ml" 131 3161 3196
+type(
+  'a list -> bool
+)
+"trie.ml" 134 3242 3250 "trie.ml" 134 3242 3259
+type(
+  ('a -> 'b option -> 'c) -> ('a, 'b) Node.t list -> 'a list -> unit
+)
+ident(
+  def iter_path "trie.ml" 134 3242 3242 "trie.ml" 1 0 -1
+)
+"trie.ml" 134 3242 3260 "trie.ml" 134 3242 3261
+type(
+  'a -> 'b option -> 'c
+)
+ident(
+  def f "trie.ml" 134 3242 3262 "trie.ml" 142 3453 3460
+)
+"trie.ml" 134 3242 3262 "trie.ml" 134 3242 3266
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tree "trie.ml" 134 3242 3269 "trie.ml" 142 3453 3460
+)
+"trie.ml" 135 3278 3281 "trie.ml" 135 3278 3283
+type(
+  'a list
+)
+"trie.ml" 135 3278 3289 "trie.ml" 135 3278 3291
+type(
+  unit
+)
+"trie.ml" 136 3292 3295 "trie.ml" 136 3292 3296
+type(
+  'a
+)
+ident(
+  def h "trie.ml" 137 3303 3307 "trie.ml" 142 3453 3460
+)
+"trie.ml" 136 3292 3298 "trie.ml" 136 3292 3299
+type(
+  'a list
+)
+ident(
+  def l "trie.ml" 137 3303 3307 "trie.ml" 142 3453 3460
+)
+"trie.ml" 136 3292 3295 "trie.ml" 136 3292 3299
+type(
+  'a list
+)
+"trie.ml" 137 3303 3310 "trie.ml" 137 3303 3318
+type(
+  ('a, 'b) Node.t list -> 'a -> bool
+)
+ident(
+  int_ref mem_node "trie.ml" 55 1326 1330 "trie.ml" 55 1326 1338
+)
+"trie.ml" 137 3303 3319 "trie.ml" 137 3303 3323
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 134 3242 3262 "trie.ml" 134 3242 3266
+)
+"trie.ml" 137 3303 3324 "trie.ml" 137 3303 3325
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 136 3292 3295 "trie.ml" 136 3292 3296
+)
+"trie.ml" 137 3303 3310 "trie.ml" 137 3303 3325
+call(
+  stack
+)
+type(
+  bool
+)
+"trie.ml" 139 3341 3350 "trie.ml" 139 3341 3354
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def node "trie.ml" 140 3377 3382 "trie.ml" 141 3415 3452
+)
+"trie.ml" 139 3341 3357 "trie.ml" 139 3341 3366
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t
+)
+ident(
+  int_ref find_node "trie.ml" 58 1399 1403 "trie.ml" 58 1399 1412
+)
+"trie.ml" 139 3341 3367 "trie.ml" 139 3341 3371
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 134 3242 3262 "trie.ml" 134 3242 3266
+)
+"trie.ml" 139 3341 3372 "trie.ml" 139 3341 3373
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 136 3292 3295 "trie.ml" 136 3292 3296
+)
+"trie.ml" 139 3341 3357 "trie.ml" 139 3341 3373
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 140 3377 3382 "trie.ml" 140 3377 3383
+type(
+  'a -> 'b option -> 'c
+)
+ident(
+  int_ref f "trie.ml" 134 3242 3260 "trie.ml" 134 3242 3261
+)
+"trie.ml" 140 3377 3384 "trie.ml" 140 3377 3388
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 139 3341 3350 "trie.ml" 139 3341 3354
+)
+"trie.ml" 140 3377 3384 "trie.ml" 140 3377 3397
+type(
+  'a
+)
+"trie.ml" 140 3377 3398 "trie.ml" 140 3377 3402
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 139 3341 3350 "trie.ml" 139 3341 3354
+)
+"trie.ml" 140 3377 3398 "trie.ml" 140 3377 3413
+type(
+  'b option
+)
+"trie.ml" 140 3377 3382 "trie.ml" 140 3377 3413
+call(
+  stack
+)
+type(
+  'c
+)
+"trie.ml" 141 3415 3420 "trie.ml" 141 3415 3429
+type(
+  ('a -> 'b option -> 'c) -> ('a, 'b) Node.t list -> 'a list -> unit
+)
+ident(
+  int_ref iter_path "trie.ml" 134 3242 3250 "trie.ml" 134 3242 3259
+)
+"trie.ml" 141 3415 3430 "trie.ml" 141 3415 3431
+type(
+  'a -> 'b option -> 'c
+)
+ident(
+  int_ref f "trie.ml" 134 3242 3260 "trie.ml" 134 3242 3261
+)
+"trie.ml" 141 3415 3432 "trie.ml" 141 3415 3436
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 139 3341 3350 "trie.ml" 139 3341 3354
+)
+"trie.ml" 141 3415 3432 "trie.ml" 141 3415 3450
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 141 3415 3451 "trie.ml" 141 3415 3452
+type(
+  'a list
+)
+ident(
+  int_ref l "trie.ml" 136 3292 3298 "trie.ml" 136 3292 3299
+)
+"trie.ml" 141 3415 3420 "trie.ml" 141 3415 3452
+call(
+  tail
+)
+type(
+  unit
+)
+"trie.ml" 140 3377 3382 "trie.ml" 141 3415 3452
+type(
+  unit
+)
+"trie.ml" 138 3326 3335 "trie.ml" 142 3453 3460
+type(
+  unit
+)
+"trie.ml" 137 3303 3307 "trie.ml" 142 3453 3460
+type(
+  unit
+)
+"trie.ml" 134 3242 3269 "trie.ml" 142 3453 3460
+type(
+  'a list -> unit
+)
+"trie.ml" 144 3462 3470 "trie.ml" 144 3462 3478
+type(
+  ('a, 'b) Node.t -> 'a list -> 'b -> ('a, 'b) Node.t
+)
+ident(
+  def set_node "trie.ml" 144 3462 3462 "trie.ml" 1 0 -1
+)
+"trie.ml" 144 3462 3479 "trie.ml" 144 3462 3483
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def node "trie.ml" 144 3462 3484 "trie.ml" 150 3643 3647
+)
+"trie.ml" 144 3462 3484 "trie.ml" 144 3462 3488
+type(
+  'a list
+)
+ident(
+  def path "trie.ml" 144 3462 3489 "trie.ml" 150 3643 3647
+)
+"trie.ml" 144 3462 3489 "trie.ml" 144 3462 3494
+type(
+  'b
+)
+ident(
+  def value "trie.ml" 145 3497 3498 "trie.ml" 150 3643 3647
+)
+"trie.ml" 145 3497 3501 "trie.ml" 145 3497 3505
+type(
+  'a list
+)
+ident(
+  int_ref path "trie.ml" 144 3462 3484 "trie.ml" 144 3462 3488
+)
+"trie.ml" 145 3497 3506 "trie.ml" 145 3497 3507
+type(
+  'a list -> 'a list -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 145 3497 3508 "trie.ml" 145 3497 3510
+type(
+  'a list
+)
+"trie.ml" 145 3497 3501 "trie.ml" 145 3497 3510
+type(
+  bool
+)
+"trie.ml" 146 3511 3517 "trie.ml" 146 3511 3531
+type(
+  ('a, 'b) Node.t -> 'b -> ('a, 'b) Node.t
+)
+ident(
+  int_ref Node.set_value "trie.ml" 44 1070 1075 "trie.ml" 44 1070 1084
+)
+"trie.ml" 146 3511 3532 "trie.ml" 146 3511 3536
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 144 3462 3479 "trie.ml" 144 3462 3483
+)
+"trie.ml" 146 3511 3537 "trie.ml" 146 3511 3542
+type(
+  'b
+)
+ident(
+  int_ref value "trie.ml" 144 3462 3489 "trie.ml" 144 3462 3494
+)
+"trie.ml" 146 3511 3517 "trie.ml" 146 3511 3542
+call(
+  tail
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 148 3555 3561 "trie.ml" 148 3555 3569
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def children "trie.ml" 149 3609 3611 "trie.ml" 149 3609 3642
+)
+"trie.ml" 148 3555 3572 "trie.ml" 148 3555 3575
+type(
+  ('a, 'b) Node.t list -> 'a list -> 'b -> ('a, 'b) Node.t list
+)
+ident(
+  int_ref set "trie.ml" 152 3649 3653 "trie.ml" 152 3649 3656
+)
+"trie.ml" 148 3555 3576 "trie.ml" 148 3555 3580
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 144 3462 3479 "trie.ml" 144 3462 3483
+)
+"trie.ml" 148 3555 3576 "trie.ml" 148 3555 3594
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 148 3555 3595 "trie.ml" 148 3555 3599
+type(
+  'a list
+)
+ident(
+  int_ref path "trie.ml" 144 3462 3484 "trie.ml" 144 3462 3488
+)
+"trie.ml" 148 3555 3600 "trie.ml" 148 3555 3605
+type(
+  'b
+)
+ident(
+  int_ref value "trie.ml" 144 3462 3489 "trie.ml" 144 3462 3494
+)
+"trie.ml" 148 3555 3572 "trie.ml" 148 3555 3605
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 149 3609 3611 "trie.ml" 149 3609 3628
+type(
+  ('a, 'b) Node.t -> ('a, 'b) Node.t list -> ('a, 'b) Node.t
+)
+ident(
+  int_ref Node.set_children "trie.ml" 46 1133 1138 "trie.ml" 46 1133 1150
+)
+"trie.ml" 149 3609 3629 "trie.ml" 149 3609 3633
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 144 3462 3479 "trie.ml" 144 3462 3483
+)
+"trie.ml" 149 3609 3634 "trie.ml" 149 3609 3642
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref children "trie.ml" 148 3555 3561 "trie.ml" 148 3555 3569
+)
+"trie.ml" 149 3609 3611 "trie.ml" 149 3609 3642
+call(
+  tail
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 147 3543 3549 "trie.ml" 150 3643 3647
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 145 3497 3498 "trie.ml" 150 3643 3647
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 152 3649 3653 "trie.ml" 152 3649 3656
+type(
+  ('a, 'b) Node.t list -> 'a list -> 'b -> ('a, 'b) Node.t list
+)
+ident(
+  def set "trie.ml" 144 3462 3462 "trie.ml" 1 0 -1
+)
+"trie.ml" 152 3649 3657 "trie.ml" 152 3649 3661
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tree "trie.ml" 152 3649 3662 "trie.ml" 163 3948 3956
+)
+"trie.ml" 152 3649 3662 "trie.ml" 152 3649 3666
+type(
+  'a list
+)
+ident(
+  def path "trie.ml" 152 3649 3667 "trie.ml" 163 3948 3956
+)
+"trie.ml" 152 3649 3667 "trie.ml" 152 3649 3672
+type(
+  'b
+)
+ident(
+  def value "trie.ml" 153 3675 3676 "trie.ml" 163 3948 3956
+)
+"trie.ml" 153 3675 3682 "trie.ml" 153 3675 3686
+type(
+  'a list
+)
+ident(
+  int_ref path "trie.ml" 152 3649 3662 "trie.ml" 152 3649 3666
+)
+"trie.ml" 154 3692 3696 "trie.ml" 154 3692 3698
+type(
+  'a list
+)
+"trie.ml" 154 3692 3704 "trie.ml" 154 3692 3709
+type(
+  exn -> ('a, 'b) Node.t list
+)
+ident(
+  ext_ref Pervasives.raise
+)
+"trie.ml" 154 3692 3710 "trie.ml" 154 3692 3719
+type(
+  exn
+)
+"trie.ml" 154 3692 3704 "trie.ml" 154 3692 3719
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 155 3720 3724 "trie.ml" 155 3720 3725
+type(
+  'a
+)
+ident(
+  def h "trie.ml" 156 3732 3737 "trie.ml" 163 3948 3956
+)
+"trie.ml" 155 3720 3727 "trie.ml" 155 3720 3728
+type(
+  'a list
+)
+ident(
+  def t "trie.ml" 156 3732 3737 "trie.ml" 163 3948 3956
+)
+"trie.ml" 155 3720 3724 "trie.ml" 155 3720 3728
+type(
+  'a list
+)
+"trie.ml" 156 3732 3740 "trie.ml" 156 3732 3748
+type(
+  ('a, 'b) Node.t list -> 'a -> bool
+)
+ident(
+  int_ref mem_node "trie.ml" 55 1326 1330 "trie.ml" 55 1326 1338
+)
+"trie.ml" 156 3732 3749 "trie.ml" 156 3732 3753
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 152 3649 3657 "trie.ml" 152 3649 3661
+)
+"trie.ml" 156 3732 3754 "trie.ml" 156 3732 3755
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 155 3720 3724 "trie.ml" 155 3720 3725
+)
+"trie.ml" 156 3732 3740 "trie.ml" 156 3732 3755
+call(
+  stack
+)
+type(
+  bool
+)
+"trie.ml" 158 3772 3782 "trie.ml" 158 3772 3786
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def node "trie.ml" 159 3809 3815 "trie.ml" 159 3809 3858
+)
+"trie.ml" 158 3772 3789 "trie.ml" 158 3772 3798
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t
+)
+ident(
+  int_ref find_node "trie.ml" 58 1399 1403 "trie.ml" 58 1399 1412
+)
+"trie.ml" 158 3772 3799 "trie.ml" 158 3772 3803
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 152 3649 3657 "trie.ml" 152 3649 3661
+)
+"trie.ml" 158 3772 3804 "trie.ml" 158 3772 3805
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 155 3720 3724 "trie.ml" 155 3720 3725
+)
+"trie.ml" 158 3772 3789 "trie.ml" 158 3772 3805
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 159 3809 3815 "trie.ml" 159 3809 3827
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t -> ('a, 'b) Node.t list
+)
+ident(
+  int_ref replace_node "trie.ml" 61 1471 1475 "trie.ml" 61 1471 1487
+)
+"trie.ml" 159 3809 3828 "trie.ml" 159 3809 3832
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 152 3649 3657 "trie.ml" 152 3649 3661
+)
+"trie.ml" 159 3809 3833 "trie.ml" 159 3809 3834
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 155 3720 3724 "trie.ml" 155 3720 3725
+)
+"trie.ml" 159 3809 3836 "trie.ml" 159 3809 3844
+type(
+  ('a, 'b) Node.t -> 'a list -> 'b -> ('a, 'b) Node.t
+)
+ident(
+  int_ref set_node "trie.ml" 144 3462 3470 "trie.ml" 144 3462 3478
+)
+"trie.ml" 159 3809 3845 "trie.ml" 159 3809 3849
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 158 3772 3782 "trie.ml" 158 3772 3786
+)
+"trie.ml" 159 3809 3850 "trie.ml" 159 3809 3851
+type(
+  'a list
+)
+ident(
+  int_ref t "trie.ml" 155 3720 3727 "trie.ml" 155 3720 3728
+)
+"trie.ml" 159 3809 3852 "trie.ml" 159 3809 3857
+type(
+  'b
+)
+ident(
+  int_ref value "trie.ml" 152 3649 3667 "trie.ml" 152 3649 3672
+)
+"trie.ml" 159 3809 3835 "trie.ml" 159 3809 3858
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 159 3809 3815 "trie.ml" 159 3809 3858
+call(
+  tail
+)
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 157 3756 3766 "trie.ml" 160 3859 3867
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 161 3879 3889 "trie.ml" 161 3879 3893
+type(
+  ('a, 'c) Node.t
+)
+ident(
+  def node "trie.ml" 162 3912 3918 "trie.ml" 162 3912 3947
+)
+"trie.ml" 161 3879 3896 "trie.ml" 161 3879 3906
+type(
+  'a -> ('a, 'c) Node.t
+)
+ident(
+  int_ref Node.empty "trie.ml" 30 826 831 "trie.ml" 30 826 836
+)
+"trie.ml" 161 3879 3907 "trie.ml" 161 3879 3908
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 155 3720 3724 "trie.ml" 155 3720 3725
+)
+"trie.ml" 161 3879 3896 "trie.ml" 161 3879 3908
+call(
+  stack
+)
+type(
+  ('a, 'c) Node.t
+)
+"trie.ml" 162 3912 3918 "trie.ml" 162 3912 3926
+type(
+  ('a, 'b) Node.t -> 'a list -> 'b -> ('a, 'b) Node.t
+)
+ident(
+  int_ref set_node "trie.ml" 144 3462 3470 "trie.ml" 144 3462 3478
+)
+"trie.ml" 162 3912 3927 "trie.ml" 162 3912 3931
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 161 3879 3889 "trie.ml" 161 3879 3893
+)
+"trie.ml" 162 3912 3932 "trie.ml" 162 3912 3933
+type(
+  'a list
+)
+ident(
+  int_ref t "trie.ml" 155 3720 3727 "trie.ml" 155 3720 3728
+)
+"trie.ml" 162 3912 3934 "trie.ml" 162 3912 3939
+type(
+  'b
+)
+ident(
+  int_ref value "trie.ml" 152 3649 3667 "trie.ml" 152 3649 3672
+)
+"trie.ml" 162 3912 3918 "trie.ml" 162 3912 3939
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 162 3912 3943 "trie.ml" 162 3912 3947
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 152 3649 3657 "trie.ml" 152 3649 3661
+)
+"trie.ml" 162 3912 3918 "trie.ml" 162 3912 3947
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 160 3859 3873 "trie.ml" 163 3948 3956
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 156 3732 3737 "trie.ml" 163 3948 3956
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 153 3675 3676 "trie.ml" 163 3948 3956
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 165 3958 3966 "trie.ml" 165 3958 3971
+type(
+  ('a, 'b) Node.t list -> 'a list -> ('a, 'b) Node.t list
+)
+ident(
+  def unset "trie.ml" 165 3958 3958 "trie.ml" 1 0 -1
+)
+"trie.ml" 165 3958 3972 "trie.ml" 165 3958 3976
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def tree "trie.ml" 165 3958 3979 "trie.ml" 181 4412 4432
+)
+"trie.ml" 166 3988 3991 "trie.ml" 166 3988 3993
+type(
+  'a list
+)
+"trie.ml" 166 3988 3999 "trie.ml" 166 3988 4003
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 165 3958 3972 "trie.ml" 165 3958 3976
+)
+"trie.ml" 167 4004 4007 "trie.ml" 167 4004 4008
+type(
+  'a
+)
+ident(
+  def h "trie.ml" 168 4015 4019 "trie.ml" 181 4412 4432
+)
+"trie.ml" 167 4004 4010 "trie.ml" 167 4004 4011
+type(
+  'a list
+)
+ident(
+  def t "trie.ml" 168 4015 4019 "trie.ml" 181 4412 4432
+)
+"trie.ml" 167 4004 4007 "trie.ml" 167 4004 4011
+type(
+  'a list
+)
+"trie.ml" 168 4015 4022 "trie.ml" 168 4015 4030
+type(
+  ('a, 'b) Node.t list -> 'a -> bool
+)
+ident(
+  int_ref mem_node "trie.ml" 55 1326 1330 "trie.ml" 55 1326 1338
+)
+"trie.ml" 168 4015 4031 "trie.ml" 168 4015 4035
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 165 3958 3972 "trie.ml" 165 3958 3976
+)
+"trie.ml" 168 4015 4036 "trie.ml" 168 4015 4037
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 167 4004 4007 "trie.ml" 167 4004 4008
+)
+"trie.ml" 168 4015 4022 "trie.ml" 168 4015 4037
+call(
+  stack
+)
+type(
+  bool
+)
+"trie.ml" 170 4053 4062 "trie.ml" 170 4053 4066
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def node "trie.ml" 171 4089 4094 "trie.ml" 179 4360 4398
+)
+"trie.ml" 170 4053 4069 "trie.ml" 170 4053 4078
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t
+)
+ident(
+  int_ref find_node "trie.ml" 58 1399 1403 "trie.ml" 58 1399 1412
+)
+"trie.ml" 170 4053 4079 "trie.ml" 170 4053 4083
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 165 3958 3972 "trie.ml" 165 3958 3976
+)
+"trie.ml" 170 4053 4084 "trie.ml" 170 4053 4085
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 167 4004 4007 "trie.ml" 167 4004 4008
+)
+"trie.ml" 170 4053 4069 "trie.ml" 170 4053 4085
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 171 4089 4098 "trie.ml" 171 4089 4106
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  def children "trie.ml" 172 4139 4144 "trie.ml" 179 4360 4398
+)
+"trie.ml" 171 4089 4109 "trie.ml" 171 4089 4114
+type(
+  ('a, 'b) Node.t list -> 'a list -> ('a, 'b) Node.t list
+)
+ident(
+  int_ref unset "trie.ml" 165 3958 3966 "trie.ml" 165 3958 3971
+)
+"trie.ml" 171 4089 4115 "trie.ml" 171 4089 4119
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 170 4053 4062 "trie.ml" 170 4053 4066
+)
+"trie.ml" 171 4089 4115 "trie.ml" 171 4089 4133
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 171 4089 4134 "trie.ml" 171 4089 4135
+type(
+  'a list
+)
+ident(
+  int_ref t "trie.ml" 167 4004 4010 "trie.ml" 167 4004 4011
+)
+"trie.ml" 171 4089 4109 "trie.ml" 171 4089 4135
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 172 4139 4148 "trie.ml" 172 4139 4156
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  def new_node "trie.ml" 177 4279 4284 "trie.ml" 179 4360 4398
+)
+"trie.ml" 173 4159 4168 "trie.ml" 173 4159 4169
+type(
+  'a list
+)
+ident(
+  int_ref t "trie.ml" 167 4004 4010 "trie.ml" 167 4004 4011
+)
+"trie.ml" 173 4159 4170 "trie.ml" 173 4159 4171
+type(
+  'a list -> 'a list -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 173 4159 4172 "trie.ml" 173 4159 4174
+type(
+  'a list
+)
+"trie.ml" 173 4159 4168 "trie.ml" 173 4159 4174
+type(
+  bool
+)
+"trie.ml" 174 4175 4186 "trie.ml" 174 4175 4203
+type(
+  ('a, 'b) Node.t -> ('a, 'b) Node.t list -> ('a, 'b) Node.t
+)
+ident(
+  int_ref Node.set_children "trie.ml" 46 1133 1138 "trie.ml" 46 1133 1150
+)
+"trie.ml" 174 4175 4205 "trie.ml" 174 4175 4215
+type(
+  'a -> ('a, 'b) Node.t
+)
+ident(
+  int_ref Node.empty "trie.ml" 30 826 831 "trie.ml" 30 826 836
+)
+"trie.ml" 174 4175 4216 "trie.ml" 174 4175 4217
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 167 4004 4007 "trie.ml" 167 4004 4008
+)
+"trie.ml" 174 4175 4204 "trie.ml" 174 4175 4218
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 174 4175 4219 "trie.ml" 174 4175 4227
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref children "trie.ml" 171 4089 4098 "trie.ml" 171 4089 4106
+)
+"trie.ml" 174 4175 4186 "trie.ml" 174 4175 4227
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 175 4228 4239 "trie.ml" 175 4228 4256
+type(
+  ('a, 'b) Node.t -> ('a, 'b) Node.t list -> ('a, 'b) Node.t
+)
+ident(
+  int_ref Node.set_children "trie.ml" 46 1133 1138 "trie.ml" 46 1133 1150
+)
+"trie.ml" 175 4228 4257 "trie.ml" 175 4228 4261
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref node "trie.ml" 170 4053 4062 "trie.ml" 170 4053 4066
+)
+"trie.ml" 175 4228 4262 "trie.ml" 175 4228 4270
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref children "trie.ml" 171 4089 4098 "trie.ml" 171 4089 4106
+)
+"trie.ml" 175 4228 4239 "trie.ml" 175 4228 4270
+call(
+  stack
+)
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 173 4159 4165 "trie.ml" 175 4228 4270
+type(
+  ('a, 'b) Node.t
+)
+"trie.ml" 177 4279 4287 "trie.ml" 177 4279 4295
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref children "trie.ml" 171 4089 4098 "trie.ml" 171 4089 4106
+)
+"trie.ml" 177 4279 4296 "trie.ml" 177 4279 4297
+type(
+  ('a, 'b) Node.t list -> ('a, 'b) Node.t list -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 177 4279 4298 "trie.ml" 177 4279 4300
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 177 4279 4287 "trie.ml" 177 4279 4300
+type(
+  bool
+)
+"trie.ml" 177 4279 4301 "trie.ml" 177 4279 4303
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( && )
+)
+"trie.ml" 177 4279 4304 "trie.ml" 177 4279 4312
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref new_node "trie.ml" 172 4139 4148 "trie.ml" 172 4139 4156
+)
+"trie.ml" 177 4279 4304 "trie.ml" 177 4279 4323
+type(
+  'b option
+)
+"trie.ml" 177 4279 4324 "trie.ml" 177 4279 4325
+type(
+  'b option -> 'b option -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"trie.ml" 177 4279 4326 "trie.ml" 177 4279 4330
+type(
+  'b option
+)
+"trie.ml" 177 4279 4304 "trie.ml" 177 4279 4330
+type(
+  bool
+)
+"trie.ml" 177 4279 4287 "trie.ml" 177 4279 4330
+type(
+  bool
+)
+"trie.ml" 178 4331 4341 "trie.ml" 178 4331 4352
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t list
+)
+ident(
+  int_ref remove_node "trie.ml" 69 1682 1686 "trie.ml" 69 1682 1697
+)
+"trie.ml" 178 4331 4353 "trie.ml" 178 4331 4357
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 165 3958 3972 "trie.ml" 165 3958 3976
+)
+"trie.ml" 178 4331 4358 "trie.ml" 178 4331 4359
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 167 4004 4007 "trie.ml" 167 4004 4008
+)
+"trie.ml" 178 4331 4341 "trie.ml" 178 4331 4359
+call(
+  tail
+)
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 179 4360 4370 "trie.ml" 179 4360 4382
+type(
+  ('a, 'b) Node.t list -> 'a -> ('a, 'b) Node.t -> ('a, 'b) Node.t list
+)
+ident(
+  int_ref replace_node "trie.ml" 61 1471 1475 "trie.ml" 61 1471 1487
+)
+"trie.ml" 179 4360 4383 "trie.ml" 179 4360 4387
+type(
+  ('a, 'b) Node.t list
+)
+ident(
+  int_ref tree "trie.ml" 165 3958 3972 "trie.ml" 165 3958 3976
+)
+"trie.ml" 179 4360 4388 "trie.ml" 179 4360 4389
+type(
+  'a
+)
+ident(
+  int_ref h "trie.ml" 167 4004 4007 "trie.ml" 167 4004 4008
+)
+"trie.ml" 179 4360 4390 "trie.ml" 179 4360 4398
+type(
+  ('a, 'b) Node.t
+)
+ident(
+  int_ref new_node "trie.ml" 172 4139 4148 "trie.ml" 172 4139 4156
+)
+"trie.ml" 179 4360 4370 "trie.ml" 179 4360 4398
+call(
+  tail
+)
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 177 4279 4284 "trie.ml" 179 4360 4398
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 172 4139 4144 "trie.ml" 179 4360 4398
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 171 4089 4094 "trie.ml" 179 4360 4398
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 169 4038 4047 "trie.ml" 180 4399 4406
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 181 4412 4417 "trie.ml" 181 4412 4422
+type(
+  exn -> ('a, 'b) Node.t list
+)
+ident(
+  ext_ref Pervasives.raise
+)
+"trie.ml" 181 4412 4423 "trie.ml" 181 4412 4432
+type(
+  exn
+)
+"trie.ml" 181 4412 4417 "trie.ml" 181 4412 4432
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 168 4015 4019 "trie.ml" 181 4412 4432
+type(
+  ('a, 'b) Node.t list
+)
+"trie.ml" 165 3958 3979 "trie.ml" 181 4412 4432
+type(
+  'a list -> ('a, 'b) Node.t list
+)

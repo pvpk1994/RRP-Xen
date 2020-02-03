@@ -1,0 +1,776 @@
+make -f /root/xen/xen/tools/kconfig/Makefile.kconfig ARCH=x86_64 SRCARCH=x86 HOSTCC="gcc" HOSTCXX="g++" silentoldconfig
+make[1]: Entering directory '/root/xen/xen'
+gcc -Wp,-MD,tools/kconfig/.conf.o.d    -D_GNU_SOURCE -DCURSES_LOC="<ncurses.h>" -DLOCALE   -c -o tools/kconfig/conf.o tools/kconfig/conf.c
+gcc -Wp,-MD,tools/kconfig/.zconf.tab.o.d    -D_GNU_SOURCE -DCURSES_LOC="<ncurses.h>" -DLOCALE  -Itools/kconfig -c -o tools/kconfig/zconf.tab.o tools/kconfig/zconf.tab.c
+gcc  -o tools/kconfig/conf tools/kconfig/conf.o tools/kconfig/zconf.tab.o  
+tools/kconfig/conf -s --silentoldconfig Kconfig
+make[1]: Leaving directory '/root/xen/xen'
+make -f Rules.mk _build
+make[1]: Entering directory '/root/xen/xen'
+make -C tools
+make[2]: Entering directory '/root/xen/xen/tools'
+make symbols
+make[3]: Entering directory '/root/xen/xen/tools'
+gcc -Wall -Werror -Wstrict-prototypes -O2 -fomit-frame-pointer -fno-strict-aliasing -Wdeclaration-after-statement -o symbols symbols.c
+make[3]: Leaving directory '/root/xen/xen/tools'
+make[2]: Leaving directory '/root/xen/xen/tools'
+make -f /root/xen/xen/Rules.mk include/xen/compile.h
+make[2]: Entering directory '/root/xen/xen'
+ Xen 4.12.2-pre
+make[2]: Leaving directory '/root/xen/xen'
+[ -e include/asm ] || ln -sf asm-x86 include/asm
+[ -e arch/x86/efi ] && for f in boot.c runtime.c compat.c efi.h;\
+	do test -r arch/x86/efi/$f || \
+	   ln -nsf ../../../common/efi/$f arch/x86/efi/; \
+	done; \
+	true
+make -f /root/xen/xen/Rules.mk -C include
+make[2]: Entering directory '/root/xen/xen/include'
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/argo.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/argo.c.new
+mv -f compat/argo.c.new compat/argo.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/argo.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$argo.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/argo.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/argo.i compat/argo.c
+set -e; id=_$(echo compat/argo.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/argo.h.new; \
+echo "#define $id" >>compat/argo.h.new; \
+echo "#include <xen/compat.h>" >>compat/argo.h.new; \
+echo "#include <public/argo.h>" >>compat/argo.h.new; \
+echo "#pragma pack(4)" >>compat/argo.h.new; \
+grep -v '^# [0-9]' compat/argo.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/argo.h.new; \
+echo "#pragma pack()" >>compat/argo.h.new; \
+echo "#endif /* $id */" >>compat/argo.h.new
+mv -f compat/argo.h.new compat/argo.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/callback.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/callback.c.new
+mv -f compat/callback.c.new compat/callback.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/callback.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$callback.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/callback.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/callback.i compat/callback.c
+set -e; id=_$(echo compat/callback.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/callback.h.new; \
+echo "#define $id" >>compat/callback.h.new; \
+echo "#include <xen/compat.h>" >>compat/callback.h.new; \
+echo "#include <public/callback.h>" >>compat/callback.h.new; \
+echo "#pragma pack(4)" >>compat/callback.h.new; \
+grep -v '^# [0-9]' compat/callback.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/callback.h.new; \
+echo "#pragma pack()" >>compat/callback.h.new; \
+echo "#endif /* $id */" >>compat/callback.h.new
+mv -f compat/callback.h.new compat/callback.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/elfnote.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/elfnote.c.new
+mv -f compat/elfnote.c.new compat/elfnote.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/elfnote.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$elfnote.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/elfnote.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/elfnote.i compat/elfnote.c
+set -e; id=_$(echo compat/elfnote.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/elfnote.h.new; \
+echo "#define $id" >>compat/elfnote.h.new; \
+echo "#include <xen/compat.h>" >>compat/elfnote.h.new; \
+echo "#include <public/elfnote.h>" >>compat/elfnote.h.new; \
+echo "#pragma pack(4)" >>compat/elfnote.h.new; \
+grep -v '^# [0-9]' compat/elfnote.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/elfnote.h.new; \
+echo "#pragma pack()" >>compat/elfnote.h.new; \
+echo "#endif /* $id */" >>compat/elfnote.h.new
+mv -f compat/elfnote.h.new compat/elfnote.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/event_channel.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/event_channel.c.new
+mv -f compat/event_channel.c.new compat/event_channel.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/event_channel.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$event_channel.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/event_channel.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/event_channel.i compat/event_channel.c
+set -e; id=_$(echo compat/event_channel.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/event_channel.h.new; \
+echo "#define $id" >>compat/event_channel.h.new; \
+echo "#include <xen/compat.h>" >>compat/event_channel.h.new; \
+echo "#include <public/event_channel.h>" >>compat/event_channel.h.new; \
+echo "#pragma pack(4)" >>compat/event_channel.h.new; \
+grep -v '^# [0-9]' compat/event_channel.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/event_channel.h.new; \
+echo "#pragma pack()" >>compat/event_channel.h.new; \
+echo "#endif /* $id */" >>compat/event_channel.h.new
+mv -f compat/event_channel.h.new compat/event_channel.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/features.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/features.c.new
+mv -f compat/features.c.new compat/features.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/features.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$features.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/features.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/features.i compat/features.c
+set -e; id=_$(echo compat/features.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/features.h.new; \
+echo "#define $id" >>compat/features.h.new; \
+echo "#include <xen/compat.h>" >>compat/features.h.new; \
+echo "#include <public/features.h>" >>compat/features.h.new; \
+echo "#pragma pack(4)" >>compat/features.h.new; \
+grep -v '^# [0-9]' compat/features.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/features.h.new; \
+echo "#pragma pack()" >>compat/features.h.new; \
+echo "#endif /* $id */" >>compat/features.h.new
+mv -f compat/features.h.new compat/features.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/grant_table.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/grant_table.c.new
+mv -f compat/grant_table.c.new compat/grant_table.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/grant_table.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$grant_table.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/grant_table.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/grant_table.i compat/grant_table.c
+set -e; id=_$(echo compat/grant_table.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/grant_table.h.new; \
+echo "#define $id" >>compat/grant_table.h.new; \
+echo "#include <xen/compat.h>" >>compat/grant_table.h.new; \
+echo "#include <public/grant_table.h>" >>compat/grant_table.h.new; \
+echo "#pragma pack(4)" >>compat/grant_table.h.new; \
+grep -v '^# [0-9]' compat/grant_table.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/grant_table.h.new; \
+echo "#pragma pack()" >>compat/grant_table.h.new; \
+echo "#endif /* $id */" >>compat/grant_table.h.new
+mv -f compat/grant_table.h.new compat/grant_table.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/kexec.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/kexec.c.new
+mv -f compat/kexec.c.new compat/kexec.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/kexec.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$kexec.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/kexec.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/kexec.i compat/kexec.c
+set -e; id=_$(echo compat/kexec.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/kexec.h.new; \
+echo "#define $id" >>compat/kexec.h.new; \
+echo "#include <xen/compat.h>" >>compat/kexec.h.new; \
+echo "#include <public/kexec.h>" >>compat/kexec.h.new; \
+echo "#pragma pack(4)" >>compat/kexec.h.new; \
+grep -v '^# [0-9]' compat/kexec.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/kexec.h.new; \
+echo "#pragma pack()" >>compat/kexec.h.new; \
+echo "#endif /* $id */" >>compat/kexec.h.new
+mv -f compat/kexec.h.new compat/kexec.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/memory.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/memory.c.new
+mv -f compat/memory.c.new compat/memory.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/memory.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$memory.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/memory.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/memory.i compat/memory.c
+set -e; id=_$(echo compat/memory.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/memory.h.new; \
+echo "#define $id" >>compat/memory.h.new; \
+echo "#include <xen/compat.h>" >>compat/memory.h.new; \
+echo "#include <public/memory.h>" >>compat/memory.h.new; \
+echo "#pragma pack(4)" >>compat/memory.h.new; \
+grep -v '^# [0-9]' compat/memory.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/memory.h.new; \
+echo "#pragma pack()" >>compat/memory.h.new; \
+echo "#endif /* $id */" >>compat/memory.h.new
+mv -f compat/memory.h.new compat/memory.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/nmi.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/nmi.c.new
+mv -f compat/nmi.c.new compat/nmi.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/nmi.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$nmi.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/nmi.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/nmi.i compat/nmi.c
+set -e; id=_$(echo compat/nmi.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/nmi.h.new; \
+echo "#define $id" >>compat/nmi.h.new; \
+echo "#include <xen/compat.h>" >>compat/nmi.h.new; \
+echo "#include <public/nmi.h>" >>compat/nmi.h.new; \
+echo "#pragma pack(4)" >>compat/nmi.h.new; \
+grep -v '^# [0-9]' compat/nmi.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/nmi.h.new; \
+echo "#pragma pack()" >>compat/nmi.h.new; \
+echo "#endif /* $id */" >>compat/nmi.h.new
+mv -f compat/nmi.h.new compat/nmi.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/physdev.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/physdev.c.new
+mv -f compat/physdev.c.new compat/physdev.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/physdev.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$physdev.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/physdev.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/physdev.i compat/physdev.c
+set -e; id=_$(echo compat/physdev.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/physdev.h.new; \
+echo "#define $id" >>compat/physdev.h.new; \
+echo "#include <xen/compat.h>" >>compat/physdev.h.new; \
+echo "#include <public/physdev.h>" >>compat/physdev.h.new; \
+echo "#pragma pack(4)" >>compat/physdev.h.new; \
+grep -v '^# [0-9]' compat/physdev.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/physdev.h.new; \
+echo "#pragma pack()" >>compat/physdev.h.new; \
+echo "#endif /* $id */" >>compat/physdev.h.new
+mv -f compat/physdev.h.new compat/physdev.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/platform.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/platform.c.new
+mv -f compat/platform.c.new compat/platform.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/platform.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$platform.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/platform.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/platform.i compat/platform.c
+set -e; id=_$(echo compat/platform.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/platform.h.new; \
+echo "#define $id" >>compat/platform.h.new; \
+echo "#include <xen/compat.h>" >>compat/platform.h.new; \
+echo "#include <public/platform.h>" >>compat/platform.h.new; \
+echo "#pragma pack(4)" >>compat/platform.h.new; \
+grep -v '^# [0-9]' compat/platform.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/platform.h.new; \
+echo "#pragma pack()" >>compat/platform.h.new; \
+echo "#endif /* $id */" >>compat/platform.h.new
+mv -f compat/platform.h.new compat/platform.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/sched.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/sched.c.new
+mv -f compat/sched.c.new compat/sched.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/sched.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$sched.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/sched.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/sched.i compat/sched.c
+set -e; id=_$(echo compat/sched.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/sched.h.new; \
+echo "#define $id" >>compat/sched.h.new; \
+echo "#include <xen/compat.h>" >>compat/sched.h.new; \
+echo "#include <public/sched.h>" >>compat/sched.h.new; \
+echo "#pragma pack(4)" >>compat/sched.h.new; \
+grep -v '^# [0-9]' compat/sched.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/sched.h.new; \
+echo "#pragma pack()" >>compat/sched.h.new; \
+echo "#endif /* $id */" >>compat/sched.h.new
+mv -f compat/sched.h.new compat/sched.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/tmem.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/tmem.c.new
+mv -f compat/tmem.c.new compat/tmem.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/tmem.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$tmem.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/tmem.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/tmem.i compat/tmem.c
+set -e; id=_$(echo compat/tmem.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/tmem.h.new; \
+echo "#define $id" >>compat/tmem.h.new; \
+echo "#include <xen/compat.h>" >>compat/tmem.h.new; \
+echo "#include <public/tmem.h>" >>compat/tmem.h.new; \
+echo "#pragma pack(4)" >>compat/tmem.h.new; \
+grep -v '^# [0-9]' compat/tmem.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/tmem.h.new; \
+echo "#pragma pack()" >>compat/tmem.h.new; \
+echo "#endif /* $id */" >>compat/tmem.h.new
+mv -f compat/tmem.h.new compat/tmem.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/trace.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/trace.c.new
+mv -f compat/trace.c.new compat/trace.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/trace.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$trace.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/trace.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/trace.i compat/trace.c
+set -e; id=_$(echo compat/trace.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/trace.h.new; \
+echo "#define $id" >>compat/trace.h.new; \
+echo "#include <xen/compat.h>" >>compat/trace.h.new; \
+echo "#include <public/trace.h>" >>compat/trace.h.new; \
+echo "#pragma pack(4)" >>compat/trace.h.new; \
+grep -v '^# [0-9]' compat/trace.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/trace.h.new; \
+echo "#pragma pack()" >>compat/trace.h.new; \
+echo "#endif /* $id */" >>compat/trace.h.new
+mv -f compat/trace.h.new compat/trace.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/vcpu.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/vcpu.c.new
+mv -f compat/vcpu.c.new compat/vcpu.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/vcpu.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$vcpu.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/vcpu.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/vcpu.i compat/vcpu.c
+set -e; id=_$(echo compat/vcpu.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/vcpu.h.new; \
+echo "#define $id" >>compat/vcpu.h.new; \
+echo "#include <xen/compat.h>" >>compat/vcpu.h.new; \
+echo "#include <public/vcpu.h>" >>compat/vcpu.h.new; \
+echo "#pragma pack(4)" >>compat/vcpu.h.new; \
+grep -v '^# [0-9]' compat/vcpu.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/vcpu.h.new; \
+echo "#pragma pack()" >>compat/vcpu.h.new; \
+echo "#endif /* $id */" >>compat/vcpu.h.new
+mv -f compat/vcpu.h.new compat/vcpu.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/version.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/version.c.new
+mv -f compat/version.c.new compat/version.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/version.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$version.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/version.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/version.i compat/version.c
+set -e; id=_$(echo compat/version.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/version.h.new; \
+echo "#define $id" >>compat/version.h.new; \
+echo "#include <xen/compat.h>" >>compat/version.h.new; \
+echo "#include <public/version.h>" >>compat/version.h.new; \
+echo "#pragma pack(4)" >>compat/version.h.new; \
+grep -v '^# [0-9]' compat/version.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/version.h.new; \
+echo "#pragma pack()" >>compat/version.h.new; \
+echo "#endif /* $id */" >>compat/version.h.new
+mv -f compat/version.h.new compat/version.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/xen.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/xen.c.new
+mv -f compat/xen.c.new compat/xen.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/xen.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$xen.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/xen.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/xen.i compat/xen.c
+set -e; id=_$(echo compat/xen.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/xen.h.new; \
+echo "#define $id" >>compat/xen.h.new; \
+echo "#include <xen/compat.h>" >>compat/xen.h.new; \
+echo "#include <public/xen.h>" >>compat/xen.h.new; \
+echo "#pragma pack(4)" >>compat/xen.h.new; \
+grep -v '^# [0-9]' compat/xen.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/xen.h.new; \
+echo "#pragma pack()" >>compat/xen.h.new; \
+echo "#endif /* $id */" >>compat/xen.h.new
+mv -f compat/xen.h.new compat/xen.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/xenoprof.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/xenoprof.c.new
+mv -f compat/xenoprof.c.new compat/xenoprof.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/xenoprof.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$xenoprof.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/xenoprof.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/xenoprof.i compat/xenoprof.c
+set -e; id=_$(echo compat/xenoprof.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/xenoprof.h.new; \
+echo "#define $id" >>compat/xenoprof.h.new; \
+echo "#include <xen/compat.h>" >>compat/xenoprof.h.new; \
+echo "#include <public/xenoprof.h>" >>compat/xenoprof.h.new; \
+echo "#pragma pack(4)" >>compat/xenoprof.h.new; \
+grep -v '^# [0-9]' compat/xenoprof.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/xenoprof.h.new; \
+echo "#pragma pack()" >>compat/xenoprof.h.new; \
+echo "#endif /* $id */" >>compat/xenoprof.h.new
+mv -f compat/xenoprof.h.new compat/xenoprof.h
+mkdir -p compat/arch-x86
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/arch-x86/pmu.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/arch-x86/pmu.c.new
+mv -f compat/arch-x86/pmu.c.new compat/arch-x86/pmu.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/arch-x86/pmu.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$arch_x86$pmu.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/arch-x86/pmu.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/arch-x86/pmu.i compat/arch-x86/pmu.c
+set -e; id=_$(echo compat/arch-x86/pmu.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/arch-x86/pmu.h.new; \
+echo "#define $id" >>compat/arch-x86/pmu.h.new; \
+echo "#include <xen/compat.h>" >>compat/arch-x86/pmu.h.new; \
+ \
+echo "#pragma pack(4)" >>compat/arch-x86/pmu.h.new; \
+grep -v '^# [0-9]' compat/arch-x86/pmu.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/arch-x86/pmu.h.new; \
+echo "#pragma pack()" >>compat/arch-x86/pmu.h.new; \
+echo "#endif /* $id */" >>compat/arch-x86/pmu.h.new
+mv -f compat/arch-x86/pmu.h.new compat/arch-x86/pmu.h
+mkdir -p compat/arch-x86
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/arch-x86/xen-mca.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/arch-x86/xen-mca.c.new
+mv -f compat/arch-x86/xen-mca.c.new compat/arch-x86/xen-mca.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/arch-x86/xen-mca.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$arch_x86$xen_mca.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/arch-x86/xen-mca.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/arch-x86/xen-mca.i compat/arch-x86/xen-mca.c
+set -e; id=_$(echo compat/arch-x86/xen-mca.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/arch-x86/xen-mca.h.new; \
+echo "#define $id" >>compat/arch-x86/xen-mca.h.new; \
+echo "#include <xen/compat.h>" >>compat/arch-x86/xen-mca.h.new; \
+ \
+echo "#pragma pack(4)" >>compat/arch-x86/xen-mca.h.new; \
+grep -v '^# [0-9]' compat/arch-x86/xen-mca.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/arch-x86/xen-mca.h.new; \
+echo "#pragma pack()" >>compat/arch-x86/xen-mca.h.new; \
+echo "#endif /* $id */" >>compat/arch-x86/xen-mca.h.new
+mv -f compat/arch-x86/xen-mca.h.new compat/arch-x86/xen-mca.h
+mkdir -p compat/arch-x86
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/arch-x86/xen.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/arch-x86/xen.c.new
+mv -f compat/arch-x86/xen.c.new compat/arch-x86/xen.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/arch-x86/xen.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$arch_x86$xen.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/arch-x86/xen.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/arch-x86/xen.i compat/arch-x86/xen.c
+set -e; id=_$(echo compat/arch-x86/xen.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/arch-x86/xen.h.new; \
+echo "#define $id" >>compat/arch-x86/xen.h.new; \
+echo "#include <xen/compat.h>" >>compat/arch-x86/xen.h.new; \
+ \
+echo "#pragma pack(4)" >>compat/arch-x86/xen.h.new; \
+grep -v '^# [0-9]' compat/arch-x86/xen.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/arch-x86/xen.h.new; \
+echo "#pragma pack()" >>compat/arch-x86/xen.h.new; \
+echo "#endif /* $id */" >>compat/arch-x86/xen.h.new
+mv -f compat/arch-x86/xen.h.new compat/arch-x86/xen.h
+mkdir -p compat/arch-x86
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/arch-x86/xen-x86_32.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/arch-x86/xen-x86_32.c.new
+mv -f compat/arch-x86/xen-x86_32.c.new compat/arch-x86/xen-x86_32.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/arch-x86/xen-x86_32.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$arch_x86$xen_x86_32.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/arch-x86/xen-x86_32.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/arch-x86/xen-x86_32.i compat/arch-x86/xen-x86_32.c
+set -e; id=_$(echo compat/arch-x86/xen-x86_32.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/arch-x86/xen-x86_32.h.new; \
+echo "#define $id" >>compat/arch-x86/xen-x86_32.h.new; \
+echo "#include <xen/compat.h>" >>compat/arch-x86/xen-x86_32.h.new; \
+ \
+echo "#pragma pack(4)" >>compat/arch-x86/xen-x86_32.h.new; \
+grep -v '^# [0-9]' compat/arch-x86/xen-x86_32.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/arch-x86/xen-x86_32.h.new; \
+echo "#pragma pack()" >>compat/arch-x86/xen-x86_32.h.new; \
+echo "#endif /* $id */" >>compat/arch-x86/xen-x86_32.h.new
+mv -f compat/arch-x86/xen-x86_32.h.new compat/arch-x86/xen-x86_32.h
+mkdir -p compat/hvm
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/hvm/dm_op.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/hvm/dm_op.c.new
+mv -f compat/hvm/dm_op.c.new compat/hvm/dm_op.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/hvm/dm_op.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$hvm$dm_op.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/hvm/dm_op.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/hvm/dm_op.i compat/hvm/dm_op.c
+set -e; id=_$(echo compat/hvm/dm_op.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/hvm/dm_op.h.new; \
+echo "#define $id" >>compat/hvm/dm_op.h.new; \
+echo "#include <xen/compat.h>" >>compat/hvm/dm_op.h.new; \
+echo "#include <public/hvm/dm_op.h>" >>compat/hvm/dm_op.h.new; \
+echo "#pragma pack(4)" >>compat/hvm/dm_op.h.new; \
+grep -v '^# [0-9]' compat/hvm/dm_op.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/hvm/dm_op.h.new; \
+echo "#pragma pack()" >>compat/hvm/dm_op.h.new; \
+echo "#endif /* $id */" >>compat/hvm/dm_op.h.new
+mv -f compat/hvm/dm_op.h.new compat/hvm/dm_op.h
+mkdir -p compat/hvm
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/hvm/hvm_op.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/hvm/hvm_op.c.new
+mv -f compat/hvm/hvm_op.c.new compat/hvm/hvm_op.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/hvm/hvm_op.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$hvm$hvm_op.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/hvm/hvm_op.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/hvm/hvm_op.i compat/hvm/hvm_op.c
+set -e; id=_$(echo compat/hvm/hvm_op.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/hvm/hvm_op.h.new; \
+echo "#define $id" >>compat/hvm/hvm_op.h.new; \
+echo "#include <xen/compat.h>" >>compat/hvm/hvm_op.h.new; \
+echo "#include <public/hvm/hvm_op.h>" >>compat/hvm/hvm_op.h.new; \
+echo "#pragma pack(4)" >>compat/hvm/hvm_op.h.new; \
+grep -v '^# [0-9]' compat/hvm/hvm_op.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/hvm/hvm_op.h.new; \
+echo "#pragma pack()" >>compat/hvm/hvm_op.h.new; \
+echo "#endif /* $id */" >>compat/hvm/hvm_op.h.new
+mv -f compat/hvm/hvm_op.h.new compat/hvm/hvm_op.h
+mkdir -p compat/hvm
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/hvm/hvm_vcpu.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/hvm/hvm_vcpu.c.new
+mv -f compat/hvm/hvm_vcpu.c.new compat/hvm/hvm_vcpu.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/hvm/hvm_vcpu.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$hvm$hvm_vcpu.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/hvm/hvm_vcpu.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/hvm/hvm_vcpu.i compat/hvm/hvm_vcpu.c
+set -e; id=_$(echo compat/hvm/hvm_vcpu.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/hvm/hvm_vcpu.h.new; \
+echo "#define $id" >>compat/hvm/hvm_vcpu.h.new; \
+echo "#include <xen/compat.h>" >>compat/hvm/hvm_vcpu.h.new; \
+echo "#include <public/hvm/hvm_vcpu.h>" >>compat/hvm/hvm_vcpu.h.new; \
+echo "#pragma pack(4)" >>compat/hvm/hvm_vcpu.h.new; \
+grep -v '^# [0-9]' compat/hvm/hvm_vcpu.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/hvm/hvm_vcpu.h.new; \
+echo "#pragma pack()" >>compat/hvm/hvm_vcpu.h.new; \
+echo "#endif /* $id */" >>compat/hvm/hvm_vcpu.h.new
+mv -f compat/hvm/hvm_vcpu.h.new compat/hvm/hvm_vcpu.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/arch-x86_32.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/arch-x86_32.c.new
+mv -f compat/arch-x86_32.c.new compat/arch-x86_32.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/arch-x86_32.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$arch_x86_32.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/arch-x86_32.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/arch-x86_32.i compat/arch-x86_32.c
+set -e; id=_$(echo compat/arch-x86_32.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/arch-x86_32.h.new; \
+echo "#define $id" >>compat/arch-x86_32.h.new; \
+echo "#include <xen/compat.h>" >>compat/arch-x86_32.h.new; \
+ \
+echo "#pragma pack(4)" >>compat/arch-x86_32.h.new; \
+grep -v '^# [0-9]' compat/arch-x86_32.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/arch-x86_32.h.new; \
+echo "#pragma pack()" >>compat/arch-x86_32.h.new; \
+echo "#endif /* $id */" >>compat/arch-x86_32.h.new
+mv -f compat/arch-x86_32.h.new compat/arch-x86_32.h
+mkdir -p compat
+grep -v 'DEFINE_XEN_GUEST_HANDLE(long)' public/pmu.h | \
+python /root/xen/xen/tools/compat-build-source.py >compat/pmu.c.new
+mv -f compat/pmu.c.new compat/pmu.c
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ '-D__OBJECT_FILE__="compat/pmu.i"' -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=include$compat$pmu.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=include/compat/pmu.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -include public/xen-compat.h -DXEN_GENERATING_COMPAT_HEADERS -m32 -o compat/pmu.i compat/pmu.c
+set -e; id=_$(echo compat/pmu.h | tr '[:lower:]-/.' '[:upper:]___'); \
+echo "#ifndef $id" >compat/pmu.h.new; \
+echo "#define $id" >>compat/pmu.h.new; \
+echo "#include <xen/compat.h>" >>compat/pmu.h.new; \
+echo "#include <public/pmu.h>" >>compat/pmu.h.new; \
+echo "#pragma pack(4)" >>compat/pmu.h.new; \
+grep -v '^# [0-9]' compat/pmu.i | \
+python /root/xen/xen/tools/compat-build-header.py | uniq >>compat/pmu.h.new; \
+echo "#pragma pack()" >>compat/pmu.h.new; \
+echo "#endif /* $id */" >>compat/pmu.h.new
+mv -f compat/pmu.h.new compat/pmu.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+xen\.h[[:blank:]]*$,,p' >compat/.xlat/xen.lst.new
+if ! cmp -s compat/.xlat/xen.lst.new compat/.xlat/xen.lst; then mv -f compat/.xlat/xen.lst.new compat/.xlat/xen.lst; else rm -f compat/.xlat/xen.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/xen.h || exit $?; \
+done <compat/.xlat/xen.lst >compat/.xlat/xen.h.new
+mv -f compat/.xlat/xen.h.new compat/.xlat/xen.h
+mkdir -p compat/.xlat/arch-x86
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+arch-x86/pmu\.h[[:blank:]]*$,,p' >compat/.xlat/arch-x86/pmu.lst.new
+if ! cmp -s compat/.xlat/arch-x86/pmu.lst.new compat/.xlat/arch-x86/pmu.lst; then mv -f compat/.xlat/arch-x86/pmu.lst.new compat/.xlat/arch-x86/pmu.lst; else rm -f compat/.xlat/arch-x86/pmu.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/arch-x86/pmu.h || exit $?; \
+done <compat/.xlat/arch-x86/pmu.lst >compat/.xlat/arch-x86/pmu.h.new
+mv -f compat/.xlat/arch-x86/pmu.h.new compat/.xlat/arch-x86/pmu.h
+mkdir -p compat/.xlat/arch-x86
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+arch-x86/xen-x86_32\.h[[:blank:]]*$,,p' >compat/.xlat/arch-x86/xen-x86_32.lst.new
+if ! cmp -s compat/.xlat/arch-x86/xen-x86_32.lst.new compat/.xlat/arch-x86/xen-x86_32.lst; then mv -f compat/.xlat/arch-x86/xen-x86_32.lst.new compat/.xlat/arch-x86/xen-x86_32.lst; else rm -f compat/.xlat/arch-x86/xen-x86_32.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/arch-x86/xen-x86_32.h || exit $?; \
+done <compat/.xlat/arch-x86/xen-x86_32.lst >compat/.xlat/arch-x86/xen-x86_32.h.new
+mv -f compat/.xlat/arch-x86/xen-x86_32.h.new compat/.xlat/arch-x86/xen-x86_32.h
+mkdir -p compat/.xlat/arch-x86
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+arch-x86/xen\.h[[:blank:]]*$,,p' >compat/.xlat/arch-x86/xen.lst.new
+if ! cmp -s compat/.xlat/arch-x86/xen.lst.new compat/.xlat/arch-x86/xen.lst; then mv -f compat/.xlat/arch-x86/xen.lst.new compat/.xlat/arch-x86/xen.lst; else rm -f compat/.xlat/arch-x86/xen.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/arch-x86/xen.h || exit $?; \
+done <compat/.xlat/arch-x86/xen.lst >compat/.xlat/arch-x86/xen.h.new
+mv -f compat/.xlat/arch-x86/xen.h.new compat/.xlat/arch-x86/xen.h
+mkdir -p compat/.xlat/arch-x86
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+arch-x86/xen-mca\.h[[:blank:]]*$,,p' >compat/.xlat/arch-x86/xen-mca.lst.new
+if ! cmp -s compat/.xlat/arch-x86/xen-mca.lst.new compat/.xlat/arch-x86/xen-mca.lst; then mv -f compat/.xlat/arch-x86/xen-mca.lst.new compat/.xlat/arch-x86/xen-mca.lst; else rm -f compat/.xlat/arch-x86/xen-mca.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/arch-x86/xen-mca.h || exit $?; \
+done <compat/.xlat/arch-x86/xen-mca.lst >compat/.xlat/arch-x86/xen-mca.h.new
+mv -f compat/.xlat/arch-x86/xen-mca.h.new compat/.xlat/arch-x86/xen-mca.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+argo\.h[[:blank:]]*$,,p' >compat/.xlat/argo.lst.new
+if ! cmp -s compat/.xlat/argo.lst.new compat/.xlat/argo.lst; then mv -f compat/.xlat/argo.lst.new compat/.xlat/argo.lst; else rm -f compat/.xlat/argo.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/argo.h || exit $?; \
+done <compat/.xlat/argo.lst >compat/.xlat/argo.h.new
+mv -f compat/.xlat/argo.h.new compat/.xlat/argo.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+event_channel\.h[[:blank:]]*$,,p' >compat/.xlat/event_channel.lst.new
+if ! cmp -s compat/.xlat/event_channel.lst.new compat/.xlat/event_channel.lst; then mv -f compat/.xlat/event_channel.lst.new compat/.xlat/event_channel.lst; else rm -f compat/.xlat/event_channel.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/event_channel.h || exit $?; \
+done <compat/.xlat/event_channel.lst >compat/.xlat/event_channel.h.new
+mv -f compat/.xlat/event_channel.h.new compat/.xlat/event_channel.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+grant_table\.h[[:blank:]]*$,,p' >compat/.xlat/grant_table.lst.new
+if ! cmp -s compat/.xlat/grant_table.lst.new compat/.xlat/grant_table.lst; then mv -f compat/.xlat/grant_table.lst.new compat/.xlat/grant_table.lst; else rm -f compat/.xlat/grant_table.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/grant_table.h || exit $?; \
+done <compat/.xlat/grant_table.lst >compat/.xlat/grant_table.h.new
+mv -f compat/.xlat/grant_table.h.new compat/.xlat/grant_table.h
+mkdir -p compat/.xlat/hvm
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+hvm/dm_op\.h[[:blank:]]*$,,p' >compat/.xlat/hvm/dm_op.lst.new
+if ! cmp -s compat/.xlat/hvm/dm_op.lst.new compat/.xlat/hvm/dm_op.lst; then mv -f compat/.xlat/hvm/dm_op.lst.new compat/.xlat/hvm/dm_op.lst; else rm -f compat/.xlat/hvm/dm_op.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/hvm/dm_op.h || exit $?; \
+done <compat/.xlat/hvm/dm_op.lst >compat/.xlat/hvm/dm_op.h.new
+mv -f compat/.xlat/hvm/dm_op.h.new compat/.xlat/hvm/dm_op.h
+mkdir -p compat/.xlat/hvm
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+hvm/hvm_op\.h[[:blank:]]*$,,p' >compat/.xlat/hvm/hvm_op.lst.new
+if ! cmp -s compat/.xlat/hvm/hvm_op.lst.new compat/.xlat/hvm/hvm_op.lst; then mv -f compat/.xlat/hvm/hvm_op.lst.new compat/.xlat/hvm/hvm_op.lst; else rm -f compat/.xlat/hvm/hvm_op.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/hvm/hvm_op.h || exit $?; \
+done <compat/.xlat/hvm/hvm_op.lst >compat/.xlat/hvm/hvm_op.h.new
+mv -f compat/.xlat/hvm/hvm_op.h.new compat/.xlat/hvm/hvm_op.h
+mkdir -p compat/.xlat/hvm
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+hvm/hvm_vcpu\.h[[:blank:]]*$,,p' >compat/.xlat/hvm/hvm_vcpu.lst.new
+if ! cmp -s compat/.xlat/hvm/hvm_vcpu.lst.new compat/.xlat/hvm/hvm_vcpu.lst; then mv -f compat/.xlat/hvm/hvm_vcpu.lst.new compat/.xlat/hvm/hvm_vcpu.lst; else rm -f compat/.xlat/hvm/hvm_vcpu.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/hvm/hvm_vcpu.h || exit $?; \
+done <compat/.xlat/hvm/hvm_vcpu.lst >compat/.xlat/hvm/hvm_vcpu.h.new
+mv -f compat/.xlat/hvm/hvm_vcpu.h.new compat/.xlat/hvm/hvm_vcpu.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+kexec\.h[[:blank:]]*$,,p' >compat/.xlat/kexec.lst.new
+if ! cmp -s compat/.xlat/kexec.lst.new compat/.xlat/kexec.lst; then mv -f compat/.xlat/kexec.lst.new compat/.xlat/kexec.lst; else rm -f compat/.xlat/kexec.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/kexec.h || exit $?; \
+done <compat/.xlat/kexec.lst >compat/.xlat/kexec.h.new
+mv -f compat/.xlat/kexec.h.new compat/.xlat/kexec.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+memory\.h[[:blank:]]*$,,p' >compat/.xlat/memory.lst.new
+if ! cmp -s compat/.xlat/memory.lst.new compat/.xlat/memory.lst; then mv -f compat/.xlat/memory.lst.new compat/.xlat/memory.lst; else rm -f compat/.xlat/memory.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/memory.h || exit $?; \
+done <compat/.xlat/memory.lst >compat/.xlat/memory.h.new
+mv -f compat/.xlat/memory.h.new compat/.xlat/memory.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+physdev\.h[[:blank:]]*$,,p' >compat/.xlat/physdev.lst.new
+if ! cmp -s compat/.xlat/physdev.lst.new compat/.xlat/physdev.lst; then mv -f compat/.xlat/physdev.lst.new compat/.xlat/physdev.lst; else rm -f compat/.xlat/physdev.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/physdev.h || exit $?; \
+done <compat/.xlat/physdev.lst >compat/.xlat/physdev.h.new
+mv -f compat/.xlat/physdev.h.new compat/.xlat/physdev.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+platform\.h[[:blank:]]*$,,p' >compat/.xlat/platform.lst.new
+if ! cmp -s compat/.xlat/platform.lst.new compat/.xlat/platform.lst; then mv -f compat/.xlat/platform.lst.new compat/.xlat/platform.lst; else rm -f compat/.xlat/platform.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/platform.h || exit $?; \
+done <compat/.xlat/platform.lst >compat/.xlat/platform.h.new
+mv -f compat/.xlat/platform.h.new compat/.xlat/platform.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+pmu\.h[[:blank:]]*$,,p' >compat/.xlat/pmu.lst.new
+if ! cmp -s compat/.xlat/pmu.lst.new compat/.xlat/pmu.lst; then mv -f compat/.xlat/pmu.lst.new compat/.xlat/pmu.lst; else rm -f compat/.xlat/pmu.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/pmu.h || exit $?; \
+done <compat/.xlat/pmu.lst >compat/.xlat/pmu.h.new
+mv -f compat/.xlat/pmu.h.new compat/.xlat/pmu.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+sched\.h[[:blank:]]*$,,p' >compat/.xlat/sched.lst.new
+if ! cmp -s compat/.xlat/sched.lst.new compat/.xlat/sched.lst; then mv -f compat/.xlat/sched.lst.new compat/.xlat/sched.lst; else rm -f compat/.xlat/sched.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/sched.h || exit $?; \
+done <compat/.xlat/sched.lst >compat/.xlat/sched.h.new
+mv -f compat/.xlat/sched.h.new compat/.xlat/sched.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+tmem\.h[[:blank:]]*$,,p' >compat/.xlat/tmem.lst.new
+if ! cmp -s compat/.xlat/tmem.lst.new compat/.xlat/tmem.lst; then mv -f compat/.xlat/tmem.lst.new compat/.xlat/tmem.lst; else rm -f compat/.xlat/tmem.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/tmem.h || exit $?; \
+done <compat/.xlat/tmem.lst >compat/.xlat/tmem.h.new
+mv -f compat/.xlat/tmem.h.new compat/.xlat/tmem.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+trace\.h[[:blank:]]*$,,p' >compat/.xlat/trace.lst.new
+if ! cmp -s compat/.xlat/trace.lst.new compat/.xlat/trace.lst; then mv -f compat/.xlat/trace.lst.new compat/.xlat/trace.lst; else rm -f compat/.xlat/trace.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/trace.h || exit $?; \
+done <compat/.xlat/trace.lst >compat/.xlat/trace.h.new
+mv -f compat/.xlat/trace.h.new compat/.xlat/trace.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+vcpu\.h[[:blank:]]*$,,p' >compat/.xlat/vcpu.lst.new
+if ! cmp -s compat/.xlat/vcpu.lst.new compat/.xlat/vcpu.lst; then mv -f compat/.xlat/vcpu.lst.new compat/.xlat/vcpu.lst; else rm -f compat/.xlat/vcpu.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/vcpu.h || exit $?; \
+done <compat/.xlat/vcpu.lst >compat/.xlat/vcpu.h.new
+mv -f compat/.xlat/vcpu.h.new compat/.xlat/vcpu.h
+mkdir -p compat/.xlat
+grep -v '^[[:blank:]]*#' xlat.lst | sed -ne 's,@arch@,x86_32,g' -re 's,[[:blank:]]+xenoprof\.h[[:blank:]]*$,,p' >compat/.xlat/xenoprof.lst.new
+if ! cmp -s compat/.xlat/xenoprof.lst.new compat/.xlat/xenoprof.lst; then mv -f compat/.xlat/xenoprof.lst.new compat/.xlat/xenoprof.lst; else rm -f compat/.xlat/xenoprof.lst.new; fi
+export PYTHON=python; \
+while read what name; do \
+	/bin/sh /root/xen/xen/tools/get-fields.sh "$what" compat_$name compat/xenoprof.h || exit $?; \
+done <compat/.xlat/xenoprof.lst >compat/.xlat/xenoprof.h.new
+mv -f compat/.xlat/xenoprof.h.new compat/.xlat/xenoprof.h
+cat compat/.xlat/xen.h compat/.xlat/arch-x86/pmu.h compat/.xlat/arch-x86/xen-x86_32.h compat/.xlat/arch-x86/xen.h compat/.xlat/arch-x86/xen-mca.h compat/.xlat/argo.h compat/.xlat/event_channel.h compat/.xlat/grant_table.h compat/.xlat/hvm/dm_op.h compat/.xlat/hvm/hvm_op.h compat/.xlat/hvm/hvm_vcpu.h compat/.xlat/kexec.h compat/.xlat/memory.h compat/.xlat/physdev.h compat/.xlat/platform.h compat/.xlat/pmu.h compat/.xlat/sched.h compat/.xlat/tmem.h compat/.xlat/trace.h compat/.xlat/vcpu.h compat/.xlat/xenoprof.h >compat/xlat.h.new
+mv -f compat/xlat.h.new compat/xlat.h
+for i in public/pmu.h public/memory.h public/errno.h public/kexec.h public/argo.h public/nmi.h public/xencomm.h public/vcpu.h public/elfnote.h public/xenoprof.h public/sched.h public/version.h public/xen.h public/features.h public/callback.h public/vm_event.h public/device_tree_defs.h public/grant_table.h public/xen-compat.h public/physdev.h public/platform.h public/tmem.h public/trace.h public/event_channel.h public/io/vscsiif.h public/io/kbdif.h public/io/protocols.h public/io/ring.h public/io/displif.h public/io/fsif.h public/io/console.h public/io/tpmif.h public/io/fbif.h public/io/xenbus.h public/io/libxenvchan.h public/io/netif.h public/io/blkif.h public/io/usbif.h public/io/pciif.h public/io/xs_wire.h public/io/sndif.h public/hvm/pvdrivers.h public/hvm/e820.h public/hvm/hvm_xs_strings.h public/hvm/dm_op.h public/hvm/ioreq.h public/hvm/hvm_info_table.h public/hvm/hvm_vcpu.h public/hvm/hvm_op.h public/hvm/params.h; do \
+    gcc -x c -ansi -Wall -Werror -include stdint.h \
+          -S -o /dev/null $i || exit 1; \
+    echo $i; \
+done >headers.chk.new
+mv headers.chk.new headers.chk
+rm -f headers99.chk.new
+echo "#include "\"public/io/9pfs.h\" | gcc -x c -std=c99 -Wall -Werror -include stdint.h  -include string.h -S -o /dev/null - || exit $?; echo public/io/9pfs.h >> headers99.chk.new;  echo "#include "\"public/io/pvcalls.h\" | gcc -x c -std=c99 -Wall -Werror -include stdint.h  -include string.h -S -o /dev/null - || exit $?; echo public/io/pvcalls.h >> headers99.chk.new;
+mv headers99.chk.new headers99.chk
+rm -f headers++.chk.new
+if ! g++ -v >/dev/null 2>&1; then                                  \
+    touch headers++.chk.new;                                                     \
+    exit 0;                                                           \
+fi;                                                                   \
+ echo "#include "\"public/pmu.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/pmu.h >> headers++.chk.new;  echo "#include "\"public/memory.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/memory.h >> headers++.chk.new;  echo "#include "\"public/sysctl.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/sysctl.h >> headers++.chk.new;  echo "#include "\"public/errno.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/errno.h >> headers++.chk.new;  echo "#include "\"public/kexec.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/kexec.h >> headers++.chk.new;  echo "#include "\"public/argo.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/argo.h >> headers++.chk.new;  echo "#include "\"public/nmi.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/nmi.h >> headers++.chk.new;  echo "#include "\"public/xencomm.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/xencomm.h >> headers++.chk.new;  echo "#include "\"public/vcpu.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/vcpu.h >> headers++.chk.new;  echo "#include "\"public/elfnote.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/elfnote.h >> headers++.chk.new;  echo "#include "\"public/xenoprof.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/xenoprof.h >> headers++.chk.new;  echo "#include "\"public/sched.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/sched.h >> headers++.chk.new;  echo "#include "\"public/version.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/version.h >> headers++.chk.new;  echo "#include "\"public/xen.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/xen.h >> headers++.chk.new;  echo "#include "\"public/features.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/features.h >> headers++.chk.new;  echo "#include "\"public/callback.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/callback.h >> headers++.chk.new;  echo "#include "\"public/vm_event.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/vm_event.h >> headers++.chk.new;  echo "#include "\"public/device_tree_defs.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/device_tree_defs.h >> headers++.chk.new;  echo "#include "\"public/grant_table.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/grant_table.h >> headers++.chk.new;  echo "#include "\"public/xen-compat.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/xen-compat.h >> headers++.chk.new;  echo "#include "\"public/physdev.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/physdev.h >> headers++.chk.new;  echo "#include "\"public/platform.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/platform.h >> headers++.chk.new;  echo "#include "\"public/tmem.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/tmem.h >> headers++.chk.new;  echo "#include "\"public/trace.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/trace.h >> headers++.chk.new;  echo "#include "\"public/event_channel.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/event_channel.h >> headers++.chk.new;  echo "#include "\"public/domctl.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/domctl.h >> headers++.chk.new;  echo "#include "\"public/io/vscsiif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/vscsiif.h >> headers++.chk.new;  echo "#include "\"public/io/kbdif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/kbdif.h >> headers++.chk.new;  echo "#include "\"public/io/protocols.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/protocols.h >> headers++.chk.new;  echo "#include "\"public/io/ring.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/ring.h >> headers++.chk.new;  echo "#include "\"public/io/displif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/displif.h >> headers++.chk.new;  echo "#include "\"public/io/fsif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/fsif.h >> headers++.chk.new;  echo "#include "\"public/io/9pfs.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -include cstring -S -o /dev/null - || exit $?; echo public/io/9pfs.h >> headers++.chk.new;  echo "#include "\"public/io/console.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/console.h >> headers++.chk.new;  echo "#include "\"public/io/tpmif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/tpmif.h >> headers++.chk.new;  echo "#include "\"public/io/fbif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/fbif.h >> headers++.chk.new;  echo "#include "\"public/io/xenbus.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/xenbus.h >> headers++.chk.new;  echo "#include "\"public/io/pvcalls.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -include cstring -S -o /dev/null - || exit $?; echo public/io/pvcalls.h >> headers++.chk.new;  echo "#include "\"public/io/libxenvchan.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/libxenvchan.h >> headers++.chk.new;  echo "#include "\"public/io/netif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/netif.h >> headers++.chk.new;  echo "#include "\"public/io/blkif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/blkif.h >> headers++.chk.new;  echo "#include "\"public/io/usbif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/usbif.h >> headers++.chk.new;  echo "#include "\"public/io/pciif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/pciif.h >> headers++.chk.new;  echo "#include "\"public/io/xs_wire.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/xs_wire.h >> headers++.chk.new;  echo "#include "\"public/io/sndif.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/io/sndif.h >> headers++.chk.new;  echo "#include "\"public/hvm/pvdrivers.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/pvdrivers.h >> headers++.chk.new;  echo "#include "\"public/hvm/e820.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/e820.h >> headers++.chk.new;  echo "#include "\"public/hvm/hvm_xs_strings.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/hvm_xs_strings.h >> headers++.chk.new;  echo "#include "\"public/hvm/dm_op.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/dm_op.h >> headers++.chk.new;  echo "#include "\"public/hvm/save.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/save.h >> headers++.chk.new;  echo "#include "\"public/hvm/ioreq.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/ioreq.h >> headers++.chk.new;  echo "#include "\"public/hvm/hvm_info_table.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/hvm_info_table.h >> headers++.chk.new;  echo "#include "\"public/hvm/hvm_vcpu.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/hvm_vcpu.h >> headers++.chk.new;  echo "#include "\"public/hvm/hvm_op.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/hvm_op.h >> headers++.chk.new;  echo "#include "\"public/hvm/params.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/hvm/params.h >> headers++.chk.new;  echo "#include "\"public/xsm/flask_op.h\" | g++ -x c++ -std=gnu++98 -Wall -Werror -D__XEN_TOOLS__ -include stdint.h -include public/xen.h  -S -o /dev/null - || exit $?; echo public/xsm/flask_op.h >> headers++.chk.new;
+mv headers++.chk.new headers++.chk
+make -C xen/lib/x86 all
+make[3]: Entering directory '/root/xen/xen/include/xen/lib/x86'
+python /root/xen/xen/../xen/tools/gen-cpuid.py -i /root/xen/xen/../xen/include/public/arch-x86/cpufeatureset.h -o cpuid-autogen.h.new
+if ! cmp -s cpuid-autogen.h.new cpuid-autogen.h; then mv -f cpuid-autogen.h.new cpuid-autogen.h; else rm -f cpuid-autogen.h.new; fi
+make[3]: Leaving directory '/root/xen/xen/include/xen/lib/x86'
+rm compat/argo.c compat/hvm/dm_op.i compat/xen.c compat/kexec.i compat/tmem.i compat/arch-x86/xen-x86_32.c compat/memory.c compat/sched.c compat/vcpu.c compat/xen.i compat/trace.i compat/features.i compat/callback.c compat/hvm/hvm_vcpu.c compat/version.i compat/arch-x86/pmu.i compat/event_channel.i compat/arch-x86/xen.i compat/elfnote.c compat/arch-x86/xen-mca.i compat/hvm/dm_op.c compat/pmu.i compat/platform.i compat/kexec.c compat/tmem.c compat/nmi.i compat/physdev.i compat/elfnote.i compat/physdev.c compat/vcpu.i compat/hvm/hvm_op.i compat/trace.c compat/features.c compat/arch-x86/pmu.c compat/event_channel.c compat/grant_table.i compat/arch-x86/xen.c compat/argo.i compat/arch-x86/xen-mca.c compat/version.c compat/arch-x86_32.i compat/pmu.c compat/platform.c compat/arch-x86_32.c compat/memory.i compat/sched.i compat/nmi.c compat/callback.i compat/xenoprof.c compat/hvm/hvm_vcpu.i compat/hvm/hvm_op.c compat/xenoprof.i compat/grant_table.c compat/arch-x86/xen-x86_32.i
+make[2]: Leaving directory '/root/xen/xen/include'
+make -f /root/xen/xen/Rules.mk -C arch/x86 asm-offsets.s
+make[2]: Entering directory '/root/xen/xen/arch/x86'
+gcc -E -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="asm-macros.i"' -MMD -MF ./.asm-macros.i.d -DXEN_BUILD_EFI -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=arch$x86$asm_macros.i' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=arch/x86/asm-macros.i' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -DBUILD_ID_EFI -D__ASSEMBLY__ -P asm-macros.c -o asm-macros.i
+echo '#if 0' >/root/xen/xen/include/asm-x86/asm-macros.h.new
+echo '.if 0' >>/root/xen/xen/include/asm-x86/asm-macros.h.new
+echo '#endif' >>/root/xen/xen/include/asm-x86/asm-macros.h.new
+echo 'asm ( ".include \"/root/xen/xen/include/asm-x86/asm-macros.h\"" );' >>/root/xen/xen/include/asm-x86/asm-macros.h.new
+echo '#if 0' >>/root/xen/xen/include/asm-x86/asm-macros.h.new
+echo '.endif' >>/root/xen/xen/include/asm-x86/asm-macros.h.new
+cat asm-macros.i >>/root/xen/xen/include/asm-x86/asm-macros.h.new
+echo '#endif' >>/root/xen/xen/include/asm-x86/asm-macros.h.new
+if ! cmp -s /root/xen/xen/include/asm-x86/asm-macros.h.new /root/xen/xen/include/asm-x86/asm-macros.h; then mv -f /root/xen/xen/include/asm-x86/asm-macros.h.new /root/xen/xen/include/asm-x86/asm-macros.h; else rm -f /root/xen/xen/include/asm-x86/asm-macros.h.new; fi
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="asm-offsets.s"' -MMD -MF ./.asm-offsets.s.d -DXEN_BUILD_EFI -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=arch$x86$asm_offsets.s' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=arch/x86/asm-offsets.s' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -DBUILD_ID_EFI -S -o asm-offsets.s x86_64/asm-offsets.c
+make[2]: Leaving directory '/root/xen/xen/arch/x86'
+make -f /root/xen/xen/Rules.mk include/asm-x86/asm-offsets.h
+make[2]: Entering directory '/root/xen/xen'
+make[2]: Leaving directory '/root/xen/xen'
+make -f /root/xen/xen/Rules.mk -C arch/x86 /root/xen/xen/xen
+make[2]: Entering directory '/root/xen/xen/arch/x86'
+sed "s! $PWD/! !" .asm-macros.i.d >.asm-macros.i.d2.tmp && mv -f .asm-macros.i.d2.tmp .asm-macros.i.d2
+sed "s! $PWD/! !" .asm-offsets.s.d >.asm-offsets.s.d2.tmp && mv -f .asm-offsets.s.d2.tmp .asm-offsets.s.d2
+make -f /root/xen/xen/Rules.mk -C /root/xen/xen/arch/x86/boot built_in.o
+make[3]: Entering directory '/root/xen/xen/arch/x86/boot'
+make -f build32.mk cmdline.S CMDLINE_DEPS="defs.h /root/xen/xen/include/xen/stdbool.h video.h"
+make[4]: Entering directory '/root/xen/xen/arch/x86/boot'
+gcc -m32 -march=i686 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -fno-stack-protector -fno-exceptions -Werror -fno-asynchronous-unwind-tables -fno-builtin -g0 -msoft-float -I/root/xen/xen/../xen/include  -c -fpic cmdline.c -o cmdline.o
+ld -melf_i386 -N -T build32.lds -o cmdline.lnk cmdline.o
+objdump -h cmdline.lnk | sed -n '/[0-9]/{s,00*,0,g;p;}' | \
+	while read idx name sz rest; do \
+		case "$name" in \
+		.got.plt) \
+			test $sz != 0c || continue; \
+			echo "Error: non-empty $name: 0x$sz" >&2; \
+			exit $(expr $idx + 1);; \
+		esac; \
+	done
+objcopy -O binary -R .got.plt cmdline.lnk cmdline.bin
+(od -v -t x cmdline.bin | tr -s ' ' | awk 'NR > 1 {print s} {s=$0}' | \
+sed 's/ /,0x/g' | sed 's/,0x$//' | sed 's/^[0-9]*,/ .long /') >cmdline.S
+make[4]: Leaving directory '/root/xen/xen/arch/x86/boot'
+make -f build32.mk reloc.S RELOC_DEPS="defs.h /root/xen/xen/include/xen/stdbool.h /root/xen/xen/include/generated/autoconf.h /root/xen/xen/include/xen/kconfig.h /root/xen/xen/include/xen/multiboot.h /root/xen/xen/include/xen/multiboot2.h /root/xen/xen/include/public/arch-x86/hvm/start_info.h"
+make[4]: Entering directory '/root/xen/xen/arch/x86/boot'
+gcc -m32 -march=i686 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -fno-stack-protector -fno-exceptions -Werror -fno-asynchronous-unwind-tables -fno-builtin -g0 -msoft-float -I/root/xen/xen/../xen/include  -c -fpic reloc.c -o reloc.o
+ld -melf_i386 -N -T build32.lds -o reloc.lnk reloc.o
+objdump -h reloc.lnk | sed -n '/[0-9]/{s,00*,0,g;p;}' | \
+	while read idx name sz rest; do \
+		case "$name" in \
+		.got.plt) \
+			test $sz != 0c || continue; \
+			echo "Error: non-empty $name: 0x$sz" >&2; \
+			exit $(expr $idx + 1);; \
+		esac; \
+	done
+objcopy -O binary -R .got.plt reloc.lnk reloc.bin
+(od -v -t x reloc.bin | tr -s ' ' | awk 'NR > 1 {print s} {s=$0}' | \
+sed 's/ /,0x/g' | sed 's/,0x$//' | sed 's/^[0-9]*,/ .long /') >reloc.S
+make[4]: Leaving directory '/root/xen/xen/arch/x86/boot'
+gcc -D__ASSEMBLY__ -m64 -DBUILD_ID -fno-strict-aliasing -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="head.o"' -Wa,--strip-local-absolute -MMD -MF ./.head.o.d -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=arch$x86$boot$head.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=arch/x86/boot/head.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c head.S -o head.o
+ld    -melf_x86_64  -r -o built_in.o head.o
+make[3]: Leaving directory '/root/xen/xen/arch/x86/boot'
+make -f /root/xen/xen/Rules.mk -C /root/xen/xen/arch/x86/efi built_in.o
+make[3]: Entering directory '/root/xen/xen/arch/x86/efi'
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="boot.o"' -Wa,--strip-local-absolute -MMD -MF ./.boot.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=arch$x86$efi$boot.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=arch/x86/efi/boot.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -fshort-wchar -DINIT_SECTIONS_ONLY -c boot.c -o boot.o
+objcopy -I ihex -O binary buildid.ihex buildid.o
+objdump -h boot.o | sed -n '/[0-9]/{s,00*,0,g;p;}' | while read idx name sz rest; do \
+	case "$name" in \
+	.*.local) ;; \
+	.text|.text.*|.data|.data.*|.bss) \
+		test $sz != 0 || continue; \
+		echo "Error: size of boot.o:$name is 0x$sz" >&2; \
+		exit $(expr $idx + 1);; \
+	esac; \
+done
+objcopy --rename-section .rodata=.init.rodata --rename-section .rodata.str1.1=.init.rodata.str1.1 --rename-section .rodata.str2.1=.init.rodata.str2.1 --rename-section .rodata.str4.1=.init.rodata.str4.1 --rename-section .rodata.cst1=.init.rodata.cst1 --rename-section .rodata.str1.2=.init.rodata.str1.2 --rename-section .rodata.str2.2=.init.rodata.str2.2 --rename-section .rodata.str4.2=.init.rodata.str4.2 --rename-section .rodata.cst2=.init.rodata.cst2 --rename-section .rodata.str1.4=.init.rodata.str1.4 --rename-section .rodata.str2.4=.init.rodata.str2.4 --rename-section .rodata.str4.4=.init.rodata.str4.4 --rename-section .rodata.cst4=.init.rodata.cst4 --rename-section .rodata.str1.8=.init.rodata.str1.8 --rename-section .rodata.str2.8=.init.rodata.str2.8 --rename-section .rodata.str4.8=.init.rodata.str4.8 --rename-section .rodata.cst8=.init.rodata.cst8 --rename-section .rodata.str1.16=.init.rodata.str1.16 --rename-section .rodata.str2.16=.init.rodata.str2.16 --rename-section .rodata.str4.16=.init.rodata.str4.16 --rename-section .rodata.cst16=.init.rodata.cst16 --rename-section .data.rel.local=.init.data.rel.local --rename-section .data.rel.ro.local=.init.data.rel.ro.local boot.o boot.init.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="compat.o"' -Wa,--strip-local-absolute -MMD -MF ./.compat.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=arch$x86$efi$compat.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=arch/x86/efi/compat.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -fshort-wchar -c compat.c -o compat.o
+gcc -D__ASSEMBLY__ -m64 -DBUILD_ID -fno-strict-aliasing -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="relocs-dummy.o"' -Wa,--strip-local-absolute -MMD -MF ./.relocs-dummy.o.d -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=arch$x86$efi$relocs_dummy.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=arch/x86/efi/relocs-dummy.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -fshort-wchar -c relocs-dummy.S -o relocs-dummy.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="runtime.o"' -Wa,--strip-local-absolute -MMD -MF ./.runtime.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=arch$x86$efi$runtime.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=arch/x86/efi/runtime.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -fshort-wchar -c runtime.c -o runtime.o
+ld    -melf_x86_64  -r -o built_in.o boot.init.o compat.o relocs-dummy.o runtime.o
+make[3]: Leaving directory '/root/xen/xen/arch/x86/efi'
+make -f /root/xen/xen/Rules.mk -C /root/xen/xen/common built_in.o
+make[3]: Entering directory '/root/xen/xen/common'
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="bitmap.o"' -Wa,--strip-local-absolute -MMD -MF ./.bitmap.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$bitmap.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/bitmap.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c bitmap.c -o bitmap.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="bsearch.o"' -Wa,--strip-local-absolute -MMD -MF ./.bsearch.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$bsearch.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/bsearch.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c bsearch.c -o bsearch.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="core_parking.o"' -Wa,--strip-local-absolute -MMD -MF ./.core_parking.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$core_parking.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/core_parking.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c core_parking.c -o core_parking.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="cpu.o"' -Wa,--strip-local-absolute -MMD -MF ./.cpu.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$cpu.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/cpu.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c cpu.c -o cpu.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="cpupool.o"' -Wa,--strip-local-absolute -MMD -MF ./.cpupool.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$cpupool.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/cpupool.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c cpupool.c -o cpupool.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="domctl.o"' -Wa,--strip-local-absolute -MMD -MF ./.domctl.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$domctl.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/domctl.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c domctl.c -o domctl.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="domain.o"' -Wa,--strip-local-absolute -MMD -MF ./.domain.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$domain.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/domain.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c domain.c -o domain.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="event_2l.o"' -Wa,--strip-local-absolute -MMD -MF ./.event_2l.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$event_2l.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/event_2l.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c event_2l.c -o event_2l.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="event_channel.o"' -Wa,--strip-local-absolute -MMD -MF ./.event_channel.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$event_channel.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/event_channel.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c event_channel.c -o event_channel.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="event_fifo.o"' -Wa,--strip-local-absolute -MMD -MF ./.event_fifo.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$event_fifo.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/event_fifo.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c event_fifo.c -o event_fifo.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="grant_table.o"' -Wa,--strip-local-absolute -MMD -MF ./.grant_table.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$grant_table.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/grant_table.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c grant_table.c -o grant_table.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="guestcopy.o"' -Wa,--strip-local-absolute -MMD -MF ./.guestcopy.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$guestcopy.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/guestcopy.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c guestcopy.c -o guestcopy.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="irq.o"' -Wa,--strip-local-absolute -MMD -MF ./.irq.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$irq.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/irq.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c irq.c -o irq.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="kernel.o"' -Wa,--strip-local-absolute -MMD -MF ./.kernel.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$kernel.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/kernel.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c kernel.c -o kernel.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="keyhandler.o"' -Wa,--strip-local-absolute -MMD -MF ./.keyhandler.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$keyhandler.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/keyhandler.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c keyhandler.c -o keyhandler.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="kexec.o"' -Wa,--strip-local-absolute -MMD -MF ./.kexec.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$kexec.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/kexec.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c kexec.c -o kexec.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="kimage.o"' -Wa,--strip-local-absolute -MMD -MF ./.kimage.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$kimage.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/kimage.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c kimage.c -o kimage.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="lib.o"' -Wa,--strip-local-absolute -MMD -MF ./.lib.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$lib.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/lib.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c lib.c -o lib.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="livepatch.o"' -Wa,--strip-local-absolute -MMD -MF ./.livepatch.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$livepatch.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/livepatch.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c livepatch.c -o livepatch.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="livepatch_elf.o"' -Wa,--strip-local-absolute -MMD -MF ./.livepatch_elf.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$livepatch_elf.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/livepatch_elf.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c livepatch_elf.c -o livepatch_elf.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="mem_access.o"' -Wa,--strip-local-absolute -MMD -MF ./.mem_access.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$mem_access.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/mem_access.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c mem_access.c -o mem_access.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="memory.o"' -Wa,--strip-local-absolute -MMD -MF ./.memory.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$memory.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/memory.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c memory.c -o memory.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="monitor.o"' -Wa,--strip-local-absolute -MMD -MF ./.monitor.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$monitor.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/monitor.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c monitor.c -o monitor.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="multicall.o"' -Wa,--strip-local-absolute -MMD -MF ./.multicall.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$multicall.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/multicall.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c multicall.c -o multicall.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="notifier.o"' -Wa,--strip-local-absolute -MMD -MF ./.notifier.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$notifier.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/notifier.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c notifier.c -o notifier.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="page_alloc.o"' -Wa,--strip-local-absolute -MMD -MF ./.page_alloc.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$page_alloc.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/page_alloc.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c page_alloc.c -o page_alloc.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="pdx.o"' -Wa,--strip-local-absolute -MMD -MF ./.pdx.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$pdx.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/pdx.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c pdx.c -o pdx.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="preempt.o"' -Wa,--strip-local-absolute -MMD -MF ./.preempt.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$preempt.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/preempt.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c preempt.c -o preempt.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="random.o"' -Wa,--strip-local-absolute -MMD -MF ./.random.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$random.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/random.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c random.c -o random.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="rangeset.o"' -Wa,--strip-local-absolute -MMD -MF ./.rangeset.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$rangeset.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/rangeset.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c rangeset.c -o rangeset.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="radix-tree.o"' -Wa,--strip-local-absolute -MMD -MF ./.radix-tree.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$radix_tree.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/radix-tree.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c radix-tree.c -o radix-tree.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="rbtree.o"' -Wa,--strip-local-absolute -MMD -MF ./.rbtree.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$rbtree.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/rbtree.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c rbtree.c -o rbtree.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="rcupdate.o"' -Wa,--strip-local-absolute -MMD -MF ./.rcupdate.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$rcupdate.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/rcupdate.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c rcupdate.c -o rcupdate.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="rwlock.o"' -Wa,--strip-local-absolute -MMD -MF ./.rwlock.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$rwlock.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/rwlock.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c rwlock.c -o rwlock.o
+gcc -m64 -DBUILD_ID -fno-strict-aliasing -std=gnu99 -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Wno-unused-but-set-variable -Wno-unused-local-typedefs   -O2 -fomit-frame-pointer -nostdinc -fno-builtin -fno-common -Wvla -pipe -D__XEN__ -include /root/xen/xen/include/xen/config.h '-D__OBJECT_FILE__="sched_aaf.o"' -Wa,--strip-local-absolute -MMD -MF ./.sched_aaf.o.d  -I/root/xen/xen/include -I/root/xen/xen/include/asm-x86/mach-generic -I/root/xen/xen/include/asm-x86/mach-default -DXEN_IMG_OFFSET=0x200000 '-D__OBJECT_LABEL__=common$sched_aaf.o' -msoft-float -fno-stack-protector -fno-exceptions -Wnested-externs -DHAVE_AS_VMX -DHAVE_AS_SSE4_2 -DHAVE_AS_EPT -DHAVE_AS_RDRAND -DHAVE_AS_FSGSBASE -DHAVE_AS_RDSEED -U__OBJECT_LABEL__ -DHAVE_AS_QUOTED_SYM '-D__OBJECT_LABEL__=common/sched_aaf.o' -DHAVE_AS_INVPCID -DHAVE_AS_NEGATIVE_TRUE  -mno-red-zone -fpic -fno-asynchronous-unwind-tables -mno-sse -mskip-rax-setup -DGCC_HAS_VISIBILITY_ATTRIBUTE -mindirect-branch=thunk-extern -mindirect-branch-register -DCONFIG_INDIRECT_THUNK -fno-jump-tables -Wa,-I/root/xen/xen/include -c sched_aaf.c -o sched_aaf.o
+/root/xen/xen/Rules.mk:196: recipe for target 'sched_aaf.o' failed
+make[3]: Leaving directory '/root/xen/xen/common'
+/root/xen/xen/Rules.mk:184: recipe for target '/root/xen/xen/common/built_in.o' failed
+make[2]: Leaving directory '/root/xen/xen/arch/x86'
+Makefile:136: recipe for target '/root/xen/xen/xen' failed
+make[1]: Leaving directory '/root/xen/xen'
+Makefile:45: recipe for target 'build' failed

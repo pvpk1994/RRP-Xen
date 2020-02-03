@@ -1,0 +1,1 @@
+/root/xen/stubdom/../tools/qemu-xen-traditional-dir/x86_64.ld

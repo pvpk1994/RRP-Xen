@@ -1,0 +1,4312 @@
+"domains.ml" 17 676 680 "domains.ml" 17 676 685
+type(
+  ('a, unit, string, unit) format4 -> 'a
+)
+ident(
+  def debug "domains.ml" 18 720 720 "domains.ml" 1 0 -1
+)
+"domains.ml" 17 676 686 "domains.ml" 17 676 689
+type(
+  ('a, unit, string, unit) format4
+)
+ident(
+  def fmt "domains.ml" 17 676 692 "domains.ml" 17 676 719
+)
+"domains.ml" 17 676 692 "domains.ml" 17 676 705
+type(
+  string -> ('a, unit, string, unit) format4 -> 'a
+)
+ident(
+  ext_ref Logging.debug
+)
+"domains.ml" 17 676 706 "domains.ml" 17 676 715
+type(
+  string
+)
+"domains.ml" 17 676 716 "domains.ml" 17 676 719
+type(
+  ('a, unit, string, unit) format4
+)
+ident(
+  int_ref fmt "domains.ml" 17 676 686 "domains.ml" 17 676 689
+)
+"domains.ml" 17 676 692 "domains.ml" 17 676 719
+call(
+  tail
+)
+type(
+  'a
+)
+"domains.ml" 18 720 724 "domains.ml" 18 720 729
+type(
+  ('a, unit, string, unit) format4 -> 'a
+)
+ident(
+  def error "domains.ml" 19 764 764 "domains.ml" 1 0 -1
+)
+"domains.ml" 18 720 730 "domains.ml" 18 720 733
+type(
+  ('a, unit, string, unit) format4
+)
+ident(
+  def fmt "domains.ml" 18 720 736 "domains.ml" 18 720 763
+)
+"domains.ml" 18 720 736 "domains.ml" 18 720 749
+type(
+  string -> ('a, unit, string, unit) format4 -> 'a
+)
+ident(
+  ext_ref Logging.error
+)
+"domains.ml" 18 720 750 "domains.ml" 18 720 759
+type(
+  string
+)
+"domains.ml" 18 720 760 "domains.ml" 18 720 763
+type(
+  ('a, unit, string, unit) format4
+)
+ident(
+  int_ref fmt "domains.ml" 18 720 730 "domains.ml" 18 720 733
+)
+"domains.ml" 18 720 736 "domains.ml" 18 720 763
+call(
+  tail
+)
+type(
+  'a
+)
+"domains.ml" 19 764 768 "domains.ml" 19 764 772
+type(
+  ('a, unit, string, unit) format4 -> 'a
+)
+ident(
+  def warn "domains.ml" 21 809 809 "domains.ml" 1 0 -1
+)
+"domains.ml" 19 764 773 "domains.ml" 19 764 776
+type(
+  ('a, unit, string, unit) format4
+)
+ident(
+  def fmt "domains.ml" 19 764 780 "domains.ml" 19 764 807
+)
+"domains.ml" 19 764 780 "domains.ml" 19 764 792
+type(
+  string -> ('a, unit, string, unit) format4 -> 'a
+)
+ident(
+  ext_ref Logging.warn
+)
+"domains.ml" 19 764 794 "domains.ml" 19 764 803
+type(
+  string
+)
+"domains.ml" 19 764 804 "domains.ml" 19 764 807
+type(
+  ('a, unit, string, unit) format4
+)
+ident(
+  int_ref fmt "domains.ml" 19 764 773 "domains.ml" 19 764 776
+)
+"domains.ml" 19 764 780 "domains.ml" 19 764 807
+call(
+  tail
+)
+type(
+  'a
+)
+"domains.ml" 21 809 813 "domains.ml" 21 809 815
+type(
+  Xenctrl.handle
+)
+ident(
+  def xc "domains.ml" 23 845 845 "domains.ml" 1 0 -1
+)
+"domains.ml" 21 809 818 "domains.ml" 21 809 840
+type(
+  unit -> Xenctrl.handle
+)
+ident(
+  ext_ref Xenctrl.interface_open
+)
+"domains.ml" 21 809 841 "domains.ml" 21 809 843
+type(
+  unit
+)
+"domains.ml" 21 809 818 "domains.ml" 21 809 843
+type(
+  Xenctrl.handle
+)
+"domains.ml" 45 1918 1922 "domains.ml" 45 1918 1926
+type(
+  Event.t -> (unit -> unit) -> domains
+)
+ident(
+  def init "domains.ml" 54 2189 2189 "domains.ml" 1 0 -1
+)
+"domains.ml" 45 1918 1927 "domains.ml" 45 1918 1935
+type(
+  Event.t
+)
+ident(
+  def eventchn "domains.ml" 45 1918 1936 "domains.ml" 53 2187 2188
+)
+"domains.ml" 45 1918 1936 "domains.ml" 45 1918 1959
+type(
+  unit -> unit
+)
+ident(
+  def on_first_conflict_pause "domains.ml" 45 1918 1962 "domains.ml" 53 2187 2188
+)
+"domains.ml" 46 1964 1976 "domains.ml" 46 1964 1984
+type(
+  Event.t
+)
+ident(
+  int_ref eventchn "domains.ml" 45 1918 1927 "domains.ml" 45 1918 1935
+)
+"domains.ml" 47 1986 1995 "domains.ml" 47 1986 2009
+type(
+  ?random:bool -> int -> (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+ident(
+  ext_ref Hashtbl.create
+)
+"domains.ml" 47 1986 2010 "domains.ml" 47 1986 2012
+type(
+  int
+)
+"domains.ml" 47 1986 1995 "domains.ml" 47 1986 2012
+call(
+  stack
+)
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 48 2014 2038 "domains.ml" 48 2014 2050
+type(
+  unit -> Domain.t option ref Queue.t
+)
+ident(
+  ext_ref Queue.create
+)
+"domains.ml" 48 2014 2051 "domains.ml" 48 2014 2053
+type(
+  unit
+)
+"domains.ml" 48 2014 2038 "domains.ml" 48 2014 2053
+call(
+  stack
+)
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 49 2055 2085 "domains.ml" 49 2055 2097
+type(
+  unit -> Domain.t option ref Queue.t
+)
+ident(
+  ext_ref Queue.create
+)
+"domains.ml" 49 2055 2098 "domains.ml" 49 2055 2100
+type(
+  unit
+)
+"domains.ml" 49 2055 2085 "domains.ml" 49 2055 2100
+call(
+  stack
+)
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 50 2102 2129 "domains.ml" 50 2102 2152
+type(
+  unit -> unit
+)
+ident(
+  int_ref on_first_conflict_pause "domains.ml" 45 1918 1936 "domains.ml" 45 1918 1959
+)
+"domains.ml" 51 2154 2166 "domains.ml" 51 2154 2167
+type(
+  int
+)
+"domains.ml" 52 2169 2184 "domains.ml" 52 2169 2185
+type(
+  int
+)
+"domains.ml" 45 1918 1962 "domains.ml" 53 2187 2188
+type(
+  domains
+)
+"domains.ml" 54 2189 2193 "domains.ml" 54 2189 2196
+type(
+  domains -> Xenctrl.domid -> unit
+)
+ident(
+  def del "domains.ml" 55 2236 2236 "domains.ml" 1 0 -1
+)
+"domains.ml" 54 2189 2197 "domains.ml" 54 2189 2201
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 54 2189 2202 "domains.ml" 54 2189 2235
+)
+"domains.ml" 54 2189 2202 "domains.ml" 54 2189 2204
+type(
+  Xenctrl.domid
+)
+ident(
+  def id "domains.ml" 54 2189 2207 "domains.ml" 54 2189 2235
+)
+"domains.ml" 54 2189 2207 "domains.ml" 54 2189 2221
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> Xenctrl.domid -> unit
+)
+ident(
+  ext_ref Hashtbl.remove
+)
+"domains.ml" 54 2189 2222 "domains.ml" 54 2189 2226
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 54 2189 2197 "domains.ml" 54 2189 2201
+)
+"domains.ml" 54 2189 2222 "domains.ml" 54 2189 2232
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 54 2189 2233 "domains.ml" 54 2189 2235
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 54 2189 2202 "domains.ml" 54 2189 2204
+)
+"domains.ml" 54 2189 2207 "domains.ml" 54 2189 2235
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 55 2236 2240 "domains.ml" 55 2236 2245
+type(
+  domains -> Xenctrl.domid -> bool
+)
+ident(
+  def exist "domains.ml" 56 2282 2282 "domains.ml" 1 0 -1
+)
+"domains.ml" 55 2236 2246 "domains.ml" 55 2236 2250
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 55 2236 2251 "domains.ml" 55 2236 2281
+)
+"domains.ml" 55 2236 2251 "domains.ml" 55 2236 2253
+type(
+  Xenctrl.domid
+)
+ident(
+  def id "domains.ml" 55 2236 2256 "domains.ml" 55 2236 2281
+)
+"domains.ml" 55 2236 2256 "domains.ml" 55 2236 2267
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> Xenctrl.domid -> bool
+)
+ident(
+  ext_ref Hashtbl.mem
+)
+"domains.ml" 55 2236 2268 "domains.ml" 55 2236 2272
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 55 2236 2246 "domains.ml" 55 2236 2250
+)
+"domains.ml" 55 2236 2268 "domains.ml" 55 2236 2278
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 55 2236 2279 "domains.ml" 55 2236 2281
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 55 2236 2251 "domains.ml" 55 2236 2253
+)
+"domains.ml" 55 2236 2256 "domains.ml" 55 2236 2281
+call(
+  tail
+)
+type(
+  bool
+)
+"domains.ml" 56 2282 2286 "domains.ml" 56 2282 2290
+type(
+  domains -> Xenctrl.domid -> Domain.t
+)
+ident(
+  def find "domains.ml" 57 2328 2328 "domains.ml" 1 0 -1
+)
+"domains.ml" 56 2282 2291 "domains.ml" 56 2282 2295
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 56 2282 2296 "domains.ml" 56 2282 2327
+)
+"domains.ml" 56 2282 2296 "domains.ml" 56 2282 2298
+type(
+  Xenctrl.domid
+)
+ident(
+  def id "domains.ml" 56 2282 2301 "domains.ml" 56 2282 2327
+)
+"domains.ml" 56 2282 2301 "domains.ml" 56 2282 2313
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> Xenctrl.domid -> Domain.t
+)
+ident(
+  ext_ref Hashtbl.find
+)
+"domains.ml" 56 2282 2314 "domains.ml" 56 2282 2318
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 56 2282 2291 "domains.ml" 56 2282 2295
+)
+"domains.ml" 56 2282 2314 "domains.ml" 56 2282 2324
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 56 2282 2325 "domains.ml" 56 2282 2327
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 56 2282 2296 "domains.ml" 56 2282 2298
+)
+"domains.ml" 56 2282 2301 "domains.ml" 56 2282 2327
+call(
+  tail
+)
+type(
+  Domain.t
+)
+"domains.ml" 57 2328 2332 "domains.ml" 57 2328 2338
+type(
+  domains -> int
+)
+ident(
+  def number "domains.ml" 58 2372 2372 "domains.ml" 1 0 -1
+)
+"domains.ml" 57 2328 2339 "domains.ml" 57 2328 2343
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 57 2328 2346 "domains.ml" 57 2328 2371
+)
+"domains.ml" 57 2328 2346 "domains.ml" 57 2328 2360
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> int
+)
+ident(
+  ext_ref Hashtbl.length
+)
+"domains.ml" 57 2328 2361 "domains.ml" 57 2328 2365
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 57 2328 2339 "domains.ml" 57 2328 2343
+)
+"domains.ml" 57 2328 2361 "domains.ml" 57 2328 2371
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 57 2328 2346 "domains.ml" 57 2328 2371
+call(
+  tail
+)
+type(
+  int
+)
+"domains.ml" 58 2372 2376 "domains.ml" 58 2372 2380
+type(
+  domains -> (Domain.t -> unit) -> unit
+)
+ident(
+  def iter "domains.ml" 60 2436 2436 "domains.ml" 1 0 -1
+)
+"domains.ml" 58 2372 2381 "domains.ml" 58 2372 2385
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 58 2372 2386 "domains.ml" 58 2372 2434
+)
+"domains.ml" 58 2372 2386 "domains.ml" 58 2372 2389
+type(
+  Domain.t -> unit
+)
+ident(
+  def fct "domains.ml" 58 2372 2392 "domains.ml" 58 2372 2434
+)
+"domains.ml" 58 2372 2392 "domains.ml" 58 2372 2404
+type(
+  (Xenctrl.domid -> Domain.t -> unit) ->
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> unit
+)
+ident(
+  ext_ref Hashtbl.iter
+)
+"domains.ml" 58 2372 2410 "domains.ml" 58 2372 2411
+type(
+  Xenctrl.domid
+)
+"domains.ml" 58 2372 2412 "domains.ml" 58 2372 2413
+type(
+  Domain.t
+)
+ident(
+  def b "domains.ml" 58 2372 2417 "domains.ml" 58 2372 2422
+)
+"domains.ml" 58 2372 2417 "domains.ml" 58 2372 2420
+type(
+  Domain.t -> unit
+)
+ident(
+  int_ref fct "domains.ml" 58 2372 2386 "domains.ml" 58 2372 2389
+)
+"domains.ml" 58 2372 2421 "domains.ml" 58 2372 2422
+type(
+  Domain.t
+)
+ident(
+  int_ref b "domains.ml" 58 2372 2412 "domains.ml" 58 2372 2413
+)
+"domains.ml" 58 2372 2417 "domains.ml" 58 2372 2422
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 58 2372 2405 "domains.ml" 58 2372 2423
+type(
+  Xenctrl.domid -> Domain.t -> unit
+)
+"domains.ml" 58 2372 2424 "domains.ml" 58 2372 2428
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 58 2372 2381 "domains.ml" 58 2372 2385
+)
+"domains.ml" 58 2372 2424 "domains.ml" 58 2372 2434
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 58 2372 2392 "domains.ml" 58 2372 2434
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 60 2436 2444 "domains.ml" 60 2436 2458
+type(
+  'a option ref Queue.t -> bool
+)
+ident(
+  def is_empty_queue "domains.ml" 60 2436 2436 "domains.ml" 1 0 -1
+)
+"domains.ml" 60 2436 2459 "domains.ml" 60 2436 2460
+type(
+  'a option ref Queue.t
+)
+ident(
+  def q "domains.ml" 61 2463 2464 "domains.ml" 66 2566 2580
+)
+"domains.ml" 61 2463 2464 "domains.ml" 61 2463 2478
+type(
+  'a option ref Queue.t -> bool
+)
+ident(
+  ext_ref Queue.is_empty
+)
+"domains.ml" 61 2463 2479 "domains.ml" 61 2463 2480
+type(
+  'a option ref Queue.t
+)
+ident(
+  int_ref q "domains.ml" 60 2436 2459 "domains.ml" 60 2436 2460
+)
+"domains.ml" 61 2463 2464 "domains.ml" 61 2463 2480
+call(
+  stack
+)
+type(
+  bool
+)
+"domains.ml" 61 2463 2481 "domains.ml" 61 2463 2483
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( || )
+)
+"domains.ml" 62 2484 2489 "domains.ml" 62 2484 2490
+type(
+  'a option ref -> 'a option
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 62 2484 2491 "domains.ml" 62 2484 2501
+type(
+  'a option ref Queue.t -> 'a option ref
+)
+ident(
+  ext_ref Queue.peek
+)
+"domains.ml" 62 2484 2502 "domains.ml" 62 2484 2503
+type(
+  'a option ref Queue.t
+)
+ident(
+  int_ref q "domains.ml" 60 2436 2459 "domains.ml" 60 2436 2460
+)
+"domains.ml" 62 2484 2490 "domains.ml" 62 2484 2504
+call(
+  stack
+)
+type(
+  'a option ref
+)
+"domains.ml" 62 2484 2489 "domains.ml" 62 2484 2504
+type(
+  'a option
+)
+"domains.ml" 62 2484 2505 "domains.ml" 62 2484 2506
+type(
+  'a option -> 'a option -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"domains.ml" 62 2484 2507 "domains.ml" 62 2484 2511
+type(
+  'a option
+)
+"domains.ml" 62 2484 2489 "domains.ml" 62 2484 2511
+type(
+  bool
+)
+"domains.ml" 64 2521 2524 "domains.ml" 64 2521 2530
+type(
+  'a option ref -> unit
+)
+ident(
+  ext_ref Pervasives.ignore
+)
+"domains.ml" 64 2521 2532 "domains.ml" 64 2521 2541
+type(
+  'a option ref Queue.t -> 'a option ref
+)
+ident(
+  ext_ref Queue.pop
+)
+"domains.ml" 64 2521 2542 "domains.ml" 64 2521 2543
+type(
+  'a option ref Queue.t
+)
+ident(
+  int_ref q "domains.ml" 60 2436 2459 "domains.ml" 60 2436 2460
+)
+"domains.ml" 64 2521 2531 "domains.ml" 64 2521 2544
+call(
+  stack
+)
+type(
+  'a option ref
+)
+"domains.ml" 64 2521 2524 "domains.ml" 64 2521 2544
+type(
+  unit
+)
+"domains.ml" 65 2546 2549 "domains.ml" 65 2546 2563
+type(
+  'a option ref Queue.t -> bool
+)
+ident(
+  int_ref is_empty_queue "domains.ml" 60 2436 2444 "domains.ml" 60 2436 2458
+)
+"domains.ml" 65 2546 2564 "domains.ml" 65 2546 2565
+type(
+  'a option ref Queue.t
+)
+ident(
+  int_ref q "domains.ml" 60 2436 2459 "domains.ml" 60 2436 2460
+)
+"domains.ml" 65 2546 2549 "domains.ml" 65 2546 2565
+call(
+  tail
+)
+type(
+  bool
+)
+"domains.ml" 63 2512 2519 "domains.ml" 66 2566 2569
+type(
+  bool
+)
+"domains.ml" 66 2566 2575 "domains.ml" 66 2566 2580
+type(
+  bool
+)
+"domains.ml" 62 2484 2486 "domains.ml" 66 2566 2580
+type(
+  bool
+)
+"domains.ml" 61 2463 2464 "domains.ml" 66 2566 2580
+type(
+  bool
+)
+"domains.ml" 68 2582 2586 "domains.ml" 68 2582 2603
+type(
+  domains -> bool
+)
+ident(
+  def all_at_max_credit "domains.ml" 78 3036 3036 "domains.ml" 1 0 -1
+)
+"domains.ml" 68 2582 2604 "domains.ml" 68 2582 2608
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 69 2611 2612 "domains.ml" 75 2907 2933
+)
+"domains.ml" 69 2611 2615 "domains.ml" 69 2611 2616
+type(
+  bool ref -> bool
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 69 2611 2616 "domains.ml" 69 2611 2655
+type(
+  bool ref
+)
+ident(
+  ext_ref Define.conflict_rate_limit_is_aggregate
+)
+"domains.ml" 69 2611 2615 "domains.ml" 69 2611 2655
+type(
+  bool
+)
+"domains.ml" 73 2812 2814 "domains.ml" 73 2812 2828
+type(
+  Domain.t option ref Queue.t -> bool
+)
+ident(
+  int_ref is_empty_queue "domains.ml" 60 2436 2444 "domains.ml" 60 2436 2458
+)
+"domains.ml" 73 2812 2829 "domains.ml" 73 2812 2833
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 68 2582 2604 "domains.ml" 68 2582 2608
+)
+"domains.ml" 73 2812 2829 "domains.ml" 73 2812 2860
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 73 2812 2814 "domains.ml" 73 2812 2860
+call(
+  stack
+)
+type(
+  bool
+)
+"domains.ml" 74 2861 2863 "domains.ml" 74 2861 2865
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( && )
+)
+"domains.ml" 74 2861 2866 "domains.ml" 74 2861 2880
+type(
+  Domain.t option ref Queue.t -> bool
+)
+ident(
+  int_ref is_empty_queue "domains.ml" 60 2436 2444 "domains.ml" 60 2436 2458
+)
+"domains.ml" 74 2861 2881 "domains.ml" 74 2861 2885
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 68 2582 2604 "domains.ml" 68 2582 2608
+)
+"domains.ml" 74 2861 2881 "domains.ml" 74 2861 2906
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 74 2861 2866 "domains.ml" 74 2861 2906
+call(
+  tail
+)
+type(
+  bool
+)
+"domains.ml" 73 2812 2814 "domains.ml" 74 2861 2906
+type(
+  bool
+)
+"domains.ml" 75 2907 2913 "domains.ml" 75 2907 2917
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 68 2582 2604 "domains.ml" 68 2582 2608
+)
+"domains.ml" 75 2907 2913 "domains.ml" 75 2907 2929
+type(
+  int
+)
+"domains.ml" 75 2907 2930 "domains.ml" 75 2907 2931
+type(
+  int -> int -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"domains.ml" 75 2907 2932 "domains.ml" 75 2907 2933
+type(
+  int
+)
+"domains.ml" 75 2907 2913 "domains.ml" 75 2907 2933
+type(
+  bool
+)
+"domains.ml" 69 2611 2612 "domains.ml" 75 2907 2933
+type(
+  bool
+)
+"domains.ml" 78 3036 3040 "domains.ml" 78 3036 3044
+type(
+  'a -> 'a option ref Queue.t -> unit
+)
+ident(
+  def push "domains.ml" 81 3093 3093 "domains.ml" 1 0 -1
+)
+"domains.ml" 78 3036 3045 "domains.ml" 78 3036 3048
+type(
+  'a
+)
+ident(
+  def dom "domains.ml" 78 3036 3049 "domains.ml" 79 3057 3091
+)
+"domains.ml" 78 3036 3049 "domains.ml" 78 3036 3054
+type(
+  'a option ref Queue.t
+)
+ident(
+  def queue "domains.ml" 79 3057 3058 "domains.ml" 79 3057 3091
+)
+"domains.ml" 79 3057 3058 "domains.ml" 79 3057 3068
+type(
+  'a option ref -> 'a option ref Queue.t -> unit
+)
+ident(
+  ext_ref Queue.push
+)
+"domains.ml" 79 3057 3070 "domains.ml" 79 3057 3073
+type(
+  'a option -> 'a option ref
+)
+ident(
+  ext_ref Pervasives.ref
+)
+"domains.ml" 79 3057 3080 "domains.ml" 79 3057 3083
+type(
+  'a
+)
+ident(
+  int_ref dom "domains.ml" 78 3036 3045 "domains.ml" 78 3036 3048
+)
+"domains.ml" 79 3057 3074 "domains.ml" 79 3057 3084
+type(
+  'a option
+)
+"domains.ml" 79 3057 3069 "domains.ml" 79 3057 3085
+type(
+  'a option ref
+)
+"domains.ml" 79 3057 3086 "domains.ml" 79 3057 3091
+type(
+  'a option ref Queue.t
+)
+ident(
+  int_ref queue "domains.ml" 78 3036 3049 "domains.ml" 78 3036 3054
+)
+"domains.ml" 79 3057 3058 "domains.ml" 79 3057 3091
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 81 3093 3101 "domains.ml" 81 3093 3104
+type(
+  'a option ref Queue.t -> 'a
+)
+ident(
+  def pop "domains.ml" 81 3093 3093 "domains.ml" 1 0 -1
+)
+"domains.ml" 81 3093 3105 "domains.ml" 81 3093 3110
+type(
+  'a option ref Queue.t
+)
+ident(
+  def queue "domains.ml" 82 3113 3114 "domains.ml" 84 3165 3179
+)
+"domains.ml" 82 3113 3120 "domains.ml" 82 3113 3121
+type(
+  'a option ref -> 'a option
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 82 3113 3122 "domains.ml" 82 3113 3131
+type(
+  'a option ref Queue.t -> 'a option ref
+)
+ident(
+  ext_ref Queue.pop
+)
+"domains.ml" 82 3113 3132 "domains.ml" 82 3113 3137
+type(
+  'a option ref Queue.t
+)
+ident(
+  int_ref queue "domains.ml" 81 3093 3105 "domains.ml" 81 3093 3110
+)
+"domains.ml" 82 3113 3121 "domains.ml" 82 3113 3138
+call(
+  stack
+)
+type(
+  'a option ref
+)
+"domains.ml" 82 3113 3120 "domains.ml" 82 3113 3138
+type(
+  'a option
+)
+"domains.ml" 83 3144 3147 "domains.ml" 83 3144 3151
+type(
+  'a option
+)
+"domains.ml" 83 3144 3155 "domains.ml" 83 3144 3158
+type(
+  'a option ref Queue.t -> 'a
+)
+ident(
+  int_ref pop "domains.ml" 81 3093 3101 "domains.ml" 81 3093 3104
+)
+"domains.ml" 83 3144 3159 "domains.ml" 83 3144 3164
+type(
+  'a option ref Queue.t
+)
+ident(
+  int_ref queue "domains.ml" 81 3093 3105 "domains.ml" 81 3093 3110
+)
+"domains.ml" 83 3144 3155 "domains.ml" 83 3144 3164
+call(
+  tail
+)
+type(
+  'a
+)
+"domains.ml" 84 3165 3173 "domains.ml" 84 3165 3174
+type(
+  'a
+)
+ident(
+  def x "domains.ml" 84 3165 3178 "domains.ml" 84 3165 3179
+)
+"domains.ml" 84 3165 3168 "domains.ml" 84 3165 3174
+type(
+  'a option
+)
+"domains.ml" 84 3165 3178 "domains.ml" 84 3165 3179
+type(
+  'a
+)
+ident(
+  int_ref x "domains.ml" 84 3165 3173 "domains.ml" 84 3165 3174
+)
+"domains.ml" 82 3113 3114 "domains.ml" 84 3165 3179
+type(
+  'a
+)
+"domains.ml" 86 3181 3185 "domains.ml" 86 3181 3202
+type(
+  'a -> 'a option ref Queue.t -> unit
+)
+ident(
+  def remove_from_queue "domains.ml" 91 3312 3312 "domains.ml" 1 0 -1
+)
+"domains.ml" 86 3181 3203 "domains.ml" 86 3181 3206
+type(
+  'a
+)
+ident(
+  def dom "domains.ml" 86 3181 3207 "domains.ml" 89 3266 3310
+)
+"domains.ml" 86 3181 3207 "domains.ml" 86 3181 3212
+type(
+  'a option ref Queue.t
+)
+ident(
+  def queue "domains.ml" 87 3215 3216 "domains.ml" 89 3266 3310
+)
+"domains.ml" 87 3215 3216 "domains.ml" 87 3215 3226
+type(
+  ('a option ref -> unit) -> 'a option ref Queue.t -> unit
+)
+ident(
+  ext_ref Queue.iter
+)
+"domains.ml" 87 3215 3232 "domains.ml" 87 3215 3233
+type(
+  'a option ref
+)
+ident(
+  def d "domains.ml" 87 3215 3237 "domains.ml" 89 3266 3303
+)
+"domains.ml" 87 3215 3243 "domains.ml" 87 3215 3244
+type(
+  'a option ref -> 'a option
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 87 3215 3244 "domains.ml" 87 3215 3245
+type(
+  'a option ref
+)
+ident(
+  int_ref d "domains.ml" 87 3215 3232 "domains.ml" 87 3215 3233
+)
+"domains.ml" 87 3215 3243 "domains.ml" 87 3215 3245
+type(
+  'a option
+)
+"domains.ml" 88 3251 3255 "domains.ml" 88 3251 3259
+type(
+  'a option
+)
+"domains.ml" 88 3251 3263 "domains.ml" 88 3251 3265
+type(
+  unit
+)
+"domains.ml" 89 3266 3275 "domains.ml" 89 3266 3276
+type(
+  'a
+)
+ident(
+  def x "domains.ml" 89 3266 3280 "domains.ml" 89 3266 3303
+)
+"domains.ml" 89 3266 3270 "domains.ml" 89 3266 3276
+type(
+  'a option
+)
+"domains.ml" 89 3266 3283 "domains.ml" 89 3266 3284
+type(
+  'a
+)
+ident(
+  int_ref x "domains.ml" 89 3266 3275 "domains.ml" 89 3266 3276
+)
+"domains.ml" 89 3266 3284 "domains.ml" 89 3266 3285
+type(
+  'a -> 'a -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"domains.ml" 89 3266 3285 "domains.ml" 89 3266 3288
+type(
+  'a
+)
+ident(
+  int_ref dom "domains.ml" 86 3181 3203 "domains.ml" 86 3181 3206
+)
+"domains.ml" 89 3266 3283 "domains.ml" 89 3266 3288
+type(
+  bool
+)
+"domains.ml" 89 3266 3294 "domains.ml" 89 3266 3295
+type(
+  'a option ref
+)
+ident(
+  int_ref d "domains.ml" 87 3215 3232 "domains.ml" 87 3215 3233
+)
+"domains.ml" 89 3266 3296 "domains.ml" 89 3266 3298
+type(
+  'a option ref -> 'a option -> unit
+)
+ident(
+  ext_ref Pervasives.( := )
+)
+"domains.ml" 89 3266 3299 "domains.ml" 89 3266 3303
+type(
+  'a option
+)
+"domains.ml" 89 3266 3294 "domains.ml" 89 3266 3303
+type(
+  unit
+)
+"domains.ml" 89 3266 3280 "domains.ml" 89 3266 3303
+type(
+  unit
+)
+"domains.ml" 87 3215 3237 "domains.ml" 89 3266 3303
+type(
+  unit
+)
+"domains.ml" 87 3215 3227 "domains.ml" 89 3266 3304
+type(
+  'a option ref -> unit
+)
+"domains.ml" 89 3266 3305 "domains.ml" 89 3266 3310
+type(
+  'a option ref Queue.t
+)
+ident(
+  int_ref queue "domains.ml" 86 3181 3207 "domains.ml" 86 3181 3212
+)
+"domains.ml" 87 3215 3216 "domains.ml" 89 3266 3310
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 91 3312 3316 "domains.ml" 91 3312 3323
+type(
+  domains -> bool * Xenctrl.domid list
+)
+ident(
+  def cleanup "domains.ml" 122 4296 4296 "domains.ml" 1 0 -1
+)
+"domains.ml" 91 3312 3324 "domains.ml" 91 3312 3328
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 92 3331 3332 "domains.ml" 120 4275 4294
+)
+"domains.ml" 92 3331 3336 "domains.ml" 92 3331 3342
+type(
+  bool ref
+)
+ident(
+  def notify "domains.ml" 93 3358 3359 "domains.ml" 120 4275 4294
+)
+"domains.ml" 92 3331 3345 "domains.ml" 92 3331 3348
+type(
+  bool -> bool ref
+)
+ident(
+  ext_ref Pervasives.ref
+)
+"domains.ml" 92 3331 3349 "domains.ml" 92 3331 3354
+type(
+  bool
+)
+"domains.ml" 92 3331 3345 "domains.ml" 92 3331 3354
+type(
+  bool ref
+)
+"domains.ml" 93 3358 3363 "domains.ml" 93 3358 3371
+type(
+  Xenctrl.domid list ref
+)
+ident(
+  def dead_dom "domains.ml" 95 3385 3386 "domains.ml" 120 4275 4294
+)
+"domains.ml" 93 3358 3374 "domains.ml" 93 3358 3377
+type(
+  Xenctrl.domid list -> Xenctrl.domid list ref
+)
+ident(
+  ext_ref Pervasives.ref
+)
+"domains.ml" 93 3358 3378 "domains.ml" 93 3358 3380
+type(
+  Xenctrl.domid list
+)
+"domains.ml" 93 3358 3374 "domains.ml" 93 3358 3380
+type(
+  Xenctrl.domid list ref
+)
+"domains.ml" 95 3385 3386 "domains.ml" 95 3385 3398
+type(
+  (Xenctrl.domid -> Domain.t -> unit) ->
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> unit
+)
+ident(
+  ext_ref Hashtbl.iter
+)
+"domains.ml" 95 3385 3404 "domains.ml" 95 3385 3406
+type(
+  Xenctrl.domid
+)
+ident(
+  def id "domains.ml" 95 3385 3407 "domains.ml" 108 3868 3899
+)
+"domains.ml" 95 3385 3407 "domains.ml" 95 3385 3408
+type(
+  Domain.t
+)
+"domains.ml" 95 3385 3415 "domains.ml" 95 3385 3417
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 95 3385 3404 "domains.ml" 95 3385 3406
+)
+"domains.ml" 95 3385 3418 "domains.ml" 95 3385 3420
+type(
+  Xenctrl.domid -> Xenctrl.domid -> bool
+)
+ident(
+  ext_ref Pervasives.( <> )
+)
+"domains.ml" 95 3385 3421 "domains.ml" 95 3385 3422
+type(
+  Xenctrl.domid
+)
+"domains.ml" 95 3385 3415 "domains.ml" 95 3385 3422
+type(
+  bool
+)
+"domains.ml" 97 3434 3441 "domains.ml" 97 3434 3445
+type(
+  Xenctrl.domaininfo
+)
+ident(
+  def info "domains.ml" 98 3480 3483 "domains.ml" 105 3789 3793
+)
+"domains.ml" 97 3434 3448 "domains.ml" 97 3434 3470
+type(
+  Xenctrl.handle -> Xenctrl.domid -> Xenctrl.domaininfo
+)
+ident(
+  ext_ref Xenctrl.domain_getinfo
+)
+"domains.ml" 97 3434 3471 "domains.ml" 97 3434 3473
+type(
+  Xenctrl.handle
+)
+ident(
+  int_ref xc "domains.ml" 21 809 813 "domains.ml" 21 809 815
+)
+"domains.ml" 97 3434 3474 "domains.ml" 97 3434 3476
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 95 3385 3404 "domains.ml" 95 3385 3406
+)
+"domains.ml" 97 3434 3448 "domains.ml" 97 3434 3476
+type(
+  Xenctrl.domaininfo
+)
+"domains.ml" 98 3480 3486 "domains.ml" 98 3480 3490
+type(
+  Xenctrl.domaininfo
+)
+ident(
+  int_ref info "domains.ml" 97 3434 3441 "domains.ml" 97 3434 3445
+)
+"domains.ml" 98 3480 3486 "domains.ml" 98 3480 3507
+type(
+  bool
+)
+"domains.ml" 98 3480 3508 "domains.ml" 98 3480 3510
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( || )
+)
+"domains.ml" 98 3480 3511 "domains.ml" 98 3480 3515
+type(
+  Xenctrl.domaininfo
+)
+ident(
+  int_ref info "domains.ml" 97 3434 3441 "domains.ml" 97 3434 3445
+)
+"domains.ml" 98 3480 3511 "domains.ml" 98 3480 3529
+type(
+  bool
+)
+"domains.ml" 98 3480 3486 "domains.ml" 98 3480 3529
+type(
+  bool
+)
+"domains.ml" 99 3537 3541 "domains.ml" 99 3537 3546
+type(
+  (Xenctrl.domid -> bool -> bool -> int -> unit, unit, string, unit) format4 ->
+  Xenctrl.domid -> bool -> bool -> int -> unit
+)
+ident(
+  int_ref debug "domains.ml" 17 676 680 "domains.ml" 17 676 685
+)
+"domains.ml" 99 3537 3547 "domains.ml" 99 3537 3598
+type(
+  (Xenctrl.domid -> bool -> bool -> int -> unit, unit, string, unit) format4
+)
+"domains.ml" 100 3599 3623 "domains.ml" 100 3599 3625
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 95 3385 3404 "domains.ml" 95 3385 3406
+)
+"domains.ml" 100 3599 3626 "domains.ml" 100 3599 3630
+type(
+  Xenctrl.domaininfo
+)
+ident(
+  int_ref info "domains.ml" 97 3434 3441 "domains.ml" 97 3434 3445
+)
+"domains.ml" 100 3599 3626 "domains.ml" 100 3599 3644
+type(
+  bool
+)
+"domains.ml" 100 3599 3645 "domains.ml" 100 3599 3649
+type(
+  Xenctrl.domaininfo
+)
+ident(
+  int_ref info "domains.ml" 97 3434 3441 "domains.ml" 97 3434 3445
+)
+"domains.ml" 100 3599 3645 "domains.ml" 100 3599 3666
+type(
+  bool
+)
+"domains.ml" 100 3599 3667 "domains.ml" 100 3599 3671
+type(
+  Xenctrl.domaininfo
+)
+ident(
+  int_ref info "domains.ml" 97 3434 3441 "domains.ml" 97 3434 3445
+)
+"domains.ml" 100 3599 3667 "domains.ml" 100 3599 3693
+type(
+  int
+)
+"domains.ml" 99 3537 3541 "domains.ml" 100 3599 3693
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 101 3695 3702 "domains.ml" 101 3695 3706
+type(
+  Xenctrl.domaininfo
+)
+ident(
+  int_ref info "domains.ml" 97 3434 3441 "domains.ml" 97 3434 3445
+)
+"domains.ml" 101 3695 3702 "domains.ml" 101 3695 3720
+type(
+  bool
+)
+"domains.ml" 102 3726 3731 "domains.ml" 102 3726 3739
+type(
+  Xenctrl.domid list ref
+)
+ident(
+  int_ref dead_dom "domains.ml" 93 3358 3363 "domains.ml" 93 3358 3371
+)
+"domains.ml" 102 3726 3740 "domains.ml" 102 3726 3742
+type(
+  Xenctrl.domid list ref -> Xenctrl.domid list -> unit
+)
+ident(
+  ext_ref Pervasives.( := )
+)
+"domains.ml" 102 3726 3743 "domains.ml" 102 3726 3745
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 95 3385 3404 "domains.ml" 95 3385 3406
+)
+"domains.ml" 102 3726 3749 "domains.ml" 102 3726 3750
+type(
+  Xenctrl.domid list ref -> Xenctrl.domid list
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 102 3726 3750 "domains.ml" 102 3726 3758
+type(
+  Xenctrl.domid list ref
+)
+ident(
+  int_ref dead_dom "domains.ml" 93 3358 3363 "domains.ml" 93 3358 3371
+)
+"domains.ml" 102 3726 3749 "domains.ml" 102 3726 3758
+type(
+  Xenctrl.domid list
+)
+"domains.ml" 102 3726 3743 "domains.ml" 102 3726 3758
+type(
+  Xenctrl.domid list
+)
+"domains.ml" 102 3726 3731 "domains.ml" 102 3726 3758
+type(
+  unit
+)
+"domains.ml" 104 3768 3773 "domains.ml" 104 3768 3779
+type(
+  bool ref
+)
+ident(
+  int_ref notify "domains.ml" 92 3331 3336 "domains.ml" 92 3331 3342
+)
+"domains.ml" 104 3768 3780 "domains.ml" 104 3768 3782
+type(
+  bool ref -> bool -> unit
+)
+ident(
+  ext_ref Pervasives.( := )
+)
+"domains.ml" 104 3768 3783 "domains.ml" 104 3768 3787
+type(
+  bool
+)
+"domains.ml" 104 3768 3773 "domains.ml" 104 3768 3787
+type(
+  unit
+)
+"domains.ml" 101 3695 3699 "domains.ml" 104 3768 3788
+type(
+  unit
+)
+"domains.ml" 98 3480 3535 "domains.ml" 105 3789 3793
+type(
+  unit
+)
+"domains.ml" 98 3480 3483 "domains.ml" 105 3789 3793
+type(
+  unit
+)
+"domains.ml" 97 3434 3437 "domains.ml" 105 3789 3793
+type(
+  unit
+)
+"domains.ml" 106 3794 3815 "domains.ml" 106 3794 3816
+type(
+  string
+)
+"domains.ml" 106 3794 3801 "domains.ml" 106 3794 3816
+type(
+  exn
+)
+"domains.ml" 107 3820 3823 "domains.ml" 107 3820 3828
+type(
+  (Xenctrl.domid -> unit, unit, string, unit) format4 ->
+  Xenctrl.domid -> unit
+)
+ident(
+  int_ref debug "domains.ml" 17 676 680 "domains.ml" 17 676 685
+)
+"domains.ml" 107 3820 3829 "domains.ml" 107 3820 3863
+type(
+  (Xenctrl.domid -> unit, unit, string, unit) format4
+)
+"domains.ml" 107 3820 3864 "domains.ml" 107 3820 3866
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 95 3385 3404 "domains.ml" 95 3385 3406
+)
+"domains.ml" 107 3820 3823 "domains.ml" 107 3820 3866
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 108 3868 3871 "domains.ml" 108 3868 3879
+type(
+  Xenctrl.domid list ref
+)
+ident(
+  int_ref dead_dom "domains.ml" 93 3358 3363 "domains.ml" 93 3358 3371
+)
+"domains.ml" 108 3868 3880 "domains.ml" 108 3868 3882
+type(
+  Xenctrl.domid list ref -> Xenctrl.domid list -> unit
+)
+ident(
+  ext_ref Pervasives.( := )
+)
+"domains.ml" 108 3868 3883 "domains.ml" 108 3868 3885
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 95 3385 3404 "domains.ml" 95 3385 3406
+)
+"domains.ml" 108 3868 3889 "domains.ml" 108 3868 3890
+type(
+  Xenctrl.domid list ref -> Xenctrl.domid list
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 108 3868 3890 "domains.ml" 108 3868 3898
+type(
+  Xenctrl.domid list ref
+)
+ident(
+  int_ref dead_dom "domains.ml" 93 3358 3363 "domains.ml" 93 3358 3371
+)
+"domains.ml" 108 3868 3889 "domains.ml" 108 3868 3898
+type(
+  Xenctrl.domid list
+)
+"domains.ml" 108 3868 3883 "domains.ml" 108 3868 3898
+type(
+  Xenctrl.domid list
+)
+"domains.ml" 108 3868 3871 "domains.ml" 108 3868 3899
+type(
+  unit
+)
+"domains.ml" 107 3820 3823 "domains.ml" 108 3868 3899
+type(
+  unit
+)
+"domains.ml" 96 3428 3430 "domains.ml" 108 3868 3899
+type(
+  unit
+)
+"domains.ml" 95 3385 3412 "domains.ml" 108 3868 3899
+type(
+  unit
+)
+"domains.ml" 95 3385 3399 "domains.ml" 109 3900 3903
+type(
+  Xenctrl.domid -> Domain.t -> unit
+)
+"domains.ml" 109 3900 3904 "domains.ml" 109 3900 3908
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 91 3312 3324 "domains.ml" 91 3312 3328
+)
+"domains.ml" 109 3900 3904 "domains.ml" 109 3900 3914
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 95 3385 3386 "domains.ml" 109 3900 3914
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 110 3916 3917 "domains.ml" 110 3916 3926
+type(
+  (Xenctrl.domid -> unit) -> Xenctrl.domid list -> unit
+)
+ident(
+  ext_ref List.iter
+)
+"domains.ml" 110 3916 3932 "domains.ml" 110 3916 3934
+type(
+  Xenctrl.domid
+)
+ident(
+  def id "domains.ml" 111 3938 3940 "domains.ml" 118 4257 4260
+)
+"domains.ml" 111 3938 3944 "domains.ml" 111 3938 3947
+type(
+  Domain.t
+)
+ident(
+  def dom "domains.ml" 112 3980 3982 "domains.ml" 118 4257 4260
+)
+"domains.ml" 111 3938 3950 "domains.ml" 111 3938 3962
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> Xenctrl.domid -> Domain.t
+)
+ident(
+  ext_ref Hashtbl.find
+)
+"domains.ml" 111 3938 3963 "domains.ml" 111 3938 3967
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 91 3312 3324 "domains.ml" 91 3312 3328
+)
+"domains.ml" 111 3938 3963 "domains.ml" 111 3938 3973
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 111 3938 3974 "domains.ml" 111 3938 3976
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 110 3916 3932 "domains.ml" 110 3916 3934
+)
+"domains.ml" 111 3938 3950 "domains.ml" 111 3938 3976
+call(
+  stack
+)
+type(
+  Domain.t
+)
+"domains.ml" 112 3980 3982 "domains.ml" 112 3980 3994
+type(
+  Domain.t -> unit
+)
+ident(
+  ext_ref Domain.close
+)
+"domains.ml" 112 3980 3995 "domains.ml" 112 3980 3998
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 111 3938 3944 "domains.ml" 111 3938 3947
+)
+"domains.ml" 112 3980 3982 "domains.ml" 112 3980 3998
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 113 4000 4002 "domains.ml" 113 4000 4016
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> Xenctrl.domid -> unit
+)
+ident(
+  ext_ref Hashtbl.remove
+)
+"domains.ml" 113 4000 4017 "domains.ml" 113 4000 4021
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 91 3312 3324 "domains.ml" 91 3312 3328
+)
+"domains.ml" 113 4000 4017 "domains.ml" 113 4000 4027
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 113 4000 4028 "domains.ml" 113 4000 4030
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref id "domains.ml" 110 3916 3932 "domains.ml" 110 3916 3934
+)
+"domains.ml" 113 4000 4002 "domains.ml" 113 4000 4030
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 114 4032 4037 "domains.ml" 114 4032 4040
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 111 3938 3944 "domains.ml" 111 3938 3947
+)
+"domains.ml" 114 4032 4037 "domains.ml" 114 4032 4063
+type(
+  float
+)
+"domains.ml" 114 4032 4064 "domains.ml" 114 4032 4066
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( <= )
+)
+"domains.ml" 114 4032 4067 "domains.ml" 114 4032 4068
+type(
+  float ref -> float
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 114 4032 4068 "domains.ml" 114 4032 4095
+type(
+  float ref
+)
+ident(
+  ext_ref Define.conflict_burst_limit
+)
+"domains.ml" 114 4032 4067 "domains.ml" 114 4032 4095
+type(
+  float
+)
+"domains.ml" 114 4032 4037 "domains.ml" 114 4032 4095
+type(
+  bool
+)
+"domains.ml" 116 4105 4108 "domains.ml" 116 4105 4125
+type(
+  Domain.t -> Domain.t option ref Queue.t -> unit
+)
+ident(
+  int_ref remove_from_queue "domains.ml" 86 3181 3185 "domains.ml" 86 3181 3202
+)
+"domains.ml" 116 4105 4126 "domains.ml" 116 4105 4129
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 111 3938 3944 "domains.ml" 111 3938 3947
+)
+"domains.ml" 116 4105 4130 "domains.ml" 116 4105 4134
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 91 3312 3324 "domains.ml" 91 3312 3328
+)
+"domains.ml" 116 4105 4130 "domains.ml" 116 4105 4161
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 116 4105 4108 "domains.ml" 116 4105 4161
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 117 4163 4170 "domains.ml" 117 4163 4173
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 111 3938 3944 "domains.ml" 111 3938 3947
+)
+"domains.ml" 117 4163 4170 "domains.ml" 117 4163 4196
+type(
+  float
+)
+"domains.ml" 117 4163 4197 "domains.ml" 117 4163 4199
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( <= )
+)
+"domains.ml" 117 4163 4200 "domains.ml" 117 4163 4202
+type(
+  float
+)
+"domains.ml" 117 4163 4169 "domains.ml" 117 4163 4203
+type(
+  bool
+)
+"domains.ml" 117 4163 4209 "domains.ml" 117 4163 4226
+type(
+  Domain.t -> Domain.t option ref Queue.t -> unit
+)
+ident(
+  int_ref remove_from_queue "domains.ml" 86 3181 3185 "domains.ml" 86 3181 3202
+)
+"domains.ml" 117 4163 4227 "domains.ml" 117 4163 4230
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 111 3938 3944 "domains.ml" 111 3938 3947
+)
+"domains.ml" 117 4163 4231 "domains.ml" 117 4163 4235
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 91 3312 3324 "domains.ml" 91 3312 3328
+)
+"domains.ml" 117 4163 4231 "domains.ml" 117 4163 4256
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 117 4163 4209 "domains.ml" 117 4163 4256
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 117 4163 4166 "domains.ml" 117 4163 4256
+type(
+  unit
+)
+"domains.ml" 115 4096 4103 "domains.ml" 118 4257 4260
+type(
+  unit
+)
+"domains.ml" 114 4032 4034 "domains.ml" 118 4257 4260
+type(
+  unit
+)
+"domains.ml" 113 4000 4002 "domains.ml" 118 4257 4260
+type(
+  unit
+)
+"domains.ml" 112 3980 3982 "domains.ml" 118 4257 4260
+type(
+  unit
+)
+"domains.ml" 111 3938 3940 "domains.ml" 118 4257 4260
+type(
+  unit
+)
+"domains.ml" 110 3916 3927 "domains.ml" 119 4261 4263
+type(
+  Xenctrl.domid -> unit
+)
+"domains.ml" 119 4261 4264 "domains.ml" 119 4261 4265
+type(
+  Xenctrl.domid list ref -> Xenctrl.domid list
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 119 4261 4265 "domains.ml" 119 4261 4273
+type(
+  Xenctrl.domid list ref
+)
+ident(
+  int_ref dead_dom "domains.ml" 93 3358 3363 "domains.ml" 93 3358 3371
+)
+"domains.ml" 119 4261 4264 "domains.ml" 119 4261 4273
+type(
+  Xenctrl.domid list
+)
+"domains.ml" 110 3916 3917 "domains.ml" 119 4261 4273
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 120 4275 4276 "domains.ml" 120 4275 4277
+type(
+  bool ref -> bool
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 120 4275 4277 "domains.ml" 120 4275 4283
+type(
+  bool ref
+)
+ident(
+  int_ref notify "domains.ml" 92 3331 3336 "domains.ml" 92 3331 3342
+)
+"domains.ml" 120 4275 4276 "domains.ml" 120 4275 4283
+type(
+  bool
+)
+"domains.ml" 120 4275 4285 "domains.ml" 120 4275 4286
+type(
+  Xenctrl.domid list ref -> Xenctrl.domid list
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 120 4275 4286 "domains.ml" 120 4275 4294
+type(
+  Xenctrl.domid list ref
+)
+ident(
+  int_ref dead_dom "domains.ml" 93 3358 3363 "domains.ml" 93 3358 3371
+)
+"domains.ml" 120 4275 4285 "domains.ml" 120 4275 4294
+type(
+  Xenctrl.domid list
+)
+"domains.ml" 120 4275 4276 "domains.ml" 120 4275 4294
+type(
+  bool * Xenctrl.domid list
+)
+"domains.ml" 110 3916 3917 "domains.ml" 120 4275 4294
+type(
+  bool * Xenctrl.domid list
+)
+"domains.ml" 95 3385 3386 "domains.ml" 120 4275 4294
+type(
+  bool * Xenctrl.domid list
+)
+"domains.ml" 93 3358 3359 "domains.ml" 120 4275 4294
+type(
+  bool * Xenctrl.domid list
+)
+"domains.ml" 92 3331 3332 "domains.ml" 120 4275 4294
+type(
+  bool * Xenctrl.domid list
+)
+"domains.ml" 122 4296 4300 "domains.ml" 122 4296 4306
+type(
+  'a -> 'b -> unit
+)
+ident(
+  def resume "domains.ml" 125 4327 4327 "domains.ml" 1 0 -1
+)
+"domains.ml" 122 4296 4307 "domains.ml" 122 4296 4312
+type(
+  'a
+)
+ident(
+  def _doms "domains.ml" 122 4296 4313 "domains.ml" 123 4322 4325
+)
+"domains.ml" 122 4296 4313 "domains.ml" 122 4296 4319
+type(
+  'b
+)
+ident(
+  def _domid "domains.ml" 123 4322 4323 "domains.ml" 123 4322 4325
+)
+"domains.ml" 123 4322 4323 "domains.ml" 123 4322 4325
+type(
+  unit
+)
+"domains.ml" 125 4327 4331 "domains.ml" 125 4327 4337
+type(
+  domains -> Xenctrl.domid -> nativeint -> int -> Domain.t
+)
+ident(
+  def create "domains.ml" 132 4579 4579 "domains.ml" 1 0 -1
+)
+"domains.ml" 125 4327 4338 "domains.ml" 125 4327 4342
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 125 4327 4343 "domains.ml" 130 4573 4577
+)
+"domains.ml" 125 4327 4343 "domains.ml" 125 4327 4348
+type(
+  Xenctrl.domid
+)
+ident(
+  def domid "domains.ml" 125 4327 4349 "domains.ml" 130 4573 4577
+)
+"domains.ml" 125 4327 4349 "domains.ml" 125 4327 4352
+type(
+  nativeint
+)
+ident(
+  def mfn "domains.ml" 125 4327 4353 "domains.ml" 130 4573 4577
+)
+"domains.ml" 125 4327 4353 "domains.ml" 125 4327 4357
+type(
+  int
+)
+ident(
+  def port "domains.ml" 126 4360 4361 "domains.ml" 130 4573 4577
+)
+"domains.ml" 126 4360 4365 "domains.ml" 126 4360 4374
+type(
+  Xenmmap.mmap_interface
+)
+ident(
+  def interface "domains.ml" 127 4443 4444 "domains.ml" 130 4573 4577
+)
+"domains.ml" 126 4360 4377 "domains.ml" 126 4360 4402
+type(
+  Xenctrl.handle ->
+  Xenctrl.domid -> int -> nativeint -> Xenmmap.mmap_interface
+)
+ident(
+  ext_ref Xenctrl.map_foreign_range
+)
+"domains.ml" 126 4360 4403 "domains.ml" 126 4360 4405
+type(
+  Xenctrl.handle
+)
+ident(
+  int_ref xc "domains.ml" 21 809 813 "domains.ml" 21 809 815
+)
+"domains.ml" 126 4360 4406 "domains.ml" 126 4360 4411
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref domid "domains.ml" 125 4327 4343 "domains.ml" 125 4327 4348
+)
+"domains.ml" 126 4360 4413 "domains.ml" 126 4360 4432
+type(
+  unit -> int
+)
+ident(
+  ext_ref Xenmmap.getpagesize
+)
+"domains.ml" 126 4360 4432 "domains.ml" 126 4360 4434
+type(
+  unit
+)
+"domains.ml" 126 4360 4412 "domains.ml" 126 4360 4435
+type(
+  int
+)
+"domains.ml" 126 4360 4436 "domains.ml" 126 4360 4439
+type(
+  nativeint
+)
+ident(
+  int_ref mfn "domains.ml" 125 4327 4349 "domains.ml" 125 4327 4352
+)
+"domains.ml" 126 4360 4377 "domains.ml" 126 4360 4439
+type(
+  Xenmmap.mmap_interface
+)
+"domains.ml" 127 4443 4448 "domains.ml" 127 4443 4451
+type(
+  Domain.t
+)
+ident(
+  def dom "domains.ml" 128 4508 4509 "domains.ml" 130 4573 4577
+)
+"domains.ml" 127 4443 4454 "domains.ml" 127 4443 4465
+type(
+  Xenctrl.domid ->
+  nativeint -> int -> Xenmmap.mmap_interface -> Event.t -> Domain.t
+)
+ident(
+  ext_ref Domain.make
+)
+"domains.ml" 127 4443 4466 "domains.ml" 127 4443 4471
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref domid "domains.ml" 125 4327 4343 "domains.ml" 125 4327 4348
+)
+"domains.ml" 127 4443 4472 "domains.ml" 127 4443 4475
+type(
+  nativeint
+)
+ident(
+  int_ref mfn "domains.ml" 125 4327 4349 "domains.ml" 125 4327 4352
+)
+"domains.ml" 127 4443 4476 "domains.ml" 127 4443 4480
+type(
+  int
+)
+ident(
+  int_ref port "domains.ml" 125 4327 4353 "domains.ml" 125 4327 4357
+)
+"domains.ml" 127 4443 4481 "domains.ml" 127 4443 4490
+type(
+  Xenmmap.mmap_interface
+)
+ident(
+  int_ref interface "domains.ml" 126 4360 4365 "domains.ml" 126 4360 4374
+)
+"domains.ml" 127 4443 4491 "domains.ml" 127 4443 4495
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 125 4327 4338 "domains.ml" 125 4327 4342
+)
+"domains.ml" 127 4443 4491 "domains.ml" 127 4443 4504
+type(
+  Event.t
+)
+"domains.ml" 127 4443 4454 "domains.ml" 127 4443 4504
+call(
+  stack
+)
+type(
+  Domain.t
+)
+"domains.ml" 128 4508 4509 "domains.ml" 128 4508 4520
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> Xenctrl.domid -> Domain.t -> unit
+)
+ident(
+  ext_ref Hashtbl.add
+)
+"domains.ml" 128 4508 4521 "domains.ml" 128 4508 4525
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 125 4327 4338 "domains.ml" 125 4327 4342
+)
+"domains.ml" 128 4508 4521 "domains.ml" 128 4508 4531
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 128 4508 4532 "domains.ml" 128 4508 4537
+type(
+  Xenctrl.domid
+)
+ident(
+  int_ref domid "domains.ml" 125 4327 4343 "domains.ml" 125 4327 4348
+)
+"domains.ml" 128 4508 4538 "domains.ml" 128 4508 4541
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 127 4443 4448 "domains.ml" 127 4443 4451
+)
+"domains.ml" 128 4508 4509 "domains.ml" 128 4508 4541
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 129 4543 4544 "domains.ml" 129 4543 4567
+type(
+  Domain.t -> unit
+)
+ident(
+  ext_ref Domain.bind_interdomain
+)
+"domains.ml" 129 4543 4568 "domains.ml" 129 4543 4571
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 127 4443 4448 "domains.ml" 127 4443 4451
+)
+"domains.ml" 129 4543 4544 "domains.ml" 129 4543 4571
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 130 4573 4574 "domains.ml" 130 4573 4577
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 127 4443 4448 "domains.ml" 127 4443 4451
+)
+"domains.ml" 129 4543 4544 "domains.ml" 130 4573 4577
+type(
+  Domain.t
+)
+"domains.ml" 128 4508 4509 "domains.ml" 130 4573 4577
+type(
+  Domain.t
+)
+"domains.ml" 127 4443 4444 "domains.ml" 130 4573 4577
+type(
+  Domain.t
+)
+"domains.ml" 126 4360 4361 "domains.ml" 130 4573 4577
+type(
+  Domain.t
+)
+"domains.ml" 132 4579 4583 "domains.ml" 132 4579 4596
+type(
+  string ref
+)
+ident(
+  def xenstored_kva "domains.ml" 133 4606 4606 "domains.ml" 1 0 -1
+)
+"domains.ml" 132 4579 4599 "domains.ml" 132 4579 4602
+type(
+  string -> string ref
+)
+ident(
+  ext_ref Pervasives.ref
+)
+"domains.ml" 132 4579 4603 "domains.ml" 132 4579 4605
+type(
+  string
+)
+"domains.ml" 132 4579 4599 "domains.ml" 132 4579 4605
+type(
+  string ref
+)
+"domains.ml" 133 4606 4610 "domains.ml" 133 4606 4624
+type(
+  string ref
+)
+ident(
+  def xenstored_port "domains.ml" 135 4635 4635 "domains.ml" 1 0 -1
+)
+"domains.ml" 133 4606 4627 "domains.ml" 133 4606 4630
+type(
+  string -> string ref
+)
+ident(
+  ext_ref Pervasives.ref
+)
+"domains.ml" 133 4606 4631 "domains.ml" 133 4606 4633
+type(
+  string
+)
+"domains.ml" 133 4606 4627 "domains.ml" 133 4606 4633
+type(
+  string ref
+)
+"domains.ml" 135 4635 4639 "domains.ml" 135 4635 4646
+type(
+  domains -> Domain.t
+)
+ident(
+  def create0 "domains.ml" 153 5125 5125 "domains.ml" 1 0 -1
+)
+"domains.ml" 135 4635 4647 "domains.ml" 135 4635 4651
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 136 4654 4655 "domains.ml" 151 5119 5123
+)
+"domains.ml" 136 4654 4659 "domains.ml" 136 4654 4663
+type(
+  int
+)
+ident(
+  def port "domains.ml" 147 4966 4967 "domains.ml" 151 5119 5123
+)
+"domains.ml" 136 4654 4665 "domains.ml" 136 4654 4674
+type(
+  Xenmmap.mmap_interface
+)
+ident(
+  def interface "domains.ml" 147 4966 4967 "domains.ml" 151 5119 5123
+)
+"domains.ml" 136 4654 4659 "domains.ml" 136 4654 4674
+type(
+  int * Xenmmap.mmap_interface
+)
+"domains.ml" 138 4681 4688 "domains.ml" 138 4681 4692
+type(
+  int
+)
+ident(
+  def port "domains.ml" 141 4820 4823 "domains.ml" 144 4938 4956
+)
+"domains.ml" 138 4681 4695 "domains.ml" 138 4681 4725
+type(
+  string -> int
+)
+ident(
+  ext_ref Utils.read_file_single_integer
+)
+"domains.ml" 138 4681 4726 "domains.ml" 138 4681 4727
+type(
+  string ref -> string
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 138 4681 4727 "domains.ml" 138 4681 4741
+type(
+  string ref
+)
+ident(
+  int_ref xenstored_port "domains.ml" 133 4606 4610 "domains.ml" 133 4606 4624
+)
+"domains.ml" 138 4681 4726 "domains.ml" 138 4681 4741
+type(
+  string
+)
+"domains.ml" 138 4681 4695 "domains.ml" 138 4681 4741
+call(
+  stack
+)
+type(
+  int
+)
+"domains.ml" 139 4742 4749 "domains.ml" 139 4742 4751
+type(
+  Unix.file_descr
+)
+ident(
+  def fd "domains.ml" 141 4820 4823 "domains.ml" 144 4938 4956
+)
+"domains.ml" 139 4742 4754 "domains.ml" 139 4742 4767
+type(
+  string -> Unix.open_flag list -> Unix.file_perm -> Unix.file_descr
+)
+ident(
+  ext_ref Unix.openfile
+)
+"domains.ml" 139 4742 4768 "domains.ml" 139 4742 4769
+type(
+  string ref -> string
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 139 4742 4769 "domains.ml" 139 4742 4782
+type(
+  string ref
+)
+ident(
+  int_ref xenstored_kva "domains.ml" 132 4579 4583 "domains.ml" 132 4579 4596
+)
+"domains.ml" 139 4742 4768 "domains.ml" 139 4742 4782
+type(
+  string
+)
+"domains.ml" 140 4783 4797 "domains.ml" 140 4783 4808
+type(
+  Unix.open_flag
+)
+"domains.ml" 140 4783 4795 "domains.ml" 140 4783 4810
+type(
+  Unix.open_flag list
+)
+"domains.ml" 140 4783 4811 "domains.ml" 140 4783 4816
+type(
+  Unix.file_perm
+)
+"domains.ml" 139 4742 4754 "domains.ml" 140 4783 4816
+call(
+  stack
+)
+type(
+  Unix.file_descr
+)
+"domains.ml" 141 4820 4827 "domains.ml" 141 4820 4836
+type(
+  Xenmmap.mmap_interface
+)
+ident(
+  def interface "domains.ml" 143 4920 4923 "domains.ml" 144 4938 4956
+)
+"domains.ml" 141 4820 4839 "domains.ml" 141 4820 4851
+type(
+  Unix.file_descr ->
+  Xenmmap.mmap_prot_flag ->
+  Xenmmap.mmap_map_flag -> int -> int -> Xenmmap.mmap_interface
+)
+ident(
+  ext_ref Xenmmap.mmap
+)
+"domains.ml" 141 4820 4852 "domains.ml" 141 4820 4854
+type(
+  Unix.file_descr
+)
+ident(
+  int_ref fd "domains.ml" 139 4742 4749 "domains.ml" 139 4742 4751
+)
+"domains.ml" 141 4820 4855 "domains.ml" 141 4820 4867
+type(
+  Xenmmap.mmap_prot_flag
+)
+"domains.ml" 141 4820 4868 "domains.ml" 141 4820 4882
+type(
+  Xenmmap.mmap_map_flag
+)
+"domains.ml" 142 4883 4892 "domains.ml" 142 4883 4911
+type(
+  unit -> int
+)
+ident(
+  ext_ref Xenmmap.getpagesize
+)
+"domains.ml" 142 4883 4911 "domains.ml" 142 4883 4913
+type(
+  unit
+)
+"domains.ml" 142 4883 4891 "domains.ml" 142 4883 4914
+type(
+  int
+)
+"domains.ml" 142 4883 4915 "domains.ml" 142 4883 4916
+type(
+  int
+)
+"domains.ml" 141 4820 4839 "domains.ml" 142 4883 4916
+type(
+  Xenmmap.mmap_interface
+)
+"domains.ml" 143 4920 4923 "domains.ml" 143 4920 4933
+type(
+  Unix.file_descr -> unit
+)
+ident(
+  ext_ref Unix.close
+)
+"domains.ml" 143 4920 4934 "domains.ml" 143 4920 4936
+type(
+  Unix.file_descr
+)
+ident(
+  int_ref fd "domains.ml" 139 4742 4749 "domains.ml" 139 4742 4751
+)
+"domains.ml" 143 4920 4923 "domains.ml" 143 4920 4936
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 144 4938 4941 "domains.ml" 144 4938 4945
+type(
+  int
+)
+ident(
+  int_ref port "domains.ml" 138 4681 4688 "domains.ml" 138 4681 4692
+)
+"domains.ml" 144 4938 4947 "domains.ml" 144 4938 4956
+type(
+  Xenmmap.mmap_interface
+)
+ident(
+  int_ref interface "domains.ml" 141 4820 4827 "domains.ml" 141 4820 4836
+)
+"domains.ml" 144 4938 4941 "domains.ml" 144 4938 4956
+type(
+  int * Xenmmap.mmap_interface
+)
+"domains.ml" 143 4920 4923 "domains.ml" 144 4938 4956
+type(
+  int * Xenmmap.mmap_interface
+)
+"domains.ml" 141 4820 4823 "domains.ml" 144 4938 4956
+type(
+  int * Xenmmap.mmap_interface
+)
+"domains.ml" 137 4677 4679 "domains.ml" 145 4957 4960
+type(
+  int * Xenmmap.mmap_interface
+)
+"domains.ml" 147 4966 4971 "domains.ml" 147 4966 4974
+type(
+  Domain.t
+)
+ident(
+  def dom "domains.ml" 148 5038 5039 "domains.ml" 151 5119 5123
+)
+"domains.ml" 147 4966 4977 "domains.ml" 147 4966 4988
+type(
+  Xenctrl.domid ->
+  nativeint -> int -> Xenmmap.mmap_interface -> Event.t -> Domain.t
+)
+ident(
+  ext_ref Domain.make
+)
+"domains.ml" 147 4966 4989 "domains.ml" 147 4966 4990
+type(
+  Xenctrl.domid
+)
+"domains.ml" 147 4966 4991 "domains.ml" 147 4966 5005
+type(
+  nativeint
+)
+ident(
+  ext_ref Nativeint.zero
+)
+"domains.ml" 147 4966 5006 "domains.ml" 147 4966 5010
+type(
+  int
+)
+ident(
+  int_ref port "domains.ml" 136 4654 4659 "domains.ml" 136 4654 4663
+)
+"domains.ml" 147 4966 5011 "domains.ml" 147 4966 5020
+type(
+  Xenmmap.mmap_interface
+)
+ident(
+  int_ref interface "domains.ml" 136 4654 4665 "domains.ml" 136 4654 4674
+)
+"domains.ml" 147 4966 5021 "domains.ml" 147 4966 5025
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 135 4635 4647 "domains.ml" 135 4635 4651
+)
+"domains.ml" 147 4966 5021 "domains.ml" 147 4966 5034
+type(
+  Event.t
+)
+"domains.ml" 147 4966 4977 "domains.ml" 147 4966 5034
+call(
+  stack
+)
+type(
+  Domain.t
+)
+"domains.ml" 148 5038 5039 "domains.ml" 148 5038 5050
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t -> Xenctrl.domid -> Domain.t -> unit
+)
+ident(
+  ext_ref Hashtbl.add
+)
+"domains.ml" 148 5038 5051 "domains.ml" 148 5038 5055
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 135 4635 4647 "domains.ml" 135 4635 4651
+)
+"domains.ml" 148 5038 5051 "domains.ml" 148 5038 5061
+type(
+  (Xenctrl.domid, Domain.t) Hashtbl.t
+)
+"domains.ml" 148 5038 5062 "domains.ml" 148 5038 5063
+type(
+  Xenctrl.domid
+)
+"domains.ml" 148 5038 5064 "domains.ml" 148 5038 5067
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 147 4966 4971 "domains.ml" 147 4966 4974
+)
+"domains.ml" 148 5038 5039 "domains.ml" 148 5038 5067
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 149 5069 5070 "domains.ml" 149 5069 5093
+type(
+  Domain.t -> unit
+)
+ident(
+  ext_ref Domain.bind_interdomain
+)
+"domains.ml" 149 5069 5094 "domains.ml" 149 5069 5097
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 147 4966 4971 "domains.ml" 147 4966 4974
+)
+"domains.ml" 149 5069 5070 "domains.ml" 149 5069 5097
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 150 5099 5100 "domains.ml" 150 5099 5113
+type(
+  Domain.t -> unit
+)
+ident(
+  ext_ref Domain.notify
+)
+"domains.ml" 150 5099 5114 "domains.ml" 150 5099 5117
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 147 4966 4971 "domains.ml" 147 4966 4974
+)
+"domains.ml" 150 5099 5100 "domains.ml" 150 5099 5117
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 151 5119 5120 "domains.ml" 151 5119 5123
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 147 4966 4971 "domains.ml" 147 4966 4974
+)
+"domains.ml" 150 5099 5100 "domains.ml" 151 5119 5123
+type(
+  Domain.t
+)
+"domains.ml" 149 5069 5070 "domains.ml" 151 5119 5123
+type(
+  Domain.t
+)
+"domains.ml" 148 5038 5039 "domains.ml" 151 5119 5123
+type(
+  Domain.t
+)
+"domains.ml" 147 4966 4967 "domains.ml" 151 5119 5123
+type(
+  Domain.t
+)
+"domains.ml" 136 4654 4655 "domains.ml" 151 5119 5123
+type(
+  Domain.t
+)
+"domains.ml" 153 5125 5129 "domains.ml" 153 5125 5149
+type(
+  domains -> Domain.t -> unit
+)
+ident(
+  def decr_conflict_credit "domains.ml" 185 6312 6312 "domains.ml" 1 0 -1
+)
+"domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 153 5125 5155 "domains.ml" 182 6225 6227
+)
+"domains.ml" 153 5125 5155 "domains.ml" 153 5125 5158
+type(
+  Domain.t
+)
+ident(
+  def dom "domains.ml" 154 5161 5162 "domains.ml" 182 6225 6227
+)
+"domains.ml" 154 5161 5162 "domains.ml" 154 5161 5165
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 153 5125 5155 "domains.ml" 153 5125 5158
+)
+"domains.ml" 154 5161 5193 "domains.ml" 154 5161 5202
+type(
+  int64 -> int64 -> int64
+)
+ident(
+  ext_ref Int64.add
+)
+"domains.ml" 154 5161 5203 "domains.ml" 154 5161 5205
+type(
+  int64
+)
+"domains.ml" 154 5161 5206 "domains.ml" 154 5161 5209
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 153 5125 5155 "domains.ml" 153 5125 5158
+)
+"domains.ml" 154 5161 5206 "domains.ml" 154 5161 5233
+type(
+  int64
+)
+"domains.ml" 154 5161 5193 "domains.ml" 154 5161 5233
+type(
+  int64
+)
+"domains.ml" 154 5161 5162 "domains.ml" 154 5161 5233
+type(
+  unit
+)
+"domains.ml" 155 5235 5240 "domains.ml" 155 5235 5246
+type(
+  float
+)
+ident(
+  def before "domains.ml" 156 5279 5280 "domains.ml" 182 6225 6227
+)
+"domains.ml" 155 5235 5249 "domains.ml" 155 5235 5252
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 153 5125 5155 "domains.ml" 153 5125 5158
+)
+"domains.ml" 155 5235 5249 "domains.ml" 155 5235 5275
+type(
+  float
+)
+"domains.ml" 156 5279 5284 "domains.ml" 156 5279 5289
+type(
+  float
+)
+ident(
+  def after "domains.ml" 157 5322 5323 "domains.ml" 182 6225 6227
+)
+"domains.ml" 156 5279 5292 "domains.ml" 156 5279 5295
+type(
+  float -> float -> float
+)
+ident(
+  ext_ref Pervasives.max
+)
+"domains.ml" 156 5279 5296 "domains.ml" 156 5279 5302
+type(
+  float
+)
+"domains.ml" 156 5279 5304 "domains.ml" 156 5279 5310
+type(
+  float
+)
+ident(
+  int_ref before "domains.ml" 155 5235 5240 "domains.ml" 155 5235 5246
+)
+"domains.ml" 156 5279 5311 "domains.ml" 156 5279 5313
+type(
+  float -> float -> float
+)
+ident(
+  ext_ref Pervasives.( -. )
+)
+"domains.ml" 156 5279 5314 "domains.ml" 156 5279 5317
+type(
+  float
+)
+"domains.ml" 156 5279 5303 "domains.ml" 156 5279 5318
+type(
+  float
+)
+"domains.ml" 156 5279 5292 "domains.ml" 156 5279 5318
+call(
+  stack
+)
+type(
+  float
+)
+"domains.ml" 157 5322 5323 "domains.ml" 157 5322 5328
+type(
+  (Xenctrl.domid -> float -> float -> unit, unit, string, unit) format4 ->
+  Xenctrl.domid -> float -> float -> unit
+)
+ident(
+  int_ref debug "domains.ml" 17 676 680 "domains.ml" 17 676 685
+)
+"domains.ml" 157 5322 5329 "domains.ml" 157 5322 5366
+type(
+  (Xenctrl.domid -> float -> float -> unit, unit, string, unit) format4
+)
+"domains.ml" 157 5322 5368 "domains.ml" 157 5322 5381
+type(
+  Domain.t -> Xenctrl.domid
+)
+ident(
+  ext_ref Domain.get_id
+)
+"domains.ml" 157 5322 5382 "domains.ml" 157 5322 5385
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 153 5125 5155 "domains.ml" 153 5125 5158
+)
+"domains.ml" 157 5322 5367 "domains.ml" 157 5322 5386
+call(
+  stack
+)
+type(
+  Xenctrl.domid
+)
+"domains.ml" 157 5322 5387 "domains.ml" 157 5322 5393
+type(
+  float
+)
+ident(
+  int_ref before "domains.ml" 155 5235 5240 "domains.ml" 155 5235 5246
+)
+"domains.ml" 157 5322 5394 "domains.ml" 157 5322 5399
+type(
+  float
+)
+ident(
+  int_ref after "domains.ml" 156 5279 5284 "domains.ml" 156 5279 5289
+)
+"domains.ml" 157 5322 5323 "domains.ml" 157 5322 5399
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 158 5401 5402 "domains.ml" 158 5401 5405
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 153 5125 5155 "domains.ml" 153 5125 5158
+)
+"domains.ml" 158 5401 5432 "domains.ml" 158 5401 5437
+type(
+  float
+)
+ident(
+  int_ref after "domains.ml" 156 5279 5284 "domains.ml" 156 5279 5289
+)
+"domains.ml" 158 5401 5402 "domains.ml" 158 5401 5437
+type(
+  unit
+)
+"domains.ml" 159 5439 5444 "domains.ml" 159 5439 5459
+type(
+  bool
+)
+ident(
+  def newly_penalised "domains.ml" 162 5548 5549 "domains.ml" 182 6225 6227
+)
+"domains.ml" 160 5462 5464 "domains.ml" 160 5462 5470
+type(
+  float
+)
+ident(
+  int_ref before "domains.ml" 155 5235 5240 "domains.ml" 155 5235 5246
+)
+"domains.ml" 160 5462 5471 "domains.ml" 160 5462 5473
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( >= )
+)
+"domains.ml" 160 5462 5474 "domains.ml" 160 5462 5475
+type(
+  float ref -> float
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 160 5462 5475 "domains.ml" 160 5462 5502
+type(
+  float ref
+)
+ident(
+  ext_ref Define.conflict_burst_limit
+)
+"domains.ml" 160 5462 5474 "domains.ml" 160 5462 5502
+type(
+  float
+)
+"domains.ml" 160 5462 5464 "domains.ml" 160 5462 5502
+type(
+  bool
+)
+"domains.ml" 161 5503 5505 "domains.ml" 161 5503 5507
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( && )
+)
+"domains.ml" 161 5503 5508 "domains.ml" 161 5503 5513
+type(
+  float
+)
+ident(
+  int_ref after "domains.ml" 156 5279 5284 "domains.ml" 156 5279 5289
+)
+"domains.ml" 161 5503 5514 "domains.ml" 161 5503 5515
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( < )
+)
+"domains.ml" 161 5503 5516 "domains.ml" 161 5503 5517
+type(
+  float ref -> float
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 161 5503 5517 "domains.ml" 161 5503 5544
+type(
+  float ref
+)
+ident(
+  ext_ref Define.conflict_burst_limit
+)
+"domains.ml" 161 5503 5516 "domains.ml" 161 5503 5544
+type(
+  float
+)
+"domains.ml" 161 5503 5508 "domains.ml" 161 5503 5544
+type(
+  bool
+)
+"domains.ml" 160 5462 5464 "domains.ml" 161 5503 5544
+type(
+  bool
+)
+"domains.ml" 162 5548 5553 "domains.ml" 162 5548 5565
+type(
+  bool
+)
+ident(
+  def newly_paused "domains.ml" 163 5600 5601 "domains.ml" 182 6225 6227
+)
+"domains.ml" 162 5548 5568 "domains.ml" 162 5548 5574
+type(
+  float
+)
+ident(
+  int_ref before "domains.ml" 155 5235 5240 "domains.ml" 155 5235 5246
+)
+"domains.ml" 162 5548 5575 "domains.ml" 162 5548 5576
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( > )
+)
+"domains.ml" 162 5548 5577 "domains.ml" 162 5548 5580
+type(
+  float
+)
+"domains.ml" 162 5548 5568 "domains.ml" 162 5548 5580
+type(
+  bool
+)
+"domains.ml" 162 5548 5581 "domains.ml" 162 5548 5583
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( && )
+)
+"domains.ml" 162 5548 5584 "domains.ml" 162 5548 5589
+type(
+  float
+)
+ident(
+  int_ref after "domains.ml" 156 5279 5284 "domains.ml" 156 5279 5289
+)
+"domains.ml" 162 5548 5590 "domains.ml" 162 5548 5592
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( <= )
+)
+"domains.ml" 162 5548 5593 "domains.ml" 162 5548 5596
+type(
+  float
+)
+"domains.ml" 162 5548 5584 "domains.ml" 162 5548 5596
+type(
+  bool
+)
+"domains.ml" 162 5548 5568 "domains.ml" 162 5548 5596
+type(
+  bool
+)
+"domains.ml" 163 5600 5604 "domains.ml" 163 5600 5605
+type(
+  bool ref -> bool
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 163 5600 5605 "domains.ml" 163 5600 5644
+type(
+  bool ref
+)
+ident(
+  ext_ref Define.conflict_rate_limit_is_aggregate
+)
+"domains.ml" 163 5600 5604 "domains.ml" 163 5600 5644
+type(
+  bool
+)
+"domains.ml" 164 5652 5657 "domains.ml" 164 5652 5672
+type(
+  bool
+)
+ident(
+  int_ref newly_penalised "domains.ml" 159 5439 5444 "domains.ml" 159 5439 5459
+)
+"domains.ml" 165 5673 5675 "domains.ml" 165 5673 5677
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( && )
+)
+"domains.ml" 165 5673 5678 "domains.ml" 165 5673 5683
+type(
+  float
+)
+ident(
+  int_ref after "domains.ml" 156 5279 5284 "domains.ml" 156 5279 5289
+)
+"domains.ml" 165 5673 5684 "domains.ml" 165 5673 5685
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( > )
+)
+"domains.ml" 165 5673 5686 "domains.ml" 165 5673 5689
+type(
+  float
+)
+"domains.ml" 165 5673 5678 "domains.ml" 165 5673 5689
+type(
+  bool
+)
+"domains.ml" 164 5652 5657 "domains.ml" 165 5673 5689
+type(
+  bool
+)
+"domains.ml" 167 5699 5702 "domains.ml" 167 5699 5706
+type(
+  Domain.t -> Domain.t option ref Queue.t -> unit
+)
+ident(
+  int_ref push "domains.ml" 78 3036 3040 "domains.ml" 78 3036 3044
+)
+"domains.ml" 167 5699 5707 "domains.ml" 167 5699 5710
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 153 5125 5155 "domains.ml" 153 5125 5158
+)
+"domains.ml" 167 5699 5711 "domains.ml" 167 5699 5715
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 167 5699 5711 "domains.ml" 167 5699 5742
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 166 5690 5697 "domains.ml" 168 5743 5746
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 168 5743 5755 "domains.ml" 168 5743 5767
+type(
+  bool
+)
+ident(
+  int_ref newly_paused "domains.ml" 162 5548 5553 "domains.ml" 162 5548 5565
+)
+"domains.ml" 170 5777 5784 "domains.ml" 170 5777 5795
+type(
+  bool
+)
+ident(
+  def first_pause "domains.ml" 171 5842 5845 "domains.ml" 172 5881 5935
+)
+"domains.ml" 170 5777 5798 "domains.ml" 170 5777 5812
+type(
+  Domain.t option ref Queue.t -> bool
+)
+ident(
+  ext_ref Queue.is_empty
+)
+"domains.ml" 170 5777 5813 "domains.ml" 170 5777 5817
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 170 5777 5813 "domains.ml" 170 5777 5838
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 170 5777 5798 "domains.ml" 170 5777 5838
+call(
+  stack
+)
+type(
+  bool
+)
+"domains.ml" 171 5842 5845 "domains.ml" 171 5842 5849
+type(
+  Domain.t -> Domain.t option ref Queue.t -> unit
+)
+ident(
+  int_ref push "domains.ml" 78 3036 3040 "domains.ml" 78 3036 3044
+)
+"domains.ml" 171 5842 5850 "domains.ml" 171 5842 5853
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 153 5125 5155 "domains.ml" 153 5125 5158
+)
+"domains.ml" 171 5842 5854 "domains.ml" 171 5842 5858
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 171 5842 5854 "domains.ml" 171 5842 5879
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 171 5842 5845 "domains.ml" 171 5842 5879
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 172 5881 5887 "domains.ml" 172 5881 5898
+type(
+  bool
+)
+ident(
+  int_ref first_pause "domains.ml" 170 5777 5784 "domains.ml" 170 5777 5795
+)
+"domains.ml" 172 5881 5904 "domains.ml" 172 5881 5908
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 172 5881 5904 "domains.ml" 172 5881 5932
+type(
+  unit -> unit
+)
+"domains.ml" 172 5881 5933 "domains.ml" 172 5881 5935
+type(
+  unit
+)
+"domains.ml" 172 5881 5904 "domains.ml" 172 5881 5935
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 172 5881 5884 "domains.ml" 172 5881 5935
+type(
+  unit
+)
+"domains.ml" 171 5842 5845 "domains.ml" 172 5881 5935
+type(
+  unit
+)
+"domains.ml" 169 5768 5775 "domains.ml" 173 5936 5939
+type(
+  unit
+)
+"domains.ml" 173 5936 5945 "domains.ml" 175 6014 6017
+type(
+  unit
+)
+"domains.ml" 168 5743 5752 "domains.ml" 175 6014 6017
+type(
+  unit
+)
+"domains.ml" 163 5600 5650 "domains.ml" 176 6018 6020
+type(
+  unit
+)
+"domains.ml" 177 6028 6033 "domains.ml" 177 6028 6048
+type(
+  bool
+)
+ident(
+  int_ref newly_penalised "domains.ml" 159 5439 5444 "domains.ml" 159 5439 5459
+)
+"domains.ml" 177 6028 6054 "domains.ml" 177 6028 6058
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 177 6028 6074 "domains.ml" 177 6028 6078
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 177 6028 6074 "domains.ml" 177 6028 6090
+type(
+  int
+)
+"domains.ml" 177 6028 6091 "domains.ml" 177 6028 6092
+type(
+  int -> int -> int
+)
+ident(
+  ext_ref Pervasives.( + )
+)
+"domains.ml" 177 6028 6093 "domains.ml" 177 6028 6094
+type(
+  int
+)
+"domains.ml" 177 6028 6074 "domains.ml" 177 6028 6094
+type(
+  int
+)
+"domains.ml" 177 6028 6054 "domains.ml" 177 6028 6094
+type(
+  unit
+)
+"domains.ml" 177 6028 6030 "domains.ml" 177 6028 6094
+type(
+  unit
+)
+"domains.ml" 178 6096 6101 "domains.ml" 178 6096 6113
+type(
+  bool
+)
+ident(
+  int_ref newly_paused "domains.ml" 162 5548 5553 "domains.ml" 162 5548 5565
+)
+"domains.ml" 179 6121 6124 "domains.ml" 179 6121 6128
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 179 6121 6141 "domains.ml" 179 6121 6145
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 179 6121 6141 "domains.ml" 179 6121 6154
+type(
+  int
+)
+"domains.ml" 179 6121 6155 "domains.ml" 179 6121 6156
+type(
+  int -> int -> int
+)
+ident(
+  ext_ref Pervasives.( + )
+)
+"domains.ml" 179 6121 6157 "domains.ml" 179 6121 6158
+type(
+  int
+)
+"domains.ml" 179 6121 6141 "domains.ml" 179 6121 6158
+type(
+  int
+)
+"domains.ml" 179 6121 6124 "domains.ml" 179 6121 6158
+type(
+  unit
+)
+"domains.ml" 180 6160 6166 "domains.ml" 180 6160 6170
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 180 6160 6166 "domains.ml" 180 6160 6179
+type(
+  int
+)
+"domains.ml" 180 6160 6180 "domains.ml" 180 6160 6181
+type(
+  int -> int -> bool
+)
+ident(
+  ext_ref Pervasives.( = )
+)
+"domains.ml" 180 6160 6182 "domains.ml" 180 6160 6183
+type(
+  int
+)
+"domains.ml" 180 6160 6166 "domains.ml" 180 6160 6183
+type(
+  bool
+)
+"domains.ml" 180 6160 6189 "domains.ml" 180 6160 6193
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 153 5125 5150 "domains.ml" 153 5125 5154
+)
+"domains.ml" 180 6160 6189 "domains.ml" 180 6160 6217
+type(
+  unit -> unit
+)
+"domains.ml" 180 6160 6218 "domains.ml" 180 6160 6220
+type(
+  unit
+)
+"domains.ml" 180 6160 6189 "domains.ml" 180 6160 6220
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 180 6160 6163 "domains.ml" 180 6160 6220
+type(
+  unit
+)
+"domains.ml" 178 6096 6119 "domains.ml" 181 6221 6224
+type(
+  unit
+)
+"domains.ml" 178 6096 6098 "domains.ml" 181 6221 6224
+type(
+  unit
+)
+"domains.ml" 176 6018 6026 "domains.ml" 182 6225 6227
+type(
+  unit
+)
+"domains.ml" 163 5600 5601 "domains.ml" 182 6225 6227
+type(
+  unit
+)
+"domains.ml" 162 5548 5549 "domains.ml" 182 6225 6227
+type(
+  unit
+)
+"domains.ml" 159 5439 5440 "domains.ml" 182 6225 6227
+type(
+  unit
+)
+"domains.ml" 158 5401 5402 "domains.ml" 182 6225 6227
+type(
+  unit
+)
+"domains.ml" 157 5322 5323 "domains.ml" 182 6225 6227
+type(
+  unit
+)
+"domains.ml" 156 5279 5280 "domains.ml" 182 6225 6227
+type(
+  unit
+)
+"domains.ml" 155 5235 5236 "domains.ml" 182 6225 6227
+type(
+  unit
+)
+"domains.ml" 154 5161 5162 "domains.ml" 182 6225 6227
+type(
+  unit
+)
+"domains.ml" 185 6312 6316 "domains.ml" 185 6312 6347
+type(
+  domains -> unit
+)
+ident(
+  def incr_conflict_credit_from_queue "domains.ml" 203 7169 7169 "domains.ml" 1 0 -1
+)
+"domains.ml" 185 6312 6348 "domains.ml" 185 6312 6352
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 186 6355 6356 "domains.ml" 201 7165 7167
+)
+"domains.ml" 186 6355 6360 "domains.ml" 186 6355 6373
+type(
+  Domain.t option ref Queue.t -> (float -> bool) -> unit
+)
+ident(
+  def process_queue "domains.ml" 195 6819 6820 "domains.ml" 201 7165 7167
+)
+"domains.ml" 186 6355 6374 "domains.ml" 186 6355 6375
+type(
+  Domain.t option ref Queue.t
+)
+ident(
+  def q "domains.ml" 186 6355 6376 "domains.ml" 193 6811 6814
+)
+"domains.ml" 186 6355 6376 "domains.ml" 186 6355 6388
+type(
+  float -> bool
+)
+ident(
+  def requeue_test "domains.ml" 187 6391 6393 "domains.ml" 193 6811 6814
+)
+"domains.ml" 187 6391 6397 "domains.ml" 187 6391 6398
+type(
+  Domain.t
+)
+ident(
+  def d "domains.ml" 188 6410 6412 "domains.ml" 193 6811 6814
+)
+"domains.ml" 187 6391 6401 "domains.ml" 187 6391 6404
+type(
+  Domain.t option ref Queue.t -> Domain.t
+)
+ident(
+  int_ref pop "domains.ml" 81 3093 3101 "domains.ml" 81 3093 3104
+)
+"domains.ml" 187 6391 6405 "domains.ml" 187 6391 6406
+type(
+  Domain.t option ref Queue.t
+)
+ident(
+  int_ref q "domains.ml" 186 6355 6374 "domains.ml" 186 6355 6375
+)
+"domains.ml" 187 6391 6401 "domains.ml" 187 6391 6406
+call(
+  stack
+)
+type(
+  Domain.t
+)
+"domains.ml" 188 6410 6416 "domains.ml" 188 6410 6422
+type(
+  float
+)
+ident(
+  def before "domains.ml" 189 6482 6484 "domains.ml" 193 6811 6814
+)
+"domains.ml" 188 6410 6425 "domains.ml" 188 6410 6426
+type(
+  Domain.t
+)
+ident(
+  int_ref d "domains.ml" 187 6391 6397 "domains.ml" 187 6391 6398
+)
+"domains.ml" 188 6410 6425 "domains.ml" 188 6410 6449
+type(
+  float
+)
+"domains.ml" 189 6482 6484 "domains.ml" 189 6482 6485
+type(
+  Domain.t
+)
+ident(
+  int_ref d "domains.ml" 187 6391 6397 "domains.ml" 187 6391 6398
+)
+"domains.ml" 189 6482 6512 "domains.ml" 189 6482 6515
+type(
+  float -> float -> float
+)
+ident(
+  ext_ref Pervasives.min
+)
+"domains.ml" 189 6482 6517 "domains.ml" 189 6482 6518
+type(
+  Domain.t
+)
+ident(
+  int_ref d "domains.ml" 187 6391 6397 "domains.ml" 187 6391 6398
+)
+"domains.ml" 189 6482 6517 "domains.ml" 189 6482 6541
+type(
+  float
+)
+"domains.ml" 189 6482 6542 "domains.ml" 189 6482 6544
+type(
+  float -> float -> float
+)
+ident(
+  ext_ref Pervasives.( +. )
+)
+"domains.ml" 189 6482 6545 "domains.ml" 189 6482 6548
+type(
+  float
+)
+"domains.ml" 189 6482 6516 "domains.ml" 189 6482 6549
+type(
+  float
+)
+"domains.ml" 189 6482 6550 "domains.ml" 189 6482 6551
+type(
+  float ref -> float
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 189 6482 6551 "domains.ml" 189 6482 6578
+type(
+  float ref
+)
+ident(
+  ext_ref Define.conflict_burst_limit
+)
+"domains.ml" 189 6482 6550 "domains.ml" 189 6482 6578
+type(
+  float
+)
+"domains.ml" 189 6482 6512 "domains.ml" 189 6482 6578
+call(
+  stack
+)
+type(
+  float
+)
+"domains.ml" 189 6482 6484 "domains.ml" 189 6482 6578
+type(
+  unit
+)
+"domains.ml" 190 6580 6582 "domains.ml" 190 6580 6587
+type(
+  (Xenctrl.domid -> float -> float -> unit, unit, string, unit) format4 ->
+  Xenctrl.domid -> float -> float -> unit
+)
+ident(
+  int_ref debug "domains.ml" 17 676 680 "domains.ml" 17 676 685
+)
+"domains.ml" 190 6580 6588 "domains.ml" 190 6580 6638
+type(
+  (Xenctrl.domid -> float -> float -> unit, unit, string, unit) format4
+)
+"domains.ml" 190 6580 6640 "domains.ml" 190 6580 6653
+type(
+  Domain.t -> Xenctrl.domid
+)
+ident(
+  ext_ref Domain.get_id
+)
+"domains.ml" 190 6580 6654 "domains.ml" 190 6580 6655
+type(
+  Domain.t
+)
+ident(
+  int_ref d "domains.ml" 187 6391 6397 "domains.ml" 187 6391 6398
+)
+"domains.ml" 190 6580 6639 "domains.ml" 190 6580 6656
+call(
+  stack
+)
+type(
+  Xenctrl.domid
+)
+"domains.ml" 190 6580 6657 "domains.ml" 190 6580 6663
+type(
+  float
+)
+ident(
+  int_ref before "domains.ml" 188 6410 6416 "domains.ml" 188 6410 6422
+)
+"domains.ml" 190 6580 6664 "domains.ml" 190 6580 6665
+type(
+  Domain.t
+)
+ident(
+  int_ref d "domains.ml" 187 6391 6397 "domains.ml" 187 6391 6398
+)
+"domains.ml" 190 6580 6664 "domains.ml" 190 6580 6688
+type(
+  float
+)
+"domains.ml" 190 6580 6582 "domains.ml" 190 6580 6688
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 191 6690 6695 "domains.ml" 191 6690 6707
+type(
+  float -> bool
+)
+ident(
+  int_ref requeue_test "domains.ml" 186 6355 6376 "domains.ml" 186 6355 6388
+)
+"domains.ml" 191 6690 6708 "domains.ml" 191 6690 6709
+type(
+  Domain.t
+)
+ident(
+  int_ref d "domains.ml" 187 6391 6397 "domains.ml" 187 6391 6398
+)
+"domains.ml" 191 6690 6708 "domains.ml" 191 6690 6732
+type(
+  float
+)
+"domains.ml" 191 6690 6695 "domains.ml" 191 6690 6732
+call(
+  stack
+)
+type(
+  bool
+)
+"domains.ml" 192 6740 6743 "domains.ml" 192 6740 6747
+type(
+  Domain.t -> Domain.t option ref Queue.t -> unit
+)
+ident(
+  int_ref push "domains.ml" 78 3036 3040 "domains.ml" 78 3036 3044
+)
+"domains.ml" 192 6740 6748 "domains.ml" 192 6740 6749
+type(
+  Domain.t
+)
+ident(
+  int_ref d "domains.ml" 187 6391 6397 "domains.ml" 187 6391 6398
+)
+"domains.ml" 192 6740 6750 "domains.ml" 192 6740 6751
+type(
+  Domain.t option ref Queue.t
+)
+ident(
+  int_ref q "domains.ml" 186 6355 6374 "domains.ml" 186 6355 6375
+)
+"domains.ml" 191 6690 6738 "domains.ml" 193 6811 6814
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 191 6690 6692 "domains.ml" 193 6811 6814
+type(
+  unit
+)
+"domains.ml" 190 6580 6582 "domains.ml" 193 6811 6814
+type(
+  unit
+)
+"domains.ml" 189 6482 6484 "domains.ml" 193 6811 6814
+type(
+  unit
+)
+"domains.ml" 188 6410 6412 "domains.ml" 193 6811 6814
+type(
+  unit
+)
+"domains.ml" 187 6391 6393 "domains.ml" 193 6811 6814
+type(
+  unit
+)
+"domains.ml" 195 6819 6824 "domains.ml" 195 6819 6841
+type(
+  float -> bool
+)
+ident(
+  def paused_queue_test "domains.ml" 196 6864 6865 "domains.ml" 201 7165 7167
+)
+"domains.ml" 195 6819 6842 "domains.ml" 195 6819 6846
+type(
+  float
+)
+ident(
+  def cred "domains.ml" 195 6819 6849 "domains.ml" 195 6819 6860
+)
+"domains.ml" 195 6819 6849 "domains.ml" 195 6819 6853
+type(
+  float
+)
+ident(
+  int_ref cred "domains.ml" 195 6819 6842 "domains.ml" 195 6819 6846
+)
+"domains.ml" 195 6819 6854 "domains.ml" 195 6819 6856
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( <= )
+)
+"domains.ml" 195 6819 6857 "domains.ml" 195 6819 6860
+type(
+  float
+)
+"domains.ml" 195 6819 6849 "domains.ml" 195 6819 6860
+type(
+  bool
+)
+"domains.ml" 196 6864 6869 "domains.ml" 196 6864 6887
+type(
+  float -> bool
+)
+ident(
+  def penalty_queue_test "domains.ml" 197 6934 6935 "domains.ml" 201 7165 7167
+)
+"domains.ml" 196 6864 6888 "domains.ml" 196 6864 6892
+type(
+  float
+)
+ident(
+  def cred "domains.ml" 196 6864 6895 "domains.ml" 196 6864 6930
+)
+"domains.ml" 196 6864 6895 "domains.ml" 196 6864 6899
+type(
+  float
+)
+ident(
+  int_ref cred "domains.ml" 196 6864 6888 "domains.ml" 196 6864 6892
+)
+"domains.ml" 196 6864 6900 "domains.ml" 196 6864 6901
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( < )
+)
+"domains.ml" 196 6864 6902 "domains.ml" 196 6864 6903
+type(
+  float ref -> float
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 196 6864 6903 "domains.ml" 196 6864 6930
+type(
+  float ref
+)
+ident(
+  ext_ref Define.conflict_burst_limit
+)
+"domains.ml" 196 6864 6902 "domains.ml" 196 6864 6930
+type(
+  float
+)
+"domains.ml" 196 6864 6895 "domains.ml" 196 6864 6930
+type(
+  bool
+)
+"domains.ml" 197 6934 6939 "domains.ml" 197 6934 6952
+type(
+  Domain.t option ref Queue.t -> (float -> bool) -> unit
+)
+ident(
+  int_ref process_queue "domains.ml" 186 6355 6360 "domains.ml" 186 6355 6373
+)
+"domains.ml" 197 6934 6953 "domains.ml" 197 6934 6957
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 185 6312 6348 "domains.ml" 185 6312 6352
+)
+"domains.ml" 197 6934 6953 "domains.ml" 197 6934 6978
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 197 6934 6979 "domains.ml" 197 6934 6996
+type(
+  float -> bool
+)
+ident(
+  int_ref paused_queue_test "domains.ml" 195 6819 6824 "domains.ml" 195 6819 6841
+)
+"domains.ml" 197 6934 6939 "domains.ml" 197 6934 6996
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 198 6997 7003 "domains.ml" 198 6997 7014
+type(
+  exn
+)
+"domains.ml" 199 7020 7026 "domains.ml" 199 7020 7039
+type(
+  Domain.t option ref Queue.t -> (float -> bool) -> unit
+)
+ident(
+  int_ref process_queue "domains.ml" 186 6355 6360 "domains.ml" 186 6355 6373
+)
+"domains.ml" 199 7020 7040 "domains.ml" 199 7020 7044
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 185 6312 6348 "domains.ml" 185 6312 6352
+)
+"domains.ml" 199 7020 7040 "domains.ml" 199 7020 7071
+type(
+  Domain.t option ref Queue.t
+)
+"domains.ml" 199 7020 7072 "domains.ml" 199 7020 7090
+type(
+  float -> bool
+)
+ident(
+  int_ref penalty_queue_test "domains.ml" 196 6864 6869 "domains.ml" 196 6864 6887
+)
+"domains.ml" 199 7020 7026 "domains.ml" 199 7020 7090
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 200 7091 7098 "domains.ml" 200 7091 7109
+type(
+  exn
+)
+"domains.ml" 200 7091 7113 "domains.ml" 200 7091 7115
+type(
+  unit
+)
+"domains.ml" 198 6997 7018 "domains.ml" 201 7165 7167
+type(
+  unit
+)
+"domains.ml" 197 6934 6935 "domains.ml" 201 7165 7167
+type(
+  unit
+)
+"domains.ml" 196 6864 6865 "domains.ml" 201 7165 7167
+type(
+  unit
+)
+"domains.ml" 195 6819 6820 "domains.ml" 201 7165 7167
+type(
+  unit
+)
+"domains.ml" 186 6355 6356 "domains.ml" 201 7165 7167
+type(
+  unit
+)
+"domains.ml" 203 7169 7173 "domains.ml" 203 7169 7193
+type(
+  domains -> unit
+)
+ident(
+  def incr_conflict_credit "domains.ml" 222 7889 7891 "domains.ml" 1 0 -1
+)
+"domains.ml" 203 7169 7194 "domains.ml" 203 7169 7198
+type(
+  domains
+)
+ident(
+  def doms "domains.ml" 204 7201 7202 "domains.ml" 222 7889 7891
+)
+"domains.ml" 204 7201 7205 "domains.ml" 204 7201 7206
+type(
+  bool ref -> bool
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 204 7201 7206 "domains.ml" 204 7201 7245
+type(
+  bool ref
+)
+ident(
+  ext_ref Define.conflict_rate_limit_is_aggregate
+)
+"domains.ml" 204 7201 7205 "domains.ml" 204 7201 7245
+type(
+  bool
+)
+"domains.ml" 205 7246 7252 "domains.ml" 205 7246 7283
+type(
+  domains -> unit
+)
+ident(
+  int_ref incr_conflict_credit_from_queue "domains.ml" 185 6312 6316 "domains.ml" 185 6312 6347
+)
+"domains.ml" 205 7246 7284 "domains.ml" 205 7246 7288
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 203 7169 7194 "domains.ml" 203 7169 7198
+)
+"domains.ml" 205 7246 7252 "domains.ml" 205 7246 7288
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 208 7370 7376 "domains.ml" 208 7370 7379
+type(
+  Domain.t -> unit
+)
+ident(
+  def inc "domains.ml" 221 7844 7846 "domains.ml" 221 7844 7888
+)
+"domains.ml" 208 7370 7380 "domains.ml" 208 7370 7383
+type(
+  Domain.t
+)
+ident(
+  def dom "domains.ml" 209 7386 7389 "domains.ml" 219 7790 7838
+)
+"domains.ml" 209 7386 7393 "domains.ml" 209 7386 7399
+type(
+  float
+)
+ident(
+  def before "domains.ml" 210 7432 7435 "domains.ml" 219 7790 7838
+)
+"domains.ml" 209 7386 7402 "domains.ml" 209 7386 7405
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 208 7370 7380 "domains.ml" 208 7370 7383
+)
+"domains.ml" 209 7386 7402 "domains.ml" 209 7386 7428
+type(
+  float
+)
+"domains.ml" 210 7432 7439 "domains.ml" 210 7432 7444
+type(
+  float
+)
+ident(
+  def after "domains.ml" 211 7499 7502 "domains.ml" 219 7790 7838
+)
+"domains.ml" 210 7432 7447 "domains.ml" 210 7432 7450
+type(
+  float -> float -> float
+)
+ident(
+  ext_ref Pervasives.min
+)
+"domains.ml" 210 7432 7452 "domains.ml" 210 7432 7458
+type(
+  float
+)
+ident(
+  int_ref before "domains.ml" 209 7386 7393 "domains.ml" 209 7386 7399
+)
+"domains.ml" 210 7432 7459 "domains.ml" 210 7432 7461
+type(
+  float -> float -> float
+)
+ident(
+  ext_ref Pervasives.( +. )
+)
+"domains.ml" 210 7432 7462 "domains.ml" 210 7432 7465
+type(
+  float
+)
+"domains.ml" 210 7432 7451 "domains.ml" 210 7432 7466
+type(
+  float
+)
+"domains.ml" 210 7432 7467 "domains.ml" 210 7432 7468
+type(
+  float ref -> float
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 210 7432 7468 "domains.ml" 210 7432 7495
+type(
+  float ref
+)
+ident(
+  ext_ref Define.conflict_burst_limit
+)
+"domains.ml" 210 7432 7467 "domains.ml" 210 7432 7495
+type(
+  float
+)
+"domains.ml" 210 7432 7447 "domains.ml" 210 7432 7495
+call(
+  stack
+)
+type(
+  float
+)
+"domains.ml" 211 7499 7502 "domains.ml" 211 7499 7505
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 208 7370 7380 "domains.ml" 208 7370 7383
+)
+"domains.ml" 211 7499 7532 "domains.ml" 211 7499 7537
+type(
+  float
+)
+ident(
+  int_ref after "domains.ml" 210 7432 7439 "domains.ml" 210 7432 7444
+)
+"domains.ml" 211 7499 7502 "domains.ml" 211 7499 7537
+type(
+  unit
+)
+"domains.ml" 212 7539 7542 "domains.ml" 212 7539 7547
+type(
+  (Xenctrl.domid -> float -> float -> unit, unit, string, unit) format4 ->
+  Xenctrl.domid -> float -> float -> unit
+)
+ident(
+  int_ref debug "domains.ml" 17 676 680 "domains.ml" 17 676 685
+)
+"domains.ml" 212 7539 7548 "domains.ml" 212 7539 7586
+type(
+  (Xenctrl.domid -> float -> float -> unit, unit, string, unit) format4
+)
+"domains.ml" 212 7539 7588 "domains.ml" 212 7539 7601
+type(
+  Domain.t -> Xenctrl.domid
+)
+ident(
+  ext_ref Domain.get_id
+)
+"domains.ml" 212 7539 7602 "domains.ml" 212 7539 7605
+type(
+  Domain.t
+)
+ident(
+  int_ref dom "domains.ml" 208 7370 7380 "domains.ml" 208 7370 7383
+)
+"domains.ml" 212 7539 7587 "domains.ml" 212 7539 7606
+call(
+  stack
+)
+type(
+  Xenctrl.domid
+)
+"domains.ml" 212 7539 7607 "domains.ml" 212 7539 7613
+type(
+  float
+)
+ident(
+  int_ref before "domains.ml" 209 7386 7393 "domains.ml" 209 7386 7399
+)
+"domains.ml" 212 7539 7614 "domains.ml" 212 7539 7619
+type(
+  float
+)
+ident(
+  int_ref after "domains.ml" 210 7432 7439 "domains.ml" 210 7432 7444
+)
+"domains.ml" 212 7539 7542 "domains.ml" 212 7539 7619
+call(
+  stack
+)
+type(
+  unit
+)
+"domains.ml" 214 7622 7628 "domains.ml" 214 7622 7634
+type(
+  float
+)
+ident(
+  int_ref before "domains.ml" 209 7386 7393 "domains.ml" 209 7386 7399
+)
+"domains.ml" 214 7622 7635 "domains.ml" 214 7622 7637
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( <= )
+)
+"domains.ml" 214 7622 7638 "domains.ml" 214 7622 7641
+type(
+  float
+)
+"domains.ml" 214 7622 7628 "domains.ml" 214 7622 7641
+type(
+  bool
+)
+"domains.ml" 214 7622 7642 "domains.ml" 214 7622 7644
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( && )
+)
+"domains.ml" 214 7622 7645 "domains.ml" 214 7622 7650
+type(
+  float
+)
+ident(
+  int_ref after "domains.ml" 210 7432 7439 "domains.ml" 210 7432 7444
+)
+"domains.ml" 214 7622 7651 "domains.ml" 214 7622 7652
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( > )
+)
+"domains.ml" 214 7622 7653 "domains.ml" 214 7622 7656
+type(
+  float
+)
+"domains.ml" 214 7622 7645 "domains.ml" 214 7622 7656
+type(
+  bool
+)
+"domains.ml" 214 7622 7628 "domains.ml" 214 7622 7656
+type(
+  bool
+)
+"domains.ml" 215 7657 7665 "domains.ml" 215 7657 7669
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 203 7169 7194 "domains.ml" 203 7169 7198
+)
+"domains.ml" 215 7657 7682 "domains.ml" 215 7657 7686
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 203 7169 7194 "domains.ml" 203 7169 7198
+)
+"domains.ml" 215 7657 7682 "domains.ml" 215 7657 7695
+type(
+  int
+)
+"domains.ml" 215 7657 7696 "domains.ml" 215 7657 7697
+type(
+  int -> int -> int
+)
+ident(
+  ext_ref Pervasives.( - )
+)
+"domains.ml" 215 7657 7698 "domains.ml" 215 7657 7699
+type(
+  int
+)
+"domains.ml" 215 7657 7682 "domains.ml" 215 7657 7699
+type(
+  int
+)
+"domains.ml" 215 7657 7665 "domains.ml" 215 7657 7699
+type(
+  unit
+)
+"domains.ml" 214 7622 7625 "domains.ml" 215 7657 7699
+type(
+  unit
+)
+"domains.ml" 217 7702 7708 "domains.ml" 217 7702 7714
+type(
+  float
+)
+ident(
+  int_ref before "domains.ml" 209 7386 7393 "domains.ml" 209 7386 7399
+)
+"domains.ml" 217 7702 7715 "domains.ml" 217 7702 7716
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( < )
+)
+"domains.ml" 217 7702 7717 "domains.ml" 217 7702 7718
+type(
+  float ref -> float
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 217 7702 7718 "domains.ml" 217 7702 7745
+type(
+  float ref
+)
+ident(
+  ext_ref Define.conflict_burst_limit
+)
+"domains.ml" 217 7702 7717 "domains.ml" 217 7702 7745
+type(
+  float
+)
+"domains.ml" 217 7702 7708 "domains.ml" 217 7702 7745
+type(
+  bool
+)
+"domains.ml" 218 7746 7749 "domains.ml" 218 7746 7751
+type(
+  bool -> bool -> bool
+)
+ident(
+  ext_ref Pervasives.( && )
+)
+"domains.ml" 218 7746 7752 "domains.ml" 218 7746 7757
+type(
+  float
+)
+ident(
+  int_ref after "domains.ml" 210 7432 7439 "domains.ml" 210 7432 7444
+)
+"domains.ml" 218 7746 7758 "domains.ml" 218 7746 7760
+type(
+  float -> float -> bool
+)
+ident(
+  ext_ref Pervasives.( >= )
+)
+"domains.ml" 218 7746 7761 "domains.ml" 218 7746 7762
+type(
+  float ref -> float
+)
+ident(
+  ext_ref Pervasives.( ! )
+)
+"domains.ml" 218 7746 7762 "domains.ml" 218 7746 7789
+type(
+  float ref
+)
+ident(
+  ext_ref Define.conflict_burst_limit
+)
+"domains.ml" 218 7746 7761 "domains.ml" 218 7746 7789
+type(
+  float
+)
+"domains.ml" 218 7746 7752 "domains.ml" 218 7746 7789
+type(
+  bool
+)
+"domains.ml" 217 7702 7708 "domains.ml" 218 7746 7789
+type(
+  bool
+)
+"domains.ml" 219 7790 7798 "domains.ml" 219 7790 7802
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 203 7169 7194 "domains.ml" 203 7169 7198
+)
+"domains.ml" 219 7790 7818 "domains.ml" 219 7790 7822
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 203 7169 7194 "domains.ml" 203 7169 7198
+)
+"domains.ml" 219 7790 7818 "domains.ml" 219 7790 7834
+type(
+  int
+)
+"domains.ml" 219 7790 7835 "domains.ml" 219 7790 7836
+type(
+  int -> int -> int
+)
+ident(
+  ext_ref Pervasives.( - )
+)
+"domains.ml" 219 7790 7837 "domains.ml" 219 7790 7838
+type(
+  int
+)
+"domains.ml" 219 7790 7818 "domains.ml" 219 7790 7838
+type(
+  int
+)
+"domains.ml" 219 7790 7798 "domains.ml" 219 7790 7838
+type(
+  unit
+)
+"domains.ml" 217 7702 7705 "domains.ml" 219 7790 7838
+type(
+  unit
+)
+"domains.ml" 214 7622 7625 "domains.ml" 219 7790 7838
+type(
+  unit
+)
+"domains.ml" 212 7539 7542 "domains.ml" 219 7790 7838
+type(
+  unit
+)
+"domains.ml" 211 7499 7502 "domains.ml" 219 7790 7838
+type(
+  unit
+)
+"domains.ml" 210 7432 7435 "domains.ml" 219 7790 7838
+type(
+  unit
+)
+"domains.ml" 209 7386 7389 "domains.ml" 219 7790 7838
+type(
+  unit
+)
+"domains.ml" 221 7844 7849 "domains.ml" 221 7844 7853
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 203 7169 7194 "domains.ml" 203 7169 7198
+)
+"domains.ml" 221 7844 7849 "domains.ml" 221 7844 7865
+type(
+  int
+)
+"domains.ml" 221 7844 7866 "domains.ml" 221 7844 7867
+type(
+  int -> int -> bool
+)
+ident(
+  ext_ref Pervasives.( > )
+)
+"domains.ml" 221 7844 7868 "domains.ml" 221 7844 7869
+type(
+  int
+)
+"domains.ml" 221 7844 7849 "domains.ml" 221 7844 7869
+type(
+  bool
+)
+"domains.ml" 221 7844 7875 "domains.ml" 221 7844 7879
+type(
+  domains -> (Domain.t -> unit) -> unit
+)
+ident(
+  int_ref iter "domains.ml" 58 2372 2376 "domains.ml" 58 2372 2380
+)
+"domains.ml" 221 7844 7880 "domains.ml" 221 7844 7884
+type(
+  domains
+)
+ident(
+  int_ref doms "domains.ml" 203 7169 7194 "domains.ml" 203 7169 7198
+)
+"domains.ml" 221 7844 7885 "domains.ml" 221 7844 7888
+type(
+  Domain.t -> unit
+)
+ident(
+  int_ref inc "domains.ml" 208 7370 7376 "domains.ml" 208 7370 7379
+)
+"domains.ml" 221 7844 7875 "domains.ml" 221 7844 7888
+call(
+  tail
+)
+type(
+  unit
+)
+"domains.ml" 221 7844 7846 "domains.ml" 221 7844 7888
+type(
+  unit
+)
+"domains.ml" 206 7289 7295 "domains.ml" 222 7889 7891
+type(
+  unit
+)
+"domains.ml" 204 7201 7202 "domains.ml" 222 7889 7891
+type(
+  unit
+)

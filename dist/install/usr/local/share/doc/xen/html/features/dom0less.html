@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="TOC">
+<ul>
+<li><a href="#dom0less"><span class="toc-section-number">1</span> Dom0less</a><ul>
+<li><a href="#booting-multiple-domains-from-device-tree"><span class="toc-section-number">1.1</span> Booting Multiple Domains from Device Tree</a></li>
+</ul></li>
+</ul>
+</div>
+<h1 id="dom0less"><span class="header-section-number">1</span> Dom0less</h1>
+<p>&quot;Dom0less&quot; is a set of Xen features that enable the deployment of a Xen system without an control domain (often referred to as &quot;dom0&quot;). Each feature can be used independently from the others, unless otherwise stated.</p>
+<h2 id="booting-multiple-domains-from-device-tree"><span class="header-section-number">1.1</span> Booting Multiple Domains from Device Tree</h2>
+<p>This feature enables Xen to create a set of DomUs at boot time. Information about the DomUs to be created by Xen is passed to the hypervisor via Device Tree. Specifically, the existing Device Tree based Multiboot specification has been extended to allow for multiple domains to be passed to Xen. See docs/misc/arm/device-tree/booting.txt for more information about the Multiboot specification and how to use it.</p>
+<p>Currently, a control domain (&quot;dom0&quot;) is still required, but in the future it will become unnecessary when all domains are created directly from Xen. Instead of waiting for the control domain to be fully booted and the Xen tools to become available, domains created by Xen this way are started right away in parallel. Hence, their boot time is typically much shorter.</p>
+<p>Domains started by Xen at boot time currently have the following limitations:</p>
+<ul>
+<li><p>They cannot be properly shutdown or rebooted using xl. If one of them crashes, the whole platform should be rebooted.</p></li>
+<li><p>Some xl operations might not work as expected. xl is meant to be used with domains that have been created by it. Using xl with domains started by Xen at boot might not work as expected.</p></li>
+<li><p>The GIC version is the native version. In absence of other information, the GIC version exposed to the domains started by Xen at boot is the same as the native GIC version.</p></li>
+<li><p>No PV drivers. There is no support for PV devices at the moment. All devices need to be statically assigned to guests.</p></li>
+<li><p>Pinning vCPUs of domains started by Xen at boot can be done from the control domain, using <code>xl vcpu-pin</code> as usual. It is not currently possible to configure vCPU pinning without a control domain. However, the NULL scheduler can be selected by passing <code>sched=null</code> to the Xen command line. The NULL scheduler automatically assigns and pins vCPUs to pCPUs, but the vCPU-pCPU assignments cannot be configured.</p></li>
+</ul>
+</body>
+</html>

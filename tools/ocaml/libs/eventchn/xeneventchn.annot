@@ -1,0 +1,78 @@
+"xeneventchn.ml" 43 1765 1769 "xeneventchn.ml" 43 1765 1786
+type(
+  handle -> int
+)
+ident(
+  def bind_dom_exc_virq "xeneventchn.ml" 44 1821 1821 "xeneventchn.ml" 1 0 -1
+)
+"xeneventchn.ml" 43 1765 1787 "xeneventchn.ml" 43 1765 1793
+type(
+  handle
+)
+ident(
+  def handle "xeneventchn.ml" 43 1765 1796 "xeneventchn.ml" 43 1765 1820
+)
+"xeneventchn.ml" 43 1765 1796 "xeneventchn.ml" 43 1765 1805
+type(
+  handle -> virq_t -> int
+)
+ident(
+  int_ref bind_virq "xeneventchn.ml" 42 1693 1693 "xeneventchn.ml" 42 1693 1764
+)
+"xeneventchn.ml" 43 1765 1806 "xeneventchn.ml" 43 1765 1812
+type(
+  handle
+)
+ident(
+  int_ref handle "xeneventchn.ml" 43 1765 1787 "xeneventchn.ml" 43 1765 1793
+)
+"xeneventchn.ml" 43 1765 1813 "xeneventchn.ml" 43 1765 1820
+type(
+  virq_t
+)
+"xeneventchn.ml" 43 1765 1796 "xeneventchn.ml" 43 1765 1820
+type(
+  int
+)
+"xeneventchn.ml" 48 2008 2012 "xeneventchn.ml" 48 2008 2018
+type(
+  'a -> 'a
+)
+ident(
+  def to_int "xeneventchn.ml" 49 2025 2025 "xeneventchn.ml" 1 0 -1
+)
+"xeneventchn.ml" 48 2008 2019 "xeneventchn.ml" 48 2008 2020
+type(
+  'a
+)
+ident(
+  def x "xeneventchn.ml" 48 2008 2023 "xeneventchn.ml" 48 2008 2024
+)
+"xeneventchn.ml" 48 2008 2023 "xeneventchn.ml" 48 2008 2024
+type(
+  'a
+)
+ident(
+  int_ref x "xeneventchn.ml" 48 2008 2019 "xeneventchn.ml" 48 2008 2020
+)
+"xeneventchn.ml" 49 2025 2029 "xeneventchn.ml" 49 2025 2035
+type(
+  'a -> 'a
+)
+ident(
+  def of_int "xeneventchn.ml" 49 2025 2041 "xeneventchn.ml" 1 0 -1
+)
+"xeneventchn.ml" 49 2025 2036 "xeneventchn.ml" 49 2025 2037
+type(
+  'a
+)
+ident(
+  def x "xeneventchn.ml" 49 2025 2040 "xeneventchn.ml" 49 2025 2041
+)
+"xeneventchn.ml" 49 2025 2040 "xeneventchn.ml" 49 2025 2041
+type(
+  'a
+)
+ident(
+  int_ref x "xeneventchn.ml" 49 2025 2036 "xeneventchn.ml" 49 2025 2037
+)

@@ -178,6 +178,47 @@ static int sched_arinc653_domain_set(libxl__gc *gc, uint32_t domid,
     return 0;
 }
 
+
+/* AAF */
+static int sched_aaf_domain_set(libxl__gc *gc, uint32_t domid,
+                                const libxl_domain_sched_params *scinfo)
+{
+        /* No per-domain characteristics yet */
+        return 0;
+}
+
+
+/****** UNDER CONSTRUCTION !!! ******/
+// Adding AAF-Domain support 
+
+static int sched_aaf_domain_get(libxl__gc *gc, uint32_t domid, libxl_domain_sched_params *sci)
+{
+   // initiate an instance of AAF-Domain with its characteristics
+   /*
+   struct xen_domctl_sched_aaf aaf_dom;
+   int rc;
+   rc = xc_sched_aaf_domain_get(CTX->xch, domid, &aaf_dom);
+   if(rc != 0)
+   {
+        LOGED(ERROR, domid, "Getting AAF Domain Credit");
+       return ERROR_FAIL;
+   }
+   */
+
+   return 0;
+ }
+ 
+
+static int sched_arinc653_domain_get(libxl__gc *gc, uint32_t domid,
+                                   const libxl_domain_sched_params *scinfo)
+{
+        // merely having this function so as to retreive uuid of domains 
+     return 0;
+}
+
+
+
+
 static int sched_null_domain_set(libxl__gc *gc, uint32_t domid,
                                  const libxl_domain_sched_params *scinfo)
 {
@@ -788,6 +829,9 @@ int libxl_domain_sched_params_set(libxl_ctx *ctx, uint32_t domid,
     case LIBXL_SCHEDULER_ARINC653:
         ret=sched_arinc653_domain_set(gc, domid, scinfo);
         break;
+    case LIBXL_SCHEDULER_AAF:
+	ret=sched_aaf_domain_set(gc, domid, scinfo);
+        break;
     case LIBXL_SCHEDULER_RTDS:
         ret=sched_rtds_domain_set(gc, domid, scinfo);
         break;
@@ -822,6 +866,7 @@ int libxl_vcpu_sched_params_set(libxl_ctx *ctx, uint32_t domid,
     case LIBXL_SCHEDULER_CREDIT:
     case LIBXL_SCHEDULER_CREDIT2:
     case LIBXL_SCHEDULER_ARINC653:
+    case LIBXL_SCHEDULER_AAF:
     case LIBXL_SCHEDULER_NULL:
         LOGD(ERROR, domid, "per-VCPU parameter setting not supported for this scheduler");
         rc = ERROR_INVAL;
@@ -857,6 +902,7 @@ int libxl_vcpu_sched_params_set_all(libxl_ctx *ctx, uint32_t domid,
     case LIBXL_SCHEDULER_CREDIT:
     case LIBXL_SCHEDULER_CREDIT2:
     case LIBXL_SCHEDULER_ARINC653:
+    case LIBXL_SCHEDULER_AAF:
     case LIBXL_SCHEDULER_NULL:
         LOGD(ERROR, domid, "per-VCPU parameter setting not supported for this scheduler");
         rc = ERROR_INVAL;
@@ -901,6 +947,15 @@ int libxl_domain_sched_params_get(libxl_ctx *ctx, uint32_t domid,
     case LIBXL_SCHEDULER_NULL:
         ret=sched_null_domain_get(gc, domid, scinfo);
         break;
+    case LIBXL_SCHEDULER_AAF:
+        //invoke the aaf_domain_get function here
+        ret = sched_aaf_domain_get(gc, domid, scinfo);
+        break;
+
+    case LIBXL_SCHEDULER_ARINC653:
+	ret= sched_arinc653_domain_get(gc, domid, scinfo);
+        break;
+
     default:
         LOGD(ERROR, domid, "Unknown scheduler");
         ret=ERROR_INVAL;
@@ -927,6 +982,7 @@ int libxl_vcpu_sched_params_get(libxl_ctx *ctx, uint32_t domid,
     case LIBXL_SCHEDULER_CREDIT:
     case LIBXL_SCHEDULER_CREDIT2:
     case LIBXL_SCHEDULER_ARINC653:
+    case LIBXL_SCHEDULER_AAF:
     case LIBXL_SCHEDULER_NULL:
         LOGD(ERROR, domid, "per-VCPU parameter getting not supported for this scheduler");
         rc = ERROR_INVAL;
@@ -960,6 +1016,7 @@ int libxl_vcpu_sched_params_get_all(libxl_ctx *ctx, uint32_t domid,
     case LIBXL_SCHEDULER_CREDIT:
     case LIBXL_SCHEDULER_CREDIT2:
     case LIBXL_SCHEDULER_ARINC653:
+    case LIBXL_SCHEDULER_AAF:
     case LIBXL_SCHEDULER_NULL:
         LOGD(ERROR, domid, "per-VCPU parameter getting not supported for this scheduler");
         rc = ERROR_INVAL;

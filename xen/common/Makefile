@@ -38,11 +38,14 @@ obj-y += radix-tree.o
 obj-y += rbtree.o
 obj-y += rcupdate.o
 obj-y += rwlock.o
+# SCHEDULER ZONE
+obj-$(CONFIG_SCHED_AAF) += sched_aaf.o
 obj-$(CONFIG_SCHED_ARINC653) += sched_arinc653.o
 obj-$(CONFIG_SCHED_CREDIT) += sched_credit.o
 obj-$(CONFIG_SCHED_CREDIT2) += sched_credit2.o
 obj-$(CONFIG_SCHED_RTDS) += sched_rt.o
 obj-$(CONFIG_SCHED_NULL) += sched_null.o
+# SCHEDULER ZONE ENDS
 obj-y += schedule.o
 obj-y += shutdown.o
 obj-y += softirq.o
