@@ -206,3 +206,11 @@ http://sourceforge.net/projects/tboot.  This project hosts the code in a
 mercurial repo at http://tboot.sourceforge.net/hg/tboot.hg and contains
 tarballs of the source.  Instructions in the tboot README describe how
 to modify grub.conf to use tboot to launch Xen.
+
+
+RRP MulZ and Partition Single Scheduler(s)
+------------------------------------------
+xen/common/sched_aaf.c is the Partition Single Implementation of RRP-HiRTS Framework
+xen/common/sched_rrp_mulz.c is the MulZ Implementation of RRP-HiRTS Framework
+userspace plugins / Schedule Entry setup files are located in another repo.
+Find it here: 
