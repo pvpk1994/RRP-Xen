@@ -1,6 +1,40 @@
-/* Partition Single (ps) Algorithm Xen Implementation
+/********** RRP-MulZ HIRTS SCHEDULER ************************************/
+
+/* RRP MULTI RESOURCE Algorithm Xen Implementation (MULZ)
  * Author:: Pavan Kumar Paluri
- * Copyright 2019 - RTLAB UNIVERSITY OF HOUSTON */
+ * Copyright 2019-2020 - RTLAB UNIVERSITY OF HOUSTON */
+
+/*************************************************************************************************
+ **************** LAST UPDATED ON April 6, 2020 *************************************************
+ TODO: Support for Concurrent Launch Table Invocations from Domain-0 Userspace [NOT URGENT]
+ TODO: Abrupt Crashing of DomU when trying to deliberately quit it using xl destroy [FIXED]
+ TODO: Check the correctness of Domain Invocation sequence in AAF-POOL in do_schedule [NOT URGENT]
+ TODO: Comment/Erase unnecessary functions and reorganize the scheduler code [NOT URGENT]
+ TODO: Disable the hardcoded CPU condition checks at multiple places and make it Dynamic [NOT URGENT]
+ TODO: Scheduler failing for more than 1 domain per CPU since the other domain is unable to find a valid vcpu left [FIXED]
+
+ * Inclusion of per-cpu Locks to avoid list corruptions
+ * This scheduler works fine
+ * Fixed a bug that was causing rrp-single core to reboot on xl-destroy
+ *************************************************************************************************/
+
+/****************** LOCKING MECHANISM ************************
+
+ * Scheduler Lock (RUNQ Lock)
+   - is per-RUNQ and there is 1 runQ per CPU
+   - serializes all runQ manipulation operations
+
+ * Private Data Lock (Private Scheduler Lock)
+   - Serializes accesses to the scheduler global state (for CPUs 0 and 2)
+
+ * Lock Ordering Mechanism:
+   -----------------------
+   - If we need both locks, we must acquire the private scheduler lock ALWAYS FIRST
+   - If we already own a RUNQ lock, we must never acquire the private scheduler lock
+
+ ***************************************************************/
+
+
 
 #include <xen/config.h>
 #include <xen/lib.h>
@@ -31,6 +65,17 @@
 // Timer function to print time
 #define print_time() ( printk("CPU_ID: %d, ms::micro_s:: %3ld.%3ld, %-19s ",smp_processor_id(), NOW()/MILLISECS(1),NOW()%MILLISECS(1)/1000, __func__) )
 
+#define SCHED_PCPU(_cpu) ((struct ps_pcpu_t *)per_cpu(schedule_data, _cpu).sched_priv)
+#define RUNQ(_cpu)          (&(SCHED_PCPU(_cpu)->runq))
+#define MAX_PCPUS 4
+
+
+/* ********* DEFINE ZONE ********** */
+// #define PRINT_ENABLE
+#define RRP_DEBUG
+// #define RRP_CPU_ZONE
+static int index=0;
+// static void init_pdata(struct ps_priv_t *, struct ps_pcpu_t *, int);
 /*
  * AAF Tracing events (only 512 value ranges available)
  * More details regarding the events can be found at
@@ -50,6 +95,8 @@ struct ps_vcpu_t
    // bool_t awake;
   // Linked list of vcpus to be maintained in global scheduler structure
   struct list_head list_elem;
+  struct list_head runq_elem; /* RUNQ Element for RRP-CPU RUNQs */
+  int cpu_rrp;
 };
 
 // schedulable entry strucutre for ps scheduler
@@ -86,8 +133,94 @@ struct ps_priv_t
 
   // Iterate through list of vcpu structures provided by xen 
    struct list_head vcpu_list;
+   uint32_t cpu_id;
 };
 
+static struct ps_priv_t rrp_lt[MAX_PCPUS];
+
+/* PCPU-RRP */
+struct ps_pcpu_t
+{
+ /* Per-cpu params */
+  struct sched_entry_t schedule[PS_MAX_DOMAINS_PER_SCHEDULE];
+  int num_schedule_entries;
+  s_time_t hyperperiod;
+  s_time_t next_hyperperiod;
+    struct list_head runq;
+    unsigned int nr_runnable;
+    uint32_t runq_sort_last;
+  spinlock_t pcpu_lock; /* Spin lock for Concurrent RUNQ Locks */
+  // int cpu_id; // Just in case we need it..
+};
+
+
+static int aaf_pick_cpu(const struct scheduler *, struct vcpu *);
+static void init_pdata(struct ps_priv_t*, struct ps_pcpu_t*, int);
+
+/********* PCPU-VCPU RUNQ HELPER FUNCTIONS *************/
+
+static inline int __vcpu_on_runq(struct ps_vcpu_t *svc)
+{
+    return !list_empty(&svc->list_elem);
+}
+
+static inline struct ps_vcpu_t *__runq_elem(struct list_head *elem)
+{
+    return list_entry(elem, struct ps_vcpu_t, list_elem);
+}
+
+/* Is the first element of cpu's runq (if any) cpu's idle vcpu? */
+static inline bool_t is_runq_idle(unsigned int cpu)
+{
+    /*
+     * We're peeking at cpu's runq, we must hold the proper lock.
+     */
+    ASSERT(spin_is_locked(per_cpu(schedule_data, cpu).schedule_lock));
+    return list_empty(RUNQ(cpu)) ||
+           is_idle_vcpu(__runq_elem(RUNQ(cpu)->next)->vc);
+}
+
+static inline void inc_nr_runnable(unsigned int cpu)
+{
+    ASSERT(spin_is_locked(per_cpu(schedule_data, cpu).schedule_lock));
+    SCHED_PCPU(cpu)->nr_runnable++;
+
+}
+
+static inline void dec_nr_runnable(unsigned int cpu)
+{
+    ASSERT(spin_is_locked(per_cpu(schedule_data, cpu).schedule_lock));
+    ASSERT(SCHED_PCPU(cpu)->nr_runnable >= 1);
+    SCHED_PCPU(cpu)->nr_runnable--;
+}
+
+static inline void __runq_insert(struct ps_vcpu_t *svc)
+{
+    unsigned int cpu = svc->vc->processor;
+    const struct list_head * const runq = RUNQ(cpu);
+    struct list_head *iter;
+    printk("inside __runq_insert on CPU %d\n",svc->vc->processor);
+    BUG_ON( __vcpu_on_runq(svc) );
+    list_add_tail(&svc->list_elem, iter);
+}
+
+static inline void runq_insert(struct ps_vcpu_t *svc)
+{
+    __runq_insert(svc);
+    inc_nr_runnable(svc->vc->processor);
+}
+
+static inline void __runq_remove(struct ps_vcpu_t *svc)
+{
+    BUG_ON( !__vcpu_on_runq(svc) );
+    list_del_init(&svc->list_elem);
+}
+
+static inline void runq_remove(struct ps_vcpu_t *svc)
+{
+    dec_nr_runnable(svc->vc->processor);
+    __runq_remove(svc);
+}
 
 /* **********************************
   * Helper Functions
@@ -106,76 +239,105 @@ static int dom_handle_cmp(const xen_domain_handle_t h1,
 
 static int dom_comp(s_time_t wcet1, s_time_t wcet2)
 {
-  return wcet1 > wcet2 ? 0 : 1;
+        return wcet1 > wcet2 ? 0 : 1;
 }
 
-/* Find a vcpu based on its vcpu_id and the domain handle linked to it */
-static struct vcpu* find_vcpu(const struct scheduler *ops,
-			     xen_domain_handle_t h,int vcpu_id)
+
+/* Find a vcpu based on VCPU-ID and Domain-Handle for non-sched-set function */
+static struct vcpu* find_vcpu(const struct scheduler *ops, xen_domain_handle_t h, int vcpu_id, int cpu_id)
 {
   struct ps_vcpu_t *ps_vcpu;
-  // loop thru the vcpu list to find the specified VCPU 
+  printk("Control in find_vcpu_sched_set\n");
   list_for_each_entry(ps_vcpu, &SCHED_PRIV(ops)->vcpu_list, list_elem)
-    if(dom_handle_cmp(ps_vcpu->vc->domain->handle,h)==0
-	&&(vcpu_id == ps_vcpu->vc->vcpu_id) )
-	return ps_vcpu->vc;
-
-  // if no such vcpu found:: Exit
-   return NULL;
+  if(dom_handle_cmp(ps_vcpu->vc->domain->handle,h) == 0 &&
+ 	(vcpu_id == ps_vcpu->vc->vcpu_id))
+	{
+	 /* If the control enters the if conditional, the vc->processor always points to the cpu
+	    in execution under aaf_pool
+	  */
+         printk("find_vcpu: DOMAIN HANDLE: %X\n",*ps_vcpu->vc->domain->handle);
+	 printk("find_vcpu: CPUID is: %d\n", ps_vcpu->vc->processor);
+         return ps_vcpu->vc;
+	}
+ return NULL;
 }
 
-
-// Update the schedule entries with runnable vcpus that are validated by Xen
-static void update_schedule_vcpus(const struct scheduler *ops)
+static void update_schedule_vcpus(const struct scheduler *ops, int cpu_id)
 {
-  unsigned int i;
+  unsigned int i; 
   int num_entries = SCHED_PRIV(ops)->num_schedule_entries;
+  printk("UPDATE_SCHED_VCPUS: num_schedule_entries: %d\n", SCHED_PRIV(ops)->num_schedule_entries);
   for(i=0; i<num_entries; i++)
   {
-     // Update the schedule entries with valid vcpus that are recognized and valid by Xen
-	SCHED_PRIV(ops)->schedule[i].vc =
-		find_vcpu(ops,SCHED_PRIV(ops)->schedule[i].dom_handle,
-			SCHED_PRIV(ops)->schedule[i].vcpu_id);  
+	printk("UPDATE_SCHED_VCPU: Domain Handle: %X\n", *SCHED_PRIV(ops)->schedule[i].dom_handle);
+        SCHED_PRIV(ops)->schedule[i].vc =
+                find_vcpu(ops,SCHED_PRIV(ops)->schedule[i].dom_handle,
+                        SCHED_PRIV(ops)->schedule[i].vcpu_id, cpu_id);
    }
 }
 
 
-// VCPU Related Info tracing
-static void aaf_vcpu_tracing(struct vcpu *avc)
+static struct vcpu* find_vcpu_pcpu(int cpu_id, xen_domain_handle_t h, int vcpu_id)
 {
-   printk("[Domain ID: %5d. VCPU ID: %-2d], CPU: %d, Runnable ?: %d\n",avc->domain->domain_id, avc->vcpu_id,
-             smp_processor_id(),vcpu_runnable(avc));
+	struct ps_vcpu_t *ps_vcpu;
+	printk("in find_vcpu_pcpu fn\n");
+	list_for_each_entry(ps_vcpu, &SCHED_PCPU(cpu_id)->runq, runq_elem)
+	if(dom_handle_cmp(ps_vcpu->vc->domain->handle, h) == 0 &&
+		(vcpu_id == ps_vcpu->vc->vcpu_id))
+	{
+		printk("find_vcpu_pcpu in if, CPU_ID: %d\n", ps_vcpu->vc->processor);
+		return ps_vcpu->vc;
+	}
+    return NULL;
 }
 
-// Schedule Entry tracing 
-static void aaf_sched_entr_tracing(const struct scheduler* ops, int counter_entr)
+
+
+static void update_vcpu_pcpu(int cpu_id)
 {
- // Typecast ops into local sched_private
- struct ps_priv_t *priv = SCHED_PRIV(ops);
- print_time();
- printk("Schedule Entry Info: \n");
+  unsigned int i;
+  int num_entries = SCHED_PCPU(cpu_id)->num_schedule_entries;
+  printk("UPDATE_VCPU_PCPU: num_schedule_entries: %d\n", SCHED_PCPU(cpu_id)->num_schedule_entries);
+  for(i=0; i<num_entries; i++)
+  {
+     printk("UPDATE_VCPU_PCPU: Domain Handle: %X\n", *SCHED_PCPU(cpu_id)->schedule[i].dom_handle);
+     SCHED_PCPU(cpu_id)->schedule[i].vc = find_vcpu_pcpu(cpu_id, SCHED_PCPU(cpu_id)->schedule[i].dom_handle,
+							SCHED_PCPU(cpu_id)->schedule[i].vcpu_id);
+  }
+}
 
- printk("\t Schedule Entry: %X\n", priv->schedule[counter_entr].dom_handle);
+static void del_vcpu_pcpu(const struct scheduler *ops,int cpu_id)
+{
+ unsigned int i;
+ unsigned long flags;
+ //spin_lock_irqsave(&SCHED_PRIV(ops)->lock,flags);
+ int num_entries = SCHED_PCPU(cpu_id)->num_schedule_entries;
+ printk("UPDATE_DEL_VCPU_PCPU: num_sched_entries: %d\n", num_entries);
+ for(i =0; i<num_entries; i++)
+ {
+   printk("UPDATE_DEL_VCPU_PCPU: Domain Handle: %X\n", *SCHED_PCPU(cpu_id)->schedule[i].dom_handle);
+   SCHED_PCPU(cpu_id)->schedule[i].vc = NULL;
  }
-
-
-
+ //spin_unlock_irqrestore(&SCHED_PRIV(ops)->lock, flags);
+}
 
 // Set Boundary Conditions
 // Put a New PS schedule
 // This function is called by adjust_global() to put in a new PS schedule
 static int ps_sched_set(const struct scheduler *ops, struct xen_sysctl_aaf_schedule *schedule)
 {
-  printk("Entering schedule_set AAF\n"); 
+  printk("Entering schedule_set AAF\n");
+  int cpu = smp_processor_id();
+  printk("cpu ID in ps_sched_set is: %d\n", cpu);
   struct ps_priv_t *sched_priv = SCHED_PRIV(ops);
- unsigned int i;
+  struct ps_pcpu_t *sched_pcpu = SCHED_PCPU(schedule->cpu_id);
+  unsigned int i;
   unsigned long flags;
-  s_time_t wcet_total =0; //sum of all computation times of domains
-  // Assign a constant (never changing) domain handle for domain-0
- // const xen_domain_handle_t dom0_handle = {0};
-  // Error handling of hyperperiod and #schedule_entries
+  /* Hardcoding for Experimentation Purposes */
+
+  s_time_t wcet_total =0;
   int rc = -EINVAL;
-  spin_lock_irqsave(&sched_priv->lock,flags);
+//  spin_lock_irqsave(&sched_priv->lock,flags);
 
   if(schedule->hyperperiod <=0)
    {
@@ -196,30 +358,44 @@ static int ps_sched_set(const struct scheduler *ops, struct xen_sysctl_aaf_sched
             printk("WCET is less than 0!!\n");
 		goto dump;
         }
-}
-
-
-   // After all error-checking is done, now its time to copy schedule to new place
+   }
     sched_priv->num_schedule_entries = schedule->num_schedule_entries;
+    sched_pcpu->num_schedule_entries = schedule->num_schedule_entries;
     sched_priv->hyperperiod = schedule->hyperperiod;
+    sched_pcpu->hyperperiod = schedule->hyperperiod;
+
+    sched_priv->cpu_id = schedule->cpu_id;
    for(i=0 ;i< schedule->num_schedule_entries; i++)
     {
-	//COPY EVERYTHING (dom_handle, vcpu_ids and wcet's)
-        // memcpy(void *to, const void* from, size_t len)
-        printk("Memcpy about to happen ....\n"); 
        memcpy(sched_priv->schedule[i].dom_handle, schedule->schedule[i].dom_handle, sizeof(schedule->schedule[i].dom_handle));
         sched_priv->schedule[i].vcpu_id = schedule->schedule[i].vcpu_id;
         sched_priv->schedule[i].wcet = schedule->schedule[i].wcet;
-       
+
+	memcpy(sched_pcpu->schedule[i].dom_handle, schedule->schedule[i].dom_handle, sizeof(schedule->schedule[i].dom_handle));
+	sched_pcpu->schedule[i].vcpu_id = schedule->schedule[i].vcpu_id;
+	sched_pcpu->schedule[i].wcet = schedule->schedule[i].wcet;
     }
     printk("Memcpy and import of other params of sched_entries done\n");
-    update_schedule_vcpus(ops);
-
-     sched_priv->next_hyperperiod = NOW();
-      rc =0;
+    /* RRP-CPUs ZONE */
+    if(schedule->cpu_id == 1 || schedule->cpu_id == 3)
+    {
+	// spin_lock_irqsave(&sched_priv->lock, flags);
+         update_vcpu_pcpu(schedule->cpu_id);
+	//spin_unlock_irqrestore(&sched_priv->lock, flags);
+    }
+    else
+        update_schedule_vcpus(ops, smp_processor_id());
+    sched_pcpu->next_hyperperiod = NOW();
+    sched_priv->next_hyperperiod = NOW();
+    rc =0;
+    if(schedule->cpu_id == 1 || schedule->cpu_id == 3)
+     {
+	// spin_unlock_irqrestore(&sched_priv->lock, flags);
+        return rc;
+     }
    dump:
         printk("Control going to Dump Failure...\n");
-        spin_unlock_irqrestore(&sched_priv->lock,flags);
+//        spin_unlock_irqrestore(&sched_priv->lock,flags);
 	return rc;
 }
 
@@ -230,17 +406,17 @@ static int ps_sched_get(const struct scheduler *ops, struct xen_sysctl_aaf_sched
   unsigned int i;
   unsigned long flags;
   spin_lock_irqsave(&sched_priv->lock, flags);
- schedule->num_schedule_entries = sched_priv->num_schedule_entries;
- schedule->hyperperiod = sched_priv->hyperperiod;
+  schedule->num_schedule_entries = sched_priv->num_schedule_entries;
+  schedule->hyperperiod = sched_priv->hyperperiod;
 
- for(i=0; i< sched_priv->num_schedule_entries; i++)
- {
+  for(i=0; i< sched_priv->num_schedule_entries; i++)
+  {
 	 memcpy(schedule->schedule[i].dom_handle,
                sched_priv->schedule[i].dom_handle,
                sizeof(sched_priv->schedule[i].dom_handle));
         schedule->schedule[i].vcpu_id = sched_priv->schedule[i].vcpu_id;
         schedule->schedule[i].wcet = sched_priv->schedule[i].wcet;
- }
+  }
   spin_unlock_irqrestore(&sched_priv->lock, flags);
  return 0;
 }
@@ -277,25 +453,27 @@ struct sched_entry_t *dom_wcet_comp(const struct scheduler *ops)
 static int aafsched_init(struct scheduler *ops)
 {
 	struct ps_priv_t *sched_priv;
-	sched_priv = xzalloc(struct ps_priv_t);
+        printk("Entering sched_init\n");
+ 	sched_priv = xzalloc(struct ps_priv_t);
 	if(sched_priv == NULL)
 		return -ENOMEM;
 
 	ops->sched_data = sched_priv;
-	// Init all the params of ps_priv_t
 	sched_priv->next_hyperperiod = 0;
-	// NOTE: DO NOT INIT OTHER PARAMS (hyperperiod, number of schedule entries) as they 
-	// are being supplied through public/sysctl.h
 	spin_lock_init(&sched_priv->lock);
         INIT_LIST_HEAD(&sched_priv->vcpu_list);
+	// BUG();
+        printk("Leaving sched_init\n");
 	return 0;
 }
 
 
 static void aafsched_deinit(struct scheduler *ops)
 {
+        printk("Entering sched_deinit\n");
 	xfree(SCHED_PRIV(ops));
 	ops->sched_data = NULL;
+	printk("Leaving sched_deinit\n");
 }
 
 
@@ -304,17 +482,20 @@ static void* aafsched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, 
 	struct ps_priv_t *sched_priv = SCHED_PRIV(ops);
 	struct ps_vcpu_t *avc;
 	unsigned int entry;
-       unsigned long flags;
-	// This version is work under progress, hence not guarded by any locks
-	// Allocate memory for PS AAF scheduler associated with given VCPU
+        unsigned long flags, flags_pcpu;
+	spinlock_t *lock;
 	avc = xmalloc(struct ps_vcpu_t);
 	if(avc == NULL)
 	    return NULL;
+
+        /* CHANGE- MANUAL INIT TO BE DONE FOR LIST HEADS */
+	INIT_LIST_HEAD(&avc->runq_elem);
+        avc->cpu_rrp = -1;
 	spin_lock_irqsave(&sched_priv->lock, flags);
         printk("Inside alloc_vdata Function...\n");
-	// Now add every vcpu of Dom0 to the schedule,as long as there are enough slots
 	if(vc->domain->domain_id == 0)
 	{
+	   avc->cpu_rrp = -1;
            printk("alloc_vdata being invoked for Dom0's VCPU #: %d\n",vc->vcpu_id);
 	  entry = sched_priv->num_schedule_entries;
 	  if(entry < PS_MAX_DOMAINS_PER_SCHEDULE)
@@ -323,38 +504,91 @@ static void* aafsched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, 
 	   sched_priv->schedule[entry].vcpu_id = vc->vcpu_id;
 	   sched_priv->schedule[entry].wcet = DOM0_TS;
 	   sched_priv->schedule[entry].vc = vc;
-           // Add up the same for major frame as well, so that it keeps running round-robin for Dom0
 	   sched_priv->hyperperiod += DOM0_TS;
-	   // Pre-Increment the count after every update
 	    ++(sched_priv->num_schedule_entries);
 	  }
-       }
+     }
 
-	// Awake/Asleep feature yet to be added...
-        // VCPU will be in asleep state if not specifically woken up and this will give an error if no vcpu in dom0 is brought
-        // to awake state.
 	avc->vc = vc;
-        // avc->awake = 0;
-	if(!is_idle_vcpu(vc))
+	if(!is_idle_vcpu(vc) && (vc->processor != 1 && vc->processor != 3))
+	{
+	   avc->cpu_rrp = -2;
 	   list_add(&avc->list_elem, &SCHED_PRIV(ops)->vcpu_list);
-	// After adding the vcpu to the list, update the vcpus
-	update_schedule_vcpus(ops);
+	}
+        else if(!is_idle_vcpu(vc) && (vc->processor == 1 || vc->processor == 3))
+	{
+	   /* If not an IDLE VCPU and bealongs to either vc->processor 1/3, then
+	    * add it to the per-CPU list of VCPUs
+	    */
+           spin_unlock_irqrestore(&sched_priv->lock, flags);
+	   printk("Adding non-idle vcpu to CPU %d's list\n",vc->processor);
+	   /* Activate PER-CPU Lock to disable list corruptions */
+	  avc->cpu_rrp = avc->vc->processor;
+//          spin_lock_irqsave(&SCHED_PCPU(vc->processor)->pcpu_lock, flags_pcpu);
+         // lock = vcpu_schedule_lock_irq(vc);
+           list_add(&avc->runq_elem, &SCHED_PCPU(avc->vc->processor)->runq);
+	  // vcpu_schedule_unlock_irq(lock, vc);
+//	   spin_unlock_irqrestore(&SCHED_PCPU(vc->processor)->pcpu_lock, flags_pcpu);
+	   printk("Added to CPU %d's runQ\n", vc->processor);
+           update_vcpu_pcpu(avc->vc->processor);
+	 //  spin_unlock_irqrestore(&sched_priv->lock, flags);
+	   return avc;
+        }
+       update_schedule_vcpus(ops, smp_processor_id());
        printk("About to leave alloc_vdata function...\n");
         spin_unlock_irqrestore(&sched_priv->lock, flags);
        return avc;
 }
 
+
+/********* ASSISTANCE FN FOR FREE_VDATA ************
+ * @param: ops: Pointer to the system wide priv
+ * @param: priv: void pointer ready to be typecast
+ * *************************************************/
+static void dom_zero_free_vdata(const struct scheduler *ops, void *priv)
+{
+  struct ps_vcpu_t *pvcpu = priv;
+  printk("dom_zero_free_vdata invoked\n");
+  if(pvcpu == NULL)
+        return;
+ if(!is_idle_vcpu(pvcpu->vc))
+        list_del(&pvcpu->list_elem);
+ xfree(pvcpu);
+ update_schedule_vcpus(ops, 1);
+ printk("leaving dom_zero_free_vdata\n");
+}
+
 static void aaf_free_vdata(const struct scheduler *ops, void *priv)
 {
   struct ps_vcpu_t *pvcpu = priv;
+  int cpu_id;
+  printk("aaf_free_vdata invoked\n");
   if(pvcpu == NULL)
 	return;
- if(!is_idle_vcpu(pvcpu->vc))
-	list_del(&pvcpu->list_elem);
- xfree(pvcpu);
- update_schedule_vcpus(ops);
-}
+  // If incoming vcpu is an idle VCPU that is trying to invoke free_vdata..
+  if(is_idle_vcpu(pvcpu->vc))
+  {
+     dom_zero_free_vdata(ops, priv);
+     return;
+  }
 
+  else {
+     /* If current vcpu is a RRP-cpu, then do a list_del on per-cpu RunQ */
+     if(pvcpu->cpu_rrp > 0)
+      {
+	cpu_id = pvcpu->cpu_rrp;
+        list_del(&pvcpu->runq_elem);
+	xfree(pvcpu);
+        update_vcpu_pcpu(cpu_id);
+	return;
+      }
+    /* Else, we know this vcpu is a Non-RRP-cpu, then simply do a list_del on global RunQ */
+    else if(pvcpu->cpu_rrp == -2)
+	{
+	  dom_zero_free_vdata(ops, priv);
+	}
+  }
+}
 
 // AAF callback functions for sleeping and awaking scheduler's vcpus
 static void aaf_vcpu_sleep(const struct scheduler *ops, struct vcpu *vc)
@@ -373,92 +607,7 @@ static void aaf_vcpu_wake(const struct scheduler *ops, struct vcpu *vc)
 }
 
 // temp do_schedule
-/*
-static struct task_slice aaf_schedule(const struct scheduler *ops, s_time_t now, bool_t tasklet_work_scheduled)
-{
-  struct task_slice ret;
-  struct list_head *pos;
- struct ps_priv_t *sched_priv = SCHED_PRIV(ops);
- struct ps_vcpu_t *vc = NULL;
-  ret.time = MILLISECS(10);
- const int cpu = smp_processor_id();
- if(vcpu_runnable(vc->vc))
-  {
-	ret.task = vc->vc;
-	break;
-  }
-return ret;
-}
-*/
 
-//#include "xc_private.h"
-/*
-int
-xc_sched_arinc653_schedule_set(
-    xc_interface *xch,
-    uint32_t cpupool_id,
-    struct xen_sysctl_arinc653_schedule *schedule)
-{
-    int rc;
-    DECLARE_SYSCTL;
-    DECLARE_HYPERCALL_BOUNCE(
-        schedule,
-        sizeof(*schedule),
-        XC_HYPERCALL_BUFFER_BOUNCE_IN);
-
-    if ( xc_hypercall_bounce_pre(xch, schedule) )
-        return -1;
-
-    sysctl.cmd = XEN_SYSCTL_scheduler_op;
-    sysctl.u.scheduler_op.cpupool_id = cpupool_id;
-    sysctl.u.scheduler_op.sched_id = XEN_SCHEDULER_AAF;
-    sysctl.u.scheduler_op.cmd = XEN_SYSCTL_SCHEDOP_putinfo;
-    set_xen_guest_handle(sysctl.u.scheduler_op.u.sched_aaf.schedule,
-            schedule);
-
-    rc = do_sysctl(xch, &sysctl);
-
-    xc_hypercall_bounce_post(xch, schedule);
-
-    return rc;
-}
-
-int
-xc_sched_arinc653_schedule_get(
-    xc_interface *xch,
-    uint32_t cpupool_id,
-    struct xen_sysctl_arinc653_schedule *schedule)
-{
-    int rc;
-    DECLARE_SYSCTL;
-    DECLARE_HYPERCALL_BOUNCE(
-        schedule,
-        sizeof(*schedule),
-        XC_HYPERCALL_BUFFER_BOUNCE_OUT);
-
-    if ( xc_hypercall_bounce_pre(xch, schedule) )
-        return -1;
-
-    sysctl.cmd = XEN_SYSCTL_scheduler_op;
-    sysctl.u.scheduler_op.cpupool_id = cpupool_id;
-    sysctl.u.scheduler_op.sched_id = XEN_SCHEDULER_AAF;
-    sysctl.u.scheduler_op.cmd = XEN_SYSCTL_SCHEDOP_getinfo;
-    set_xen_guest_handle(sysctl.u.scheduler_op.u.sched_aaf.schedule,
-            schedule);
-
-    rc = do_sysctl(xch, &sysctl);
-
-    xc_hypercall_bounce_post(xch, schedule);
-
-    return rc;
-}
-*/
-// ps_rrp do_schedule()
-/* Mini Description and comparison between ARINC and PS_RRP
-   * ARINC simply picks up the next vcpu to run through the schedule provided
-   * However, PS_RRP calcualtes a new schedule and updates domain-timeslice pair
-   * according to PS_RRP schedule.
-*/
 static struct task_slice ps_rrp_do_schedule(const struct scheduler *ops,
 					s_time_t now,
 					bool_t tasklet_work_scheduled)
@@ -467,11 +616,8 @@ static struct task_slice ps_rrp_do_schedule(const struct scheduler *ops,
   struct vcpu *new_task = NULL;
   static unsigned int sched_index = 0;
   static s_time_t next_switch_time;
- 
-  // IF our understanding is right, ops should already have the sorted domain list in it..
-  // since adjust_global() has to be invoked before do_schedule()
   struct ps_priv_t *sched_private = SCHED_PRIV(ops);
-  const unsigned int cpu = smp_processor_id();
+  unsigned int cpu = smp_processor_id();
   unsigned long flags;
   /* TRACE */
   /*
@@ -486,186 +632,188 @@ if( unlikely(tb_init_done))
   d.cpu = smp_processor_id();
   d.tasklet = tasklet_work_scheduled;
   d.idle = is_idle_vcpu(current);
-  // Doing a trace 1d will only yeild tracing once.
-  //TRACE_1D(TRC_AAF_SCHEDULE, (const void*) &d);
-// __trace_var(TRC_AAF_SCHEDULE, 1, sizeof(d), (unsigned char *)&d);
 }
- /* SCHED EVENT TRACING ENDS
-  * -------------------- */
-  
+ /* RRP-MULTICORE IMPLEMENTATION ZONE
+  * --------------------------------- */
+if(cpu == 1 || cpu == 3)
+{
+  struct ps_pcpu_t *sched_pcpu = SCHED_PCPU(cpu);
+  spin_lock_irqsave(&sched_private->lock, flags);
+  if(sched_pcpu->num_schedule_entries < 1)
+	sched_pcpu->next_hyperperiod = now + MILLISECS(30);
+  else if(now >= sched_pcpu->next_hyperperiod)
+  {
+	sched_index = 0;
+	sched_pcpu->next_hyperperiod = now + sched_pcpu->hyperperiod;
+	next_switch_time = now + sched_pcpu->schedule[0].wcet;
+  }
+ else
+  {
+	while((now >= next_switch_time) && (sched_index < sched_pcpu->num_schedule_entries))
+	{
+		sched_index++;
+		next_switch_time += sched_pcpu->schedule[sched_index].wcet;
+	}
+  }
 
+ if(sched_index >= sched_pcpu->num_schedule_entries)
+	next_switch_time = sched_pcpu->next_hyperperiod;
+ new_task = (sched_index < sched_pcpu->num_schedule_entries) ? sched_pcpu->schedule[sched_index].vc : IDLETASK(cpu);
+ if(!((new_task!= NULL) && (vcpu_runnable(new_task))
+        && PSVCPU(new_task)))
+        new_task = IDLETASK(cpu);
 
-  spin_lock_irqsave(&sched_private->lock, flags); 
- if(sched_private->num_schedule_entries < 1)
+/*
+ if(!((new_task != NULL) && (PSVCPU(new_task) != NULL)
+	&& (vcpu_runnable(new_task)) )
+	new_task = IDLETASK(cpu);
+*/
+ BUG_ON(new_task == NULL);
+ BUG_ON(now >= sched_pcpu->next_hyperperiod);
+ spin_unlock_irqrestore(&sched_private->lock, flags);
+
+ if(tasklet_work_scheduled)
+	new_task = IDLETASK(cpu);
+
+  if(!is_idle_vcpu(new_task)
+        && (new_task->processor != cpu))
+        new_task = IDLETASK(cpu);
+
+ ret.time = next_switch_time - now;
+ ret.task = new_task;
+ ret.migrated = 0;
+ /*printk("next VCPU, with Domain Handle: %X runs on CPU %d\n",*sched_pcpu->schedule[sched_index].dom_handle, cpu);*/ 
+ return ret;
+}
+
+ /* RRP-SINGLE CORE IMPLEMENTATION ZONE
+  * ----------------------------------- */
+else
+{
+  spin_lock_irqsave(&sched_private->lock, flags);
+  if(sched_private->num_schedule_entries < 1)
 	sched_private->next_hyperperiod = now + MILLISECS(30);
   else if (now >= sched_private->next_hyperperiod)
   {
-    sched_index = 0;
-	// this means we need to immediately set the new hp to be the length of hp
-   sched_private->next_hyperperiod = now + sched_private->hyperperiod;
-  // set the counter of number of schedule entries back to 0 if its not
-   next_switch_time = now+sched_private->schedule[0].wcet;
+    	sched_index = 0;
+   	sched_private->next_hyperperiod = now + sched_private->hyperperiod;
+   	next_switch_time = now+sched_private->schedule[0].wcet;
   }
- 
 
-
-  // focus on scheduling domains within the hyperperiod now
   else {
       while(now >= next_switch_time &&
 				sched_index < sched_private->num_schedule_entries)
 	{
-	sched_index++;
-        // update the next_switch time
-       next_switch_time += sched_private->schedule[sched_index].wcet;
+		sched_index++;
+       		next_switch_time += sched_private->schedule[sched_index].wcet;
        }
    }
-  // Need to introduce context switch here, since sched_index value is computed in the
-  // else condition above. 
 
-/*
-     if(sched_private->schedule[sched_index].dom_handle != "\0"
-        && IDLETASK(cpu)->domain->domain_id!= 32767)
-    {
-      // Context switch tracing begins for a particular schedule entry
-        printk("CS begins\n");
-         print_time();
-       aaf_vcpu_tracing(sched_private->schedule[sched_index].vc);
-    }
-
- */
   /* Boundary conditions checking phase */
-  // If all the domains are exhausted, then set next_switch_time to be @ next major frame
   if(sched_index >= sched_private->num_schedule_entries)
   {
 	next_switch_time = sched_private->next_hyperperiod;
   }
-  
+
  /* If current task is done with it's execution, point the schedule to next vcpu structure in schedule *ops,
   * OR if we have exhausted all schedule entries within that hyperperiod, run idle timeslices until beginning
-  * of next hyperperiod 
+  * of next hyperperiod
   */
   new_task = (sched_index < sched_private->num_schedule_entries)
 				?sched_private->schedule[sched_index].vc
 				: IDLETASK(cpu);
 
   /** ERROR CHECK ON NEW_TASK **/
- // Check to see if this new_task is actually functional -> checking it with
- // vcpu_runnable, if not functional, allocate idle_timeslices to it.
   if(!((new_task!= NULL) && (vcpu_runnable(new_task))
 	&& PSVCPU(new_task)))
 	new_task = IDLETASK(cpu);
-
-  // Raise a Fatal error if new_task is still empty when program control is @ this point.
   BUG_ON(new_task == NULL);
-  // Sanity Check: Make sure none of the hyperperiods are missed
   BUG_ON(now >= sched_private->next_hyperperiod);
-  
-// unlock the scheduler's lock at this point, not deployed yet ....
   spin_unlock_irqrestore(&sched_private->lock, flags);
 
    if(tasklet_work_scheduled)
 	new_task = IDLETASK(cpu);
- 
    if(!is_idle_vcpu(new_task)
 	&& (new_task->processor != cpu))
 	new_task = IDLETASK(cpu);
-
-
-  // This scheduler does not allow migration to some other PCPU yet since it is only a single core
-  // therefore, new_task->processor should always be equal to smp_processor_id() ie cpu
-
-  /* Now all the checks are done and its time to return the amount of time next_schedule_entry(domain) has to run
-   * along with the  upcoming task's VCPU structure. */
-
-  // Only for Domain-0 and idleVCPU
-
- // Possible Solution: since new_task is being assigned to ret.task, implement a boundary check 
- // on new_task rather than schedule[sched_index]
-  
- /*
-if(sched_private->schedule[sched_index].dom_handle != "\0"
-	&& new_task->domain->domain_id!= 32767)
-  */
    if(new_task->domain->domain_id != 0 && new_task->domain->domain_id !=32767)
    {
 	ret.time = next_switch_time - now;
-	ret.task = new_task; 
-       // Measuring Context Switches only for valid schedule entries
-	// printk("CS Done! \n");
-	 // print_time();
-        //aaf_vcpu_tracing(new_task);
+	ret.task = new_task;
         ret.migrated = 0;
-        // printk("Time to be taken for new task to run for with PS_SCHEDULER is:%d\n",ret.time);
         return ret;
    }
 
   else
   {
-  // Only for Schedule entries (Dom0 and idle vcpu excluded)
-  ret.time = next_switch_time - now;
-  ret.task = new_task;
-  // No migration
-  ret.migrated = 0;
-  // FATAL error if time is an invalid number
- // BUG_ON(ret.time<=0);
-  return ret;
+  	ret.time = next_switch_time - now;
+  	ret.task = new_task;
+  	ret.migrated = 0;
+  	return ret;
   }
+ }
 }
 
-// adjust_global
-/* Use switch-case with xen_sysctl_scheduler_op to judge which one to go for out of these 2,
- *  XEN_SYSCTL_SCHEDOP_putinfo: invokes aaf_schedule_set()
- *  XEN_SYSCTL_SCHEDOP_getinfo: invokes aaf_schedule_get()
- */
-static int aaf_adjust_global(const struct scheduler *ops,
-			struct xen_sysctl_scheduler_op *sc)
+/****************** EXPERIMENTATION ********************/
+static int test_adjust_global(const struct scheduler *ops, struct xen_sysctl_scheduler_op *sc)
 {
-	struct xen_sysctl_aaf_schedule local_sched;
-	int rc = -EINVAL;
-	switch(sc->cmd)
-	{
-        // Work in progress for getinfo...
-	case XEN_SYSCTL_SCHEDOP_getinfo:
-	memset(&local_sched, -1, sizeof(local_sched));
-	rc = ps_sched_get(ops, &local_sched);
-	if(rc)
-	   break;
-	if(copy_to_guest(sc->u.sched_aaf.schedule, &local_sched, 1))
-		BUG();
+  // int index =0;
+  struct xen_sysctl_aaf_schedule local_sched;
+  int rc=-EINVAL;
+ // struct ps_priv_t temp_priv[3];
+  switch(sc->cmd)
+  {
+   case XEN_SYSCTL_SCHEDOP_putinfo:
+   if(copy_from_guest(&local_sched, sc->u.sched_aaf.schedule, 1))
+   {
+ 	rc=-EINVAL;
 	break;
-	case XEN_SYSCTL_SCHEDOP_putinfo:
-	 if(copy_from_guest(&local_sched, sc->u.sched_aaf.schedule, 1))
-	{
-		rc = -EINVAL;
-		break;
-	}
-	rc = ps_sched_set(ops, &local_sched);
-	break;
-	}
-	return rc;
+   }
+    rc = ps_sched_set(ops, &local_sched);
+    printk("Sched_set invoked in test_adjust_gloabl\n");
+    printk("Index of the LT: %d\n",index);
+    index++;
+  break;
+  }
+  return rc;
 }
+
+
+/********************************************************/
 
 // Switch_scheduler to change the scheduler on a CPU
 static void aaf_switch_sched(struct scheduler *ops,unsigned int cpu,
 			     void *pdata, void* vdata)
 {
   struct schedule_data *sd = &per_cpu(schedule_data, cpu);
+  struct ps_priv_t *prv = SCHED_PRIV(ops);
   struct ps_vcpu_t *pvc = vdata;
-  ASSERT(!pdata && pvc && is_idle_vcpu(pvc->vc));
+  // ASSERT(pdata && pvc && is_idle_vcpu(pvc->vc));
+  printk("Switching schedule using aaf_switch_sched on pcpu: %d\n", cpu);
   idle_vcpu[cpu]->sched_priv = vdata;
- per_cpu(scheduler, cpu) = ops;
- per_cpu(schedule_data, cpu).sched_priv = NULL; /* no pdata customization for our scheduler */
- // No lock support for now ...
-    sd->schedule_lock = &sd->_lock;
+  //ASSERT(!local_irq_is_enabled());
+
+  spin_lock(&prv->lock);
+  init_pdata(prv, pdata, cpu);
+  spin_unlock(&prv->lock);
+
+  per_cpu(scheduler, cpu) = ops;
+
+  // Since we maintain RUNQ's per-cpu
+  per_cpu(schedule_data, cpu).sched_priv = pdata; /* pdata customization for our scheduler */
+  // No lock support for now ...
+  printk("Leaving aaf_switch_sched\n");
+  smp_mb();
+  sd->schedule_lock = &sd->_lock;
 }
 
-static int
-aaf_pick_cpu(const struct scheduler *ops, struct vcpu *vc)
+
+static int aaf_pick_cpu(const struct scheduler *ops, struct vcpu *vc)
 {
     cpumask_t *online;
     unsigned int cpu;
     printk("aaf cpu_pick invoked for vcpu:%d\n",vc->vcpu_id);
-    /* 
+    /*
      * If present, prefer vc's current processor, else
      * just find the first valid vcpu .
      */
@@ -676,11 +824,104 @@ aaf_pick_cpu(const struct scheduler *ops, struct vcpu *vc)
     if ( cpumask_test_cpu(vc->processor, online)
          || (cpu >= nr_cpu_ids) )
         cpu = vc->processor;
- 
     printk("aaf scheduler running on CPU %d in cpu_pick()\n",cpu);
     return cpu;
 }
 
+
+
+/******* ALLOC PDATA ***********/
+static void* ps_alloc_pdata(const struct scheduler *ops, int cpu)
+{
+ struct ps_pcpu_t *psc;
+ /* Alloc per_cpu info */
+ struct ps_priv_t *ps_private = SCHED_PRIV(ops);
+ printk("Entering ps_alloc_pdata\n");
+ psc = xzalloc(struct ps_pcpu_t);
+ if(psc == NULL)
+   return ERR_PTR(-ENOMEM);
+
+ if(per_cpu(schedule_data, cpu).sched_priv == NULL)
+	per_cpu(schedule_data, cpu).sched_priv = psc;
+ INIT_LIST_HEAD(&psc->runq);
+ psc->next_hyperperiod = 0;
+ spin_lock_init(&psc->pcpu_lock);
+ printk("Leaving ps_alloc_pdata\n");
+ return psc;
+}
+
+/**************INIT PDATA *************/
+#ifdef RRP_DEBUG
+
+static void init_pdata(struct ps_priv_t *priv, struct ps_pcpu_t *psc, int cpu)
+{
+ ASSERT(spin_is_locked(&priv->lock));
+ // CPU struct info has to be allocated but still uninitialized yet 
+ // psc->next_hyperperiod = 0;
+ INIT_LIST_HEAD(&psc->runq);
+ spin_lock_init(&psc->pcpu_lock);
+ // Do we have to set cpumask here ??? 
+}
+
+
+static void ps_init_pdata(const struct scheduler *ops, void *pdata, int cpu)
+{
+ unsigned long flags;
+ struct ps_priv_t *prv = SCHED_PRIV(ops);
+ struct schedule_data *pc = &per_cpu(schedule_data, cpu);
+ /* Locking - Just as per credit scheduler */
+ ASSERT(pc->schedule_lock == &pc->_lock && !spin_is_locked(&pc->_lock));
+ printk("Entering init_pdata\n");
+ spin_lock_irqsave(&prv->lock, flags);
+ init_pdata(prv, pdata, cpu);
+ spin_unlock_irqrestore(&prv->lock, flags);
+ printk("Leaving init_pdata\n");
+}
+#endif
+
+/*******************FREE PDATA *********************/
+static void ps_free_pdata(const struct scheduler *ops, void *pcpu, int cpu)
+{
+ printk("Entering ps_free_pdata\n");
+ struct ps_pcpu_t *spc = pcpu;
+ if(!spc)
+  {
+	printk("RRP-Xen: NULL PCPU provided: %d\n", cpu);
+	return;
+   }
+ xfree(spc);
+//  per_cpu(schedule_data, cpu).sched_priv = NULL;
+ printk("Leaving ps_free_pdata\n");
+}
+
+
+/*************** VCPU REMOVE *******************/
+static void _vcpu_remove(struct ps_priv_t *prv, struct vcpu *v)
+{
+  unsigned int bs;
+  unsigned int cpu = v->processor;
+  struct ps_vcpu_t *ps_vc;
+ //  vcpu_deassign(prv, v, cpu);
+}
+/**************** UNDER CONSTRUCTION ************/
+static void rrp_vcpu_remove(const struct scheduler *ops, struct vcpu *v)
+{
+  printk("Entering rrp_vcpu_remove \n");
+  struct ps_priv_t *ps_priv = SCHED_PRIV(ops);
+  struct ps_vcpu_t *ps_vcpu = PSVCPU(v);
+  int cpu_id = v->processor;
+  spinlock_t *lock;
+//  ASSERT(per_cpu(ps_vcpu, v->processor).vcpu == v)
+   if(cpu_id == 1 || cpu_id == 3)
+   {
+        printk("list_del_init to take place on CPU#: %d\n",cpu_id);
+   	list_del(&ps_vcpu->runq_elem);
+    }
+  printk("Leving rrp_vcpu remove \n");
+}
+
+
+/************* FUNCTION INVOCATIONS ********************/
 const struct scheduler sched_aaf_def = {
     .name = "AAF Single Scheduler",
     .opt_name = "aaf",
@@ -690,8 +931,12 @@ const struct scheduler sched_aaf_def = {
  /* .dump_settings  = aaf_dump, */
     .init           = aafsched_init,
     .deinit         = aafsched_deinit,
-    .alloc_pdata    = NULL,
-    .free_pdata     = NULL,
+
+    .alloc_pdata    = ps_alloc_pdata,
+    .free_pdata     = ps_free_pdata,
+    .init_pdata     = NULL,
+    .deinit_pdata   = NULL,
+
     .alloc_domdata  = NULL,
     .free_domdata   = NULL,
   /*  .alloc_domdata  = aaf_alloc_domdata,
@@ -701,17 +946,16 @@ const struct scheduler sched_aaf_def = {
     .free_vdata     = aaf_free_vdata,
 */
     .switch_sched   = aaf_switch_sched,
-    .insert_vcpu    = NULL,
-    .remove_vcpu    = NULL,
+//    .insert_vcpu    = ps_vcpu_insert,
+//    .remove_vcpu    = rrp_vcpu_remove,
     .alloc_vdata    = aafsched_alloc_vdata,
     .free_vdata     = aaf_free_vdata,
     .adjust         = NULL,
-    .adjust_global  = aaf_adjust_global,	
+    .adjust_global  = test_adjust_global,     // aaf_adjust_global,
     .pick_cpu       = aaf_pick_cpu,
     .do_schedule    = ps_rrp_do_schedule,//aaf_schedule,
     .sleep          = aaf_vcpu_sleep,
     .wake           = aaf_vcpu_wake,
-    
     .context_saved  = NULL,
     .yield          = NULL,
     .migrate        = NULL,
