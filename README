@@ -215,3 +215,9 @@ xen/common/sched_rrp_mulz.c is the MulZ Implementation of RRP-HiRTS Framework
 userspace plugins / Schedule Entry setup files are located in another repo.
 Find it here: https://github.com/pvpk1994/Xen-Schedule-Entry-Setup
 More Details on these schedulers and instructions to run them will be provided soon..
+
+1. Update: Both Multi-Core and Single Core are now integrated into a single sched_aaf.c in xen/common/
+2. RRP-Multi Core in this version supports/runs only on cpus 1 and 3, generic multi-cpu support will be added soon once the 
+   experimental testing phase is complete.
+ 
+ Stay tuned for more updates..
