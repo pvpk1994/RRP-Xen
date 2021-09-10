@@ -399,16 +399,17 @@ a653sched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, void *dd)
     spin_lock_irqsave(&sched_priv->lock, flags);
 
     /* 
-     * Add every one of dom0's vcpus to the schedule, as long as there are
+     * Add every one of domU's vcpus to the schedule, as long as there are
      * slots available.
      */
-    if ( vc->domain->domain_id == 0 )
+    if ( vc->domain->domain_id != 0 )
     {
         entry = sched_priv->num_schedule_entries;
 
         if ( entry < ARINC653_MAX_DOMAINS_PER_SCHEDULE )
         {
-            sched_priv->schedule[entry].dom_handle[0] = '\0';
+            // sched_priv->schedule[entry].dom_handle[0] = '\0';
+	    memcpy(sched_priv->schedule[entry].dom_handle, vc->domain->handle, sizeof(vc->domain->handle));
             sched_priv->schedule[entry].vcpu_id = vc->vcpu_id;
             sched_priv->schedule[entry].runtime = DEFAULT_TIMESLICE;
             sched_priv->schedule[entry].vc = vc;
