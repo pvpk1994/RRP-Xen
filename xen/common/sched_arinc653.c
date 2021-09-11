@@ -186,13 +186,17 @@ static struct vcpu *find_vcpu(
     int vcpu_id)
 {
     arinc653_vcpu_t *avcpu;
+    printk("Entering Function: %s\n", __func__);
 
     /* loop through the vcpu_list looking for the specified VCPU */
     list_for_each_entry ( avcpu, &SCHED_PRIV(ops)->vcpu_list, list )
         if ( (dom_handle_cmp(avcpu->vc->domain->handle, handle) == 0)
              && (vcpu_id == avcpu->vc->vcpu_id) )
+	{
+	    printk("Function: %s  Domain Handle: %X  VCPUID: %d  CPUID: %d\n", __func__, *avcpu->vc->domain->handle,
+			avcpu->vc->vcpu_id, avcpu->vc->processor);
             return avcpu->vc;
-
+	}
     return NULL;
 }
 
@@ -207,11 +211,17 @@ static void update_schedule_vcpus(const struct scheduler *ops)
 {
     unsigned int i, n_entries = SCHED_PRIV(ops)->num_schedule_entries;
 
+    printk("Function: %s  Num schedule Entries: %d\n", __func__, SCHED_PRIV(ops)->num_schedule_entries);
+
     for ( i = 0; i < n_entries; i++ )
+    {
+	printk("Function: %s Domain Handle: %X VCPU ID: %d\n",__func__, *SCHED_PRIV(ops)->schedule[i].dom_handle,
+	SCHED_PRIV(ops)->schedule[i].vcpu_id);
         SCHED_PRIV(ops)->schedule[i].vc =
             find_vcpu(ops,
                       SCHED_PRIV(ops)->schedule[i].dom_handle,
                       SCHED_PRIV(ops)->schedule[i].vcpu_id);
+    }
 }
 
 /**
@@ -235,6 +245,8 @@ arinc653_sched_set(
     unsigned int i;
     unsigned long flags;
     int rc = -EINVAL;
+
+    printk("Entering %s\n", __func__);
 
     spin_lock_irqsave(&sched_priv->lock, flags);
 
@@ -264,6 +276,10 @@ arinc653_sched_set(
     /* Copy the new schedule into place. */
     sched_priv->num_schedule_entries = schedule->num_sched_entries;
     sched_priv->major_frame = schedule->major_frame;
+
+    printk("Function: %s Number of Schedule Entries: %d\n", __func__, sched_priv->num_schedule_entries);
+    printk("Function: %s Major Frame: %d\n", __func__, sched_priv->major_frame);
+
     for ( i = 0; i < schedule->num_sched_entries; i++ )
     {
         memcpy(sched_priv->schedule[i].dom_handle,
@@ -347,7 +363,7 @@ static int
 a653sched_init(struct scheduler *ops)
 {
     a653sched_priv_t *prv;
-
+    printk("Entering Function: %s\n", __func__);
     prv = xzalloc(a653sched_priv_t);
     if ( prv == NULL )
         return -ENOMEM;
@@ -357,6 +373,7 @@ a653sched_init(struct scheduler *ops)
     prv->next_major_frame = 0;
     spin_lock_init(&prv->lock);
     INIT_LIST_HEAD(&prv->vcpu_list);
+    printk("Leaving Function: %s\n", __func__);
 
     return 0;
 }
@@ -369,8 +386,10 @@ a653sched_init(struct scheduler *ops)
 static void
 a653sched_deinit(struct scheduler *ops)
 {
+    printk("Entering Function: %s\n", __func__);
     xfree(SCHED_PRIV(ops));
     ops->sched_data = NULL;
+    printk("Leaving Function: %s\n", __func__);
 }
 
 /**
@@ -388,6 +407,7 @@ a653sched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, void *dd)
     unsigned int entry;
     unsigned long flags;
 
+    printk("Entering Function: %s\n", __func__);
     /*
      * Allocate memory for the ARINC 653-specific scheduler data information
      * associated with the given VCPU (vc).
@@ -398,7 +418,7 @@ a653sched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, void *dd)
 
     spin_lock_irqsave(&sched_priv->lock, flags);
 
-    /* 
+    /*
      * Add every one of domU's vcpus to the schedule, as long as there are
      * slots available.
      */
