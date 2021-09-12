@@ -92,7 +92,7 @@ struct ps_vcpu_t
 {
   struct vcpu* vc;
   // bool variable to see if vcpu is awake or asleep
-   // bool_t awake;
+  bool_t awake;
   // Linked list of vcpus to be maintained in global scheduler structure
   struct list_head list_elem;
   struct list_head runq_elem; /* RUNQ Element for RRP-CPU RUNQs */
@@ -488,55 +488,53 @@ static void* aafsched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, 
 	if(avc == NULL)
 	    return NULL;
 
-        /* CHANGE- MANUAL INIT TO BE DONE FOR LIST HEADS */
 	INIT_LIST_HEAD(&avc->runq_elem);
         avc->cpu_rrp = -1;
 	spin_lock_irqsave(&sched_priv->lock, flags);
         printk("Inside alloc_vdata Function...\n");
-	if(vc->domain->domain_id == 0)
+	if(vc->domain->domain_id != 0)
 	{
 	   avc->cpu_rrp = -1;
            printk("alloc_vdata being invoked for Dom0's VCPU #: %d\n",vc->vcpu_id);
 	  entry = sched_priv->num_schedule_entries;
 	  if(entry < PS_MAX_DOMAINS_PER_SCHEDULE)
 	  {
-	   sched_priv->schedule[entry].dom_handle[0] = '\0';
+	   // sched_priv->schedule[entry].dom_handle = vc->domain->handle;
+	   memcpy(sched_priv->schedule[entry].dom_handle, vc->domain->handle, sizeof(vc->domain->handle));
 	   sched_priv->schedule[entry].vcpu_id = vc->vcpu_id;
 	   sched_priv->schedule[entry].wcet = DOM0_TS;
 	   sched_priv->schedule[entry].vc = vc;
 	   sched_priv->hyperperiod += DOM0_TS;
-	    ++(sched_priv->num_schedule_entries);
+	   ++(sched_priv->num_schedule_entries);
 	  }
      }
 
 	avc->vc = vc;
+
 	if(!is_idle_vcpu(vc) && (vc->processor != 1 && vc->processor != 3))
 	{
 	   avc->cpu_rrp = -2;
+	   printk("VCPU ID: %d\t DOMAIN ID in %s: %lu\n",avc->vc->vcpu_id, __func__, avc->vc->domain->domain_id);
 	   list_add(&avc->list_elem, &SCHED_PRIV(ops)->vcpu_list);
 	}
+
+/*
         else if(!is_idle_vcpu(vc) && (vc->processor == 1 || vc->processor == 3))
 	{
-	   /* If not an IDLE VCPU and bealongs to either vc->processor 1/3, then
-	    * add it to the per-CPU list of VCPUs
-	    */
            spin_unlock_irqrestore(&sched_priv->lock, flags);
 	   printk("Adding non-idle vcpu to CPU %d's list\n",vc->processor);
-	   /* Activate PER-CPU Lock to disable list corruptions */
 	  avc->cpu_rrp = avc->vc->processor;
-//          spin_lock_irqsave(&SCHED_PCPU(vc->processor)->pcpu_lock, flags_pcpu);
-         // lock = vcpu_schedule_lock_irq(vc);
-           list_add(&avc->runq_elem, &SCHED_PCPU(avc->vc->processor)->runq);
-	  // vcpu_schedule_unlock_irq(lock, vc);
-//	   spin_unlock_irqrestore(&SCHED_PCPU(vc->processor)->pcpu_lock, flags_pcpu);
+          spin_lock_irqsave(&SCHED_PCPU(vc->processor)->pcpu_lock, flags_pcpu);
+          list_add(&avc->runq_elem, &SCHED_PCPU(avc->vc->processor)->runq);
+	   spin_unlock_irqrestore(&SCHED_PCPU(vc->processor)->pcpu_lock, flags_pcpu);
 	   printk("Added to CPU %d's runQ\n", vc->processor);
            update_vcpu_pcpu(avc->vc->processor);
-	 //  spin_unlock_irqrestore(&sched_priv->lock, flags);
 	   return avc;
         }
+*/
        update_schedule_vcpus(ops, smp_processor_id());
        printk("About to leave alloc_vdata function...\n");
-        spin_unlock_irqrestore(&sched_priv->lock, flags);
+       spin_unlock_irqrestore(&sched_priv->lock, flags);
        return avc;
 }
 
@@ -719,6 +717,7 @@ else
   * OR if we have exhausted all schedule entries within that hyperperiod, run idle timeslices until beginning
   * of next hyperperiod
   */
+  // sched_index < sched_private->num_schedule_entries ? printk("task assignment to vcpu %d\n",sched_private->schedule[sched_index].vc->vcpu_id) :printk("Idle VCPU taking up\n");
   new_task = (sched_index < sched_private->num_schedule_entries)
 				?sched_private->schedule[sched_index].vc
 				: IDLETASK(cpu);
@@ -934,7 +933,7 @@ const struct scheduler sched_aaf_def = {
 
     .alloc_pdata    = ps_alloc_pdata,
     .free_pdata     = ps_free_pdata,
-    .init_pdata     = NULL,
+    .init_pdata     = ps_init_pdata,
     .deinit_pdata   = NULL,
 
     .alloc_domdata  = NULL,
