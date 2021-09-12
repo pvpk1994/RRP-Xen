@@ -1,21 +1,27 @@
-/********** RRP-MulZ HIRTS SCHEDULER ************************************/
+/********** RRP-Xen Version 3.0.1 ************************************/
 
 /* RRP MULTI RESOURCE Algorithm Xen Implementation (MULZ)
  * Author:: Pavan Kumar Paluri
- * Copyright 2019-2020 - RTLAB UNIVERSITY OF HOUSTON */
+ * Copyright 2019-2021 - RTLAB UNIVERSITY OF HOUSTON */
 
 /*************************************************************************************************
- **************** LAST UPDATED ON April 6, 2020 *************************************************
- TODO: Support for Concurrent Launch Table Invocations from Domain-0 Userspace [NOT URGENT]
- TODO: Abrupt Crashing of DomU when trying to deliberately quit it using xl destroy [FIXED]
- TODO: Check the correctness of Domain Invocation sequence in AAF-POOL in do_schedule [NOT URGENT]
- TODO: Comment/Erase unnecessary functions and reorganize the scheduler code [NOT URGENT]
- TODO: Disable the hardcoded CPU condition checks at multiple places and make it Dynamic [NOT URGENT]
- TODO: Scheduler failing for more than 1 domain per CPU since the other domain is unable to find a valid vcpu left [FIXED]
+ **************** LAST UPDATED ON September 11, 2021 *************************************************
+ Issue 1: Support for Concurrent Launch Table Invocations from Domain-0 Userspace [NOT URGENT]
+ Issue 2: Abrupt Crashing of DomU when trying to deliberately quit it using xl destroy [FIXED]
+ Issue 3: Check the correctness of Domain Invocation sequence in AAF-POOL in do_schedule [NOT URGENT]
+ Issue 4: Comment/Erase unnecessary functions and reorganize the scheduler code [NOT URGENT]
+ Issue 5: Disable the hardcoded CPU condition checks at multiple places and make it Dynamic [NOT URGENT]
+ Issue 6: Scheduler failing for more than 1 domain per CPU since the other domain is unable to find a valid vcpu left [FIXED]
 
  * Inclusion of per-cpu Locks to avoid list corruptions
  * This scheduler works fine
  * Fixed a bug that was causing rrp-single core to reboot on xl-destroy
+
+ ***************** Single Core - Multi VCPUs per DomU *******************************************
+ * Multiple VCPUs implementation for a given DomU. 
+ * This setting currently applies exclusively for CPUs excluding 1 and 3.
+ * >1 VCPUs get added to the blocked state on creation of DomU; runs for a default of 30ms. 
+ * Round Robin Scheduling of VCPUs for DomU until the Launch Table is delivered. 
  *************************************************************************************************/
 
 /****************** LOCKING MECHANISM ************************
@@ -50,20 +56,15 @@
 #include <public/sysctl.h>
 #include <public/domctl.h>
 
-// Have a default time slice for Domain0's vcpus to run
 #define DOM0_TS MILLISECS(10)
-// get the idle vcpu for a given cpu - to run idle time slices in case no domain runs 
 #define IDLETASK(cpu)   (idle_vcpu[cpu])
 
 
-// typecast Xen's vcpu to our vcpu
 #define PSVCPU(vc)      ((struct ps_vcpu_t *)(vc)->sched_priv)
-
-// Given scheduler ops pointer, return ps scheduler's  private struct 
 #define SCHED_PRIV(s)   ((struct ps_priv_t *)((s)->sched_data))
 
-// Timer function to print time
-#define print_time() ( printk("CPU_ID: %d, ms::micro_s:: %3ld.%3ld, %-19s ",smp_processor_id(), NOW()/MILLISECS(1),NOW()%MILLISECS(1)/1000, __func__) )
+#define print_time() ( printk("CPU_ID: %d, ms::micro_s:: %3ld.%3ld, %-19s ",smp_processor_id(), 
+		     NOW()/MILLISECS(1),NOW()%MILLISECS(1)/1000, __func__) )
 
 #define SCHED_PCPU(_cpu) ((struct ps_pcpu_t *)per_cpu(schedule_data, _cpu).sched_priv)
 #define RUNQ(_cpu)          (&(SCHED_PCPU(_cpu)->runq))
@@ -75,13 +76,16 @@
 #define RRP_DEBUG
 // #define RRP_CPU_ZONE
 static int index=0;
-// static void init_pdata(struct ps_priv_t *, struct ps_pcpu_t *, int);
 /*
  * AAF Tracing events (only 512 value ranges available)
  * More details regarding the events can be found at
  * /include/public/trace.h 
  */
 // #define TRC_AAF_SCHEDULE TRC_SCHED_CLASS_EVT(AAF, 1)
+
+#define RRP_XEN_V_1
+#define RRP_XEN_V_2
+#define RRP_XEN_V_3_0_1
 
 /********************
 * Scheduler Customization Structures
@@ -93,7 +97,6 @@ struct ps_vcpu_t
   struct vcpu* vc;
   // bool variable to see if vcpu is awake or asleep
   bool_t awake;
-  // Linked list of vcpus to be maintained in global scheduler structure
   struct list_head list_elem;
   struct list_head runq_elem; /* RUNQ Element for RRP-CPU RUNQs */
   int cpu_rrp;
@@ -102,13 +105,8 @@ struct ps_vcpu_t
 // schedulable entry strucutre for ps scheduler
 struct sched_entry_t
 {
-
-  // dom_handle handles the UUID for the domain that this schedulable entry refers to
   xen_domain_handle_t dom_handle;
-  // vcpu_id refers to the vcpu number for vcpu that this sched_entry refers to..
   int vcpu_id;
- // wcet refers to the computation time that the vcpu for this sched_entry runs for
- //  per hyperperiod
   s_time_t wcet; //getAAFUp()
   struct vcpu* vc;
 };
@@ -117,7 +115,6 @@ struct sched_entry_t
 struct ps_priv_t
 {
    spinlock_t lock;
-  // Private scheduler's struct holds all the schedulable entries
   // PS_MAX_DOMAINS_PER_SCHEDULE :: defined in sysctl.h
   struct sched_entry_t schedule[PS_MAX_DOMAINS_PER_SCHEDULE];
   /***
@@ -126,14 +123,10 @@ struct ps_priv_t
    * since, each domain can appear multiple times within the schedule
    ***/
   int num_schedule_entries;
-  // hyperperiod of ps scheduler
-  s_time_t hyperperiod; // getAAFDown()
-  // the time the next hyperperiod begins
-  s_time_t next_hyperperiod;
-
-  // Iterate through list of vcpu structures provided by xen 
-   struct list_head vcpu_list;
-   uint32_t cpu_id;
+  s_time_t hyperperiod;
+  s_time_t next_hyperperiod; 
+  struct list_head vcpu_list;
+  uint32_t cpu_id;
 };
 
 static struct ps_priv_t rrp_lt[MAX_PCPUS];
@@ -150,7 +143,7 @@ struct ps_pcpu_t
     unsigned int nr_runnable;
     uint32_t runq_sort_last;
   spinlock_t pcpu_lock; /* Spin lock for Concurrent RUNQ Locks */
-  // int cpu_id; // Just in case we need it..
+  // int cpu_id;
 };
 
 
@@ -321,9 +314,7 @@ static void del_vcpu_pcpu(const struct scheduler *ops,int cpu_id)
  //spin_unlock_irqrestore(&SCHED_PRIV(ops)->lock, flags);
 }
 
-// Set Boundary Conditions
-// Put a New PS schedule
-// This function is called by adjust_global() to put in a new PS schedule
+
 static int ps_sched_set(const struct scheduler *ops, struct xen_sysctl_aaf_schedule *schedule)
 {
   printk("Entering schedule_set AAF\n");
@@ -349,8 +340,7 @@ static int ps_sched_set(const struct scheduler *ops, struct xen_sysctl_aaf_sched
       printk("Allocation Failure\n");
  	goto dump;
    }
-  // compute total wcet
-  // C-99 not supported, inits cannot be done inside for-loop
+
  for(i=0; i < schedule->num_schedule_entries; i++)
    {
 	if(schedule->schedule[i].wcet <= 0)
@@ -398,6 +388,7 @@ static int ps_sched_set(const struct scheduler *ops, struct xen_sysctl_aaf_sched
 //        spin_unlock_irqrestore(&sched_priv->lock,flags);
 	return rc;
 }
+
 
 // Get PS schedule
 static int ps_sched_get(const struct scheduler *ops, struct xen_sysctl_aaf_schedule *schedule)
@@ -492,6 +483,9 @@ static void* aafsched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, 
         avc->cpu_rrp = -1;
 	spin_lock_irqsave(&sched_priv->lock, flags);
         printk("Inside alloc_vdata Function...\n");
+
+#ifdef RRP_XEN_V_3_0_1
+
 	if(vc->domain->domain_id != 0)
 	{
 	   avc->cpu_rrp = -1;
@@ -509,6 +503,9 @@ static void* aafsched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, 
 	  }
      }
 
+#endif
+
+
 	avc->vc = vc;
 
 	if(!is_idle_vcpu(vc) && (vc->processor != 1 && vc->processor != 3))
@@ -518,7 +515,8 @@ static void* aafsched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, 
 	   list_add(&avc->list_elem, &SCHED_PRIV(ops)->vcpu_list);
 	}
 
-/*
+#ifndef RRP_XEN_V_3_0_1
+
         else if(!is_idle_vcpu(vc) && (vc->processor == 1 || vc->processor == 3))
 	{
            spin_unlock_irqrestore(&sched_priv->lock, flags);
@@ -531,7 +529,9 @@ static void* aafsched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, 
            update_vcpu_pcpu(avc->vc->processor);
 	   return avc;
         }
-*/
+
+#endif
+
        update_schedule_vcpus(ops, smp_processor_id());
        printk("About to leave alloc_vdata function...\n");
        spin_unlock_irqrestore(&sched_priv->lock, flags);
