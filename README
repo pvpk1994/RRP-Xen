@@ -216,7 +216,7 @@ This software provides RRP based VM Xen Hypervisor schedulers. These schedulers 
 
 1. RRP-Xen Version 1.0: HiRTS-RRP model based real-time scheduler on Xen hypervisor for single-core environment. This is a single VCPU implementation. More details on this can be found on project webpage (https://sites.google.com/view/hirts-rrp/rrp-xen-single-core?authuser=0) and also in the research paper published at ACM LCTES'2021. 
 
-2. RRP-Xen Version 2.0: HiRTS-RRP model based real-time scheduler on Xen hypervisor for Multi-core environment. This scheduler operates on CPUs 1 & 3 as a part of multi-core setting. However, it is trivial to extend it to more CPUs.More details on this can be found on project webpage (https://sites.google.com/view/hirts-rrp/rrp-xen-single-core?authuser=0) and also in the research paper published at ACM LCTES'2021. 
+2. RRP-Xen Version 2.0: HiRTS-RRP model based real-time scheduler on Xen hypervisor for Multi-core environment. This scheduler operates on CPUs 1 & 3 as a part of multi-core setting. However, it is trivial to extend it to more CPUs.More details on this can be found on project webpage (https://sites.google.com/view/hirts-rrp/rrp-xen-multi-core?authuser=0) and also in the research paper published at ACM LCTES'2021. 
 
 3. RRP-Xen Version 3.0.1: HiRTS-RRP model based Experimental real-time scheduler on Xen hypervisor for Single-core environment. This is a multi-VCPU implementation. 
 
