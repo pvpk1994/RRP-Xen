@@ -5,7 +5,7 @@
  * Copyright 2019-2021 - RTLAB UNIVERSITY OF HOUSTON */
 
 /*************************************************************************************************
- **************** LAST UPDATED ON  October 4, 2021 *************************************************
+ **************** LAST UPDATED ON  November 3, 2021 *************************************************
  TODO: Support for Concurrent Launch Table Invocations from Domain-0 Userspace [NOT URGENT]
  TODO: Abrupt Crashing of DomU when trying to deliberately quit it using xl destroy [FIXED]
  TODO: Check the correctness of Domain Invocation sequence in AAF-POOL in do_schedule [NOT URGENT]
@@ -15,6 +15,7 @@
  TODO: RRP-Xen multi-core CPUs (1,3,5,7) to accommodate DomUs with multiple VCPUS [Done]
  TODO: To test and build RRP-Xen multi-core to support CPUs (1, 3, 5, 7) to accommodate DomUs with multiple VCPUs spanned across different CPUs [Fixed]
  TODO: VCPU destroy, DomU destroy functions still need to be developed. Installation of guest OS is never complete without these. [Remaining]
+ TODO: Added support for Null entries in LT, treat them as pseudo Domain-0 schedule entries with VCPU_IDs =0. [ Works alright - Novemeber 3, 2021]
 
  * Inclusion of per-cpu Locks to avoid list corruptions
  * This scheduler works fine
@@ -299,6 +300,7 @@ static struct vcpu* find_vcpu_pcpu(int cpu_id, xen_domain_handle_t h, int vcpu_i
 	struct ps_vcpu_t *ps_vcpu;
 	printk("in find_vcpu_pcpu fn\n");
 	list_for_each_entry(ps_vcpu, &SCHED_PCPU(cpu_id)->runq, runq_elem)
+
 	if(dom_handle_cmp(ps_vcpu->vc->domain->handle, h) == 0 &&
 		(vcpu_id == ps_vcpu->vc->vcpu_id))
 	{
@@ -321,6 +323,13 @@ static void update_vcpu_pcpu(int cpu_id)
   printk("UPDATE_VCPU_PCPU: num_schedule_entries: %d\n", SCHED_PCPU(cpu_id)->num_schedule_entries);
   for(i=0; i<num_entries; i++)
   {
+      /* If the current schedule entry is a pseudo Domain-0 entry, assign an IDLETASk to it */
+      if(SCHED_PCPU(cpu_id)->schedule[i].dom_handle[0] == '\0')
+	{
+		SCHED_PCPU(cpu_id)->schedule[i].vc = IDLETASK(cpu_id);
+		printk("Null Entry assigned to idle vcpu\n");
+		continue;
+	}
      printk("UPDATE_VCPU_PCPU: Domain Handle: %X\n", *SCHED_PCPU(cpu_id)->schedule[i].dom_handle);
      SCHED_PCPU(cpu_id)->schedule[i].vc = find_vcpu_pcpu(cpu_id, SCHED_PCPU(cpu_id)->schedule[i].dom_handle,
 							SCHED_PCPU(cpu_id)->schedule[i].vcpu_id);
@@ -420,6 +429,17 @@ static int ps_sched_set(const struct scheduler *ops, struct xen_sysctl_aaf_sched
 
    for(i=0 ;i< schedule->num_schedule_entries; i++)
     {
+	/* If current schedule entry is a psuedo Domain-0 handle, treat is a null entry  */
+	if(schedule->schedule[i].dom_handle[0] == '\0')
+	{
+		memcpy(sched_pcpu->schedule[i].dom_handle, schedule->schedule[i].dom_handle, sizeof(schedule->schedule[i].dom_handle));
+		// sched_pcpu->schedule[i].vc = IDLETASK(schedule->cpu_id);
+		sched_pcpu->schedule[i].wcet = schedule->schedule[i].wcet;
+		sched_pcpu->schedule[i].vcpu_id = 0;
+		/* Skip the rest for the current schedule entry */
+		continue;
+	}
+
        memcpy(sched_priv->schedule[i].dom_handle, schedule->schedule[i].dom_handle, sizeof(schedule->schedule[i].dom_handle));
         sched_priv->schedule[i].vcpu_id = schedule->schedule[i].vcpu_id;
         sched_priv->schedule[i].wcet = schedule->schedule[i].wcet;
