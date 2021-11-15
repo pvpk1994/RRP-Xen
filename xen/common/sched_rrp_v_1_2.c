@@ -5,13 +5,13 @@
  * Copyright 2019-2020 - RTLAB UNIVERSITY OF HOUSTON */
 
 /*************************************************************************************************
- **************** LAST UPDATED ON April 6, 2020 *************************************************
+ **************** LAST UPDATED ON November 15, 2021 *************************************************
  TODO: Support for Concurrent Launch Table Invocations from Domain-0 Userspace [NOT URGENT]
  TODO: Abrupt Crashing of DomU when trying to deliberately quit it using xl destroy [FIXED]
  TODO: Check the correctness of Domain Invocation sequence in AAF-POOL in do_schedule [NOT URGENT]
  TODO: Comment/Erase unnecessary functions and reorganize the scheduler code [NOT URGENT]
  TODO: Disable the hardcoded CPU condition checks at multiple places and make it Dynamic [NOT URGENT]
- TODO: Scheduler failing for more than 1 domain per CPU since the other domain is unable to find a valid vcpu left [FIXED]
+ TODO: 1 VCPU per Domain. Single and Multi Core Scheduler
 
  * Inclusion of per-cpu Locks to avoid list corruptions
  * This scheduler works fine
@@ -106,7 +106,7 @@ struct sched_entry_t
   // dom_handle handles the UUID for the domain that this schedulable entry refers to
   xen_domain_handle_t dom_handle;
   // vcpu_id refers to the vcpu number for vcpu that this sched_entry refers to..
-  int vcpu_id[64];
+  int vcpu_id;
  // wcet refers to the computation time that the vcpu for this sched_entry runs for
  //  per hyperperiod
   s_time_t wcet; //getAAFUp()
@@ -272,7 +272,7 @@ static void update_schedule_vcpus(const struct scheduler *ops, int cpu_id)
 	printk("UPDATE_SCHED_VCPU: Domain Handle: %X\n", *SCHED_PRIV(ops)->schedule[i].dom_handle);
         SCHED_PRIV(ops)->schedule[i].vc =
                 find_vcpu(ops,SCHED_PRIV(ops)->schedule[i].dom_handle,
-                        SCHED_PRIV(ops)->schedule[i].vcpu_id[i], cpu_id);
+                        SCHED_PRIV(ops)->schedule[i].vcpu_id, cpu_id);
    }
 }
 
@@ -302,7 +302,7 @@ static void update_vcpu_pcpu(int cpu_id)
   {
      printk("UPDATE_VCPU_PCPU: Domain Handle: %X\n", *SCHED_PCPU(cpu_id)->schedule[i].dom_handle);
      SCHED_PCPU(cpu_id)->schedule[i].vc = find_vcpu_pcpu(cpu_id, SCHED_PCPU(cpu_id)->schedule[i].dom_handle,
-							SCHED_PCPU(cpu_id)->schedule[i].vcpu_id[i]);
+							SCHED_PCPU(cpu_id)->schedule[i].vcpu_id);
   }
 }
 
@@ -368,11 +368,11 @@ static int ps_sched_set(const struct scheduler *ops, struct xen_sysctl_aaf_sched
    for(i=0 ;i< schedule->num_schedule_entries; i++)
     {
        memcpy(sched_priv->schedule[i].dom_handle, schedule->schedule[i].dom_handle, sizeof(schedule->schedule[i].dom_handle));
-        sched_priv->schedule[i].vcpu_id[i] = schedule->schedule[i].vcpu_id[i];
+        sched_priv->schedule[i].vcpu_id = schedule->schedule[i].vcpu_id;
         sched_priv->schedule[i].wcet = schedule->schedule[i].wcet;
 
 	memcpy(sched_pcpu->schedule[i].dom_handle, schedule->schedule[i].dom_handle, sizeof(schedule->schedule[i].dom_handle));
-	sched_pcpu->schedule[i].vcpu_id[i] = schedule->schedule[i].vcpu_id[i];
+	sched_pcpu->schedule[i].vcpu_id = schedule->schedule[i].vcpu_id;
 	sched_pcpu->schedule[i].wcet = schedule->schedule[i].wcet;
     }
     printk("Memcpy and import of other params of sched_entries done\n");
@@ -414,7 +414,7 @@ static int ps_sched_get(const struct scheduler *ops, struct xen_sysctl_aaf_sched
 	 memcpy(schedule->schedule[i].dom_handle,
                sched_priv->schedule[i].dom_handle,
                sizeof(sched_priv->schedule[i].dom_handle));
-        schedule->schedule[i].vcpu_id[i] = sched_priv->schedule[i].vcpu_id[i];
+        schedule->schedule[i].vcpu_id = sched_priv->schedule[i].vcpu_id;
         schedule->schedule[i].wcet = sched_priv->schedule[i].wcet;
   }
   spin_unlock_irqrestore(&sched_priv->lock, flags);
@@ -501,7 +501,7 @@ static void* aafsched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, 
 	  if(entry < PS_MAX_DOMAINS_PER_SCHEDULE)
 	  {
 	   sched_priv->schedule[entry].dom_handle[0] = '\0';
-	   sched_priv->schedule[entry].vcpu_id[entry] = vc->vcpu_id;
+	   sched_priv->schedule[entry].vcpu_id = vc->vcpu_id;
 	   sched_priv->schedule[entry].wcet = DOM0_TS;
 	   sched_priv->schedule[entry].vc = vc;
 	   sched_priv->hyperperiod += DOM0_TS;
@@ -640,7 +640,7 @@ if( unlikely(tb_init_done))
   d.idle = is_idle_vcpu(current);
 }
 
- printk("Entering %s\n",__func__);
+// printk("Entering %s\n",__func__);
  /* RRP-MULTICORE IMPLEMENTATION ZONE
   * --------------------------------- */
 if(cpu == 1 || cpu == 3)
@@ -690,7 +690,7 @@ if(cpu == 1 || cpu == 3)
  ret.time = next_switch_time - now;
  ret.task = new_task;
  ret.migrated = 0;
-  printk("Leaving %s\n", __func__);
+//  printk("Leaving %s\n", __func__);
  /*printk("next VCPU, with Domain Handle: %X runs on CPU %d\n",*sched_pcpu->schedule[sched_index].dom_handle, cpu);*/ 
  return ret;
 }
