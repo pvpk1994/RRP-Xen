@@ -22,9 +22,6 @@
  * Concern: The schedule entry VCPU assignment before ps_sched_set() is problematic for destroying Domains and its VCPUs
  * Solution: Let the CPU add VCPUs of a newly created domain cyclically to its runQs, however do not invoke update_schedule_vcpus() yet.
 
- * Concern: Th current setting might create a problem for ps_sched_set() to destroy the VCPUs because of the update_schedule_vcpus().
- * Solution: TODO yet to be figured.
-
  *************************************************************************************************/
 
 /****************** LOCKING MECHANISM ************************
