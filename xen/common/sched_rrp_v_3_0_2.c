@@ -5,13 +5,13 @@
  * Copyright 2017-2022 - RTLAB UNIVERSITY OF HOUSTON */
 
 /*************************************************************************************************
- **************** LAST UPDATED ON November 16, 2021 ************************************************************************
+ **************** LAST UPDATED ON November 17, 2021 ************************************************************************
 
  			***** FEATURES *****
  * Support for cpupool and standalone ARINC 653 VM scheduler.
  * Extended support for ARINC 653 periodic model resource partitioning algorithms.
  * Bug fixes and performance improvements to fecilitate a clean xl-destroy and xl cpupool-destroy.
- * TODO: Build a better interface to add support for numerous CPUs operating under RRP-Xen V3.1.
+ * A better interface to add support for numerous CPUs operating under RRP-Xen V3.1. Simply add CPU# to rrp_xen_cpus[] list.
  * Support for cyclical addition of VCPUs to CPUs from a given domain, now available for RRP-Xen V3.1.
  * Integration of vcpu_remove into free_vdata to improve code readability.
  * VCPUs of all the domains operating under RRP-Xen V3.1 will now enter into a valid blocked (--b--) state on Domain creation.
@@ -21,6 +21,9 @@
 
  * Concern: The schedule entry VCPU assignment before ps_sched_set() is problematic for destroying Domains and its VCPUs
  * Solution: Let the CPU add VCPUs of a newly created domain cyclically to its runQs, however do not invoke update_schedule_vcpus() yet.
+
+ * Concern: Th current setting might create a problem for ps_sched_set() to destroy the VCPUs because of the update_schedule_vcpus().
+ * Solution: TODO yet to be figured.
 
  *************************************************************************************************/
 
@@ -68,6 +71,9 @@
 #define RRP_DEBUG
 
 static int index=0;
+
+/* Add the CPU # here for it to participate in RRP-Xen */
+static int rrp_xen_cpus[] = {1,3,5,7};
 
 /***********************************
 * Scheduler Customization Structures
@@ -203,6 +209,16 @@ static int dom_comp(s_time_t wcet1, s_time_t wcet2)
 	return wcet1 > wcet2 ? 0 : 1;
 }
 
+static int is_rrp_cpu(int cpu_id)
+{
+	int iter;
+	for(iter = 0; iter < sizeof(rrp_xen_cpus)/sizeof(rrp_xen_cpus[0]); iter++)
+	{
+		if(rrp_xen_cpus[iter] == cpu_id)
+			return 1;
+	}
+	return 0;
+}
 
 /* Find a vcpu based on VCPU-ID and Domain-Handle for non-sched-set function */
 static struct vcpu* find_vcpu(const struct scheduler *ops, xen_domain_handle_t h, int vcpu_id, int cpu_id)
@@ -329,7 +345,7 @@ static int ps_sched_set(const struct scheduler *ops, struct xen_sysctl_aaf_sched
 	printk("Memcpy and import of other params of sched_entries done\n");
 
 	/* RRP-CPUs ZONE */
-	if(schedule->cpu_id == 1 || schedule->cpu_id == 3 || schedule->cpu_id == 5)
+	if(is_rrp_cpu(schedule->cpu_id))
 	{
 		update_vcpu_pcpu(schedule->cpu_id);
 
@@ -342,7 +358,7 @@ static int ps_sched_set(const struct scheduler *ops, struct xen_sysctl_aaf_sched
 	sched_priv->next_hyperperiod = NOW();
 	rc =0;
 
-	if(schedule->cpu_id == 1 || schedule->cpu_id == 3 || schedule->cpu_id == 5)
+	if(is_rrp_cpu(schedule->cpu_id))
 	{
 		return rc;
 	}
@@ -463,7 +479,7 @@ static void* aafsched_alloc_vdata(const struct scheduler *ops, struct vcpu *vc, 
 
 	avc->vc = vc;
 
-	if(!is_idle_vcpu(vc) && (vc->processor != 1 && vc->processor != 3 && vc->processor != 5))
+	if(!is_idle_vcpu(vc) && (!is_rrp_cpu(vc->processor)))
 	{
 		avc->cpu_rrp = -2;
 		list_add(&avc->list_elem, &SCHED_PRIV(ops)->vcpu_list);
@@ -556,7 +572,7 @@ static void  *aaf_vcpu_insert(const struct scheduler *ops, struct vcpu *vc)
 	entry = SCHED_PCPU(vc->processor)->num_schedule_entries;
 	struct ps_pcpu_t *ps_cpu = SCHED_PCPU(vc->processor);
 
-	if(vc->domain->domain_id !=0 && vc->processor == 1 || vc->processor == 3 || vc->processor == 5 && !is_idle_vcpu(vc) )
+	if(vc->domain->domain_id !=0 && is_rrp_cpu(vc->processor) && !is_idle_vcpu(vc) )
 	{
 		if(entry < 512)
 		{
@@ -600,7 +616,7 @@ static struct task_slice ps_rrp_do_schedule(const struct scheduler *ops, s_time_
 
 	/* RRP-MULTICORE IMPLEMENTATION ZONE
 	 * --------------------------------- */
-	if(cpu == 1 || cpu == 3 || cpu== 5)
+	if(is_rrp_cpu(cpu))
 	{
 		struct ps_pcpu_t *sched_pcpu = SCHED_PCPU(cpu);
 		if(sched_pcpu->num_schedule_entries < 1)
@@ -847,7 +863,7 @@ static void rrp_vcpu_remove(const struct scheduler *ops, struct vcpu *v)
 	int cpu_id = v->processor;
 	spinlock_t *lock;
 
-	if(cpu_id == 1 || cpu_id == 3 || cpu_id == 5)
+	if(is_rrp_cpu(cpu_id))
 	{
 		printk("list_del_init to take place on CPU#: %d\n",cpu_id);
 		list_del(&ps_vcpu->runq_elem);
