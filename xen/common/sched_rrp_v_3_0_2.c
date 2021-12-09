@@ -568,7 +568,7 @@ static void  *aaf_vcpu_insert(const struct scheduler *ops, struct vcpu *vc)
 	spinlock_t *lock;
 	unsigned int entry;
 	vc->processor = aaf_pick_cpu(ops, vc);
-	lock = vcpu_schedule_lock_irq(vc);
+	//lock = vcpu_schedule_lock_irq(vc);
 	entry = SCHED_PCPU(vc->processor)->num_schedule_entries;
 	struct ps_pcpu_t *ps_cpu = SCHED_PCPU(vc->processor);
 
@@ -589,7 +589,7 @@ static void  *aaf_vcpu_insert(const struct scheduler *ops, struct vcpu *vc)
 	pvcpu->cpu_rrp = vc->processor;
 	list_add(&pvcpu->runq_elem, &SCHED_PCPU(vc->processor)->runq);
 	printk("Function: %s VCPU: %d from Domain: %X added to CPU: %d\n", __func__, vc->vcpu_id, vc->domain->handle,vc->processor);
-	vcpu_schedule_unlock_irq(lock, vc);
+	//vcpu_schedule_unlock_irq(lock, vc);
 }
 
 static struct task_slice ps_rrp_do_schedule(const struct scheduler *ops, s_time_t now, bool_t tasklet_work_scheduled)
